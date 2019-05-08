@@ -1,5 +1,6 @@
 <!-- Footer Area -->
 <!-- Footer Area -->
+<!-- Footer Area -->
 		<footer id="footer" class="footer-area footer--2">
 			<div class="footer__wrapper bg-image--16 section-padding--lg">
 				<div class="container">
