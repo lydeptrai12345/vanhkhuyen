@@ -118,7 +118,7 @@
 													
 													}
 											if($item_level_1['id'] == 87){
-														?><li><a href="hoat-dong.php">Hình ảnh hoạt động</a></li><?php }
+														?><li><a href="hoat-dong.php">Hoạt động</a></li><?php }
                                                 ?>
                                             </ul>
                                         </li>
@@ -126,7 +126,7 @@
 												
                                         }
                                         ?>
-										<li><a href="#">Tra Cứu</a></li>
+										<li><a href="tra-cuu.php">Tra Cứu</a></li>
 										<li><a href="lien-he.php">Liên Hệ</a></li>
                                     </ul>
                                 </nav>

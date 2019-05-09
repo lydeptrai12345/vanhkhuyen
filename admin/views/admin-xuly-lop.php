@@ -138,3 +138,33 @@ if (isset($_POST['add_nien_khoa'])) {
         }
     } else echo -2;
 }
+
+// Lấy danh sách bé theo lớp học
+if(isset($_GET['load_list_be'])) {
+    $id_lop = isset($_GET['id_lop']) ? (int)$_GET['id_lop'] : 0;
+
+    if($id_lop > 0) {
+        $str = "SELECT * FROM be INNER JOIN lophoc_be ON be.id = lophoc_be.be_id WHERE lophoc_be.lop_hoc_chi_tiet_id = {$id_lop}";
+        $query = mysqli_query($dbc, $str);
+        $result = array();
+
+        if (mysqli_num_rows($query) > 0)
+        {
+            $index = 1;
+            while ($row = mysqli_fetch_array($query)){
+                $result[] = array (
+                    'index'    =>$index++,
+                    'ten'      => $row['ten'],
+                    'ngaysinh' => date_format(date_create($row['ngaysinh']),'d/m/Y'),
+                    'gioitinh' => $row['gioitinh'] ? "Nam" : "Nữ",
+                    'cannang'  => $row['cannang'],
+                    'sdtcha'   => $row['sdtcha'],
+                    'sdtme'    => $row['sdtme'],
+                    'diachi'   => $row['diachi'],
+                    'chieucao' => $row['chieucao'],
+                );
+            }
+        }
+        echo json_encode($result);
+    }
+}

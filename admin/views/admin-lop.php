@@ -5,6 +5,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
 <!-- End header-->
 <script>
     $('#heading5 .panel-heading').attr('aria-expanded','true');
@@ -15,12 +18,14 @@
 <style>
     span.select2-container { width: 100% !important; }
     .error-message { color: #ff392a; }
+    .modal { z-index: 9999999; }
+    .modal-lg { max-width: 1000px !important; }
+
+    #example_filter label input{ border: 1px solid #ddd !important; }
+    #example_length label select{ border: 1px solid #ddd !important; }
 </style>
 
 <?php
-    // lấy danh sách lớp học
-    $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
-
     // lấy danh sách niên khóa
     $results_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY nam_ket_thuc DESC");
 
@@ -28,6 +33,18 @@
     $results_nhan_vien_them_moi = mysqli_query($dbc,"SELECT id, ho_ten FROM nhanvien WHERE id NOT IN (SELECT nhan_vien_id FROM lophoc_nhanvien)");
     $results_nhan_vien_cap_nhat = mysqli_query($dbc,"SELECT id, ho_ten FROM nhanvien");
 
+    $nien_khoa = isset($_GET['loc_nien_khoa']) ? $_GET['loc_nien_khoa'] : 0;
+
+    // tinhs nieen khoa hien tai month > 6 && month
+    $year = date("Y");
+    if(date("m") > 6)
+        $nien_khoa_hien_tai = $year . "-" . $year + 1;
+    else
+        $nien_khoa_hien_tai = ($year - 1) . "-" . $year;
+
+    if(!$nien_khoa) $nien_khoa = $nien_khoa_hien_tai;
+    // lấy danh sách khối
+    $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 ?>
 
 <!-- Page content-->
@@ -128,10 +145,39 @@
                 <!-- End thêm loại tin -->
                 <!-- Danh sach loại tin -->
                 <div class="card-header border-bottom">
-                    <form action="admin-loaitin.php" method="get">
-                        <h5 class="text-info">Danh sách lớp học</h5>
-                        <button id="btn-show-add" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-info">Thêm mới lớp học</button>
-                        <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#Modal_NIEN_KHOA" class="btn btn-success">Thêm mới niên khóa</button>
+                    <form action="" method="get" class="row">
+                        <div class="col-md-12">
+                            <h5 class="text-info">Danh sách lớp học</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#Modal_NIEN_KHOA" class="btn btn-success">Thêm mới niên khóa</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button id="btn-show-add" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-info">Thêm mới lớp học</button>
+                        </div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Niên khóa</div>
+                        <div class="col-md-2">
+                            <form id="form-bo-loc" action="admin-lop.php" method="get">
+                                <select name="loc_nien_khoa" id="" class="form-control">
+                                    <?php foreach ($results_nien_khoa as $item):?>
+                                        <?php if($nien_khoa != 0) :?>
+                                            <option <?php if($nien_khoa == $item['ten_nien_khoa']) echo "selected";?>
+                                                    data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                    value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                            </option>
+                                        <?php else:?>
+                                            <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
+                                                    data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                    value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                            </option>
+                                        <?php endif;?>
+
+                                    <?php endforeach;?>
+                                </select>
+                                <button id="btn-bo-loc" type="submit" class="hidden"></button>
+                            </form>
+                        </div>
                     </form>
 
                     <!-- Modal -->
@@ -153,7 +199,7 @@
                                         <small style="display: none" class="error-message e-1">Tên lớp có độ từ 5-255 ký tự</small>
                                     </div>
                                     <div class="form-group">
-                                        <label style="display:block">Loại lớp <span class="dot-required">*</span></label>
+                                        <label style="display:block">Khối <span class="dot-required">*</span></label>
                                         <select name="select_lop_hoc" id="" class="form-control">
 <!--                                            <option value="0">Chọn loại lớp học</option>-->
                                             <?php foreach ($results_lop_hoc as $item):?>
@@ -193,7 +239,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button id="btn-save" onclick="submit_lop_hoc()" type="button" class="btn btn-success"><i class="glyphicon glyphicon-floppy-saved"></i> Lưu lại</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                 </div>
                             </div>
 
@@ -290,7 +336,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                 </div>
                             </div>
 
@@ -345,9 +391,10 @@
                         $query = "SELECT l.id,l.mo_ta, n.ten_nien_khoa, 
                                     (SELECT COUNT(id) FROM lophoc_be WHERE l.id = lophoc_be.lop_hoc_chi_tiet_id)	AS sl_be,
                                     (SELECT COUNT(id) FROM lophoc_nhanvien WHERE l.id = lophoc_nhanvien.lop_hoc_chi_tiet_id) AS sl_nhan_vien
-                                FROM
-                                    lophoc_chitiet AS l INNER JOIN nienkhoa AS n ON l.nien_khoa_id = n.id ORDER BY id ASC 
-                                    LIMIT {$start},{$limit}";
+                                  FROM lophoc_chitiet AS l INNER JOIN nienkhoa AS n ON l.nien_khoa_id = n.id 
+                                  WHERE n.ten_nien_khoa = '{$nien_khoa}'
+                                  ORDER BY id ASC LIMIT {$start},{$limit}
+                                ";
 
                         $results = mysqli_query($dbc, $query);
                         foreach ($results as $key => $item)
@@ -359,7 +406,7 @@
                                 <td class="text-left"><?php echo $item['mo_ta'] ?></td>
                                 <td><?php echo $item['ten_nien_khoa']?></td>
                                 <td><?php echo $item['sl_nhan_vien']?></td>
-                                <td><?php echo $item['sl_be']?></td>
+                                <td><a class="btn-list-be" data-id="<?php echo $item['id']?>" style="cursor: pointer"><?php echo $item['sl_be']?></a></td>
                                 <td>
                                     <a onclick="show_form_edit(<?php echo $item['id']?>)" class="btn-edit" style="cursor: pointer" title="Cập nhật lớp học">
                                         <i class="material-icons action-icon">edit</i>
@@ -411,27 +458,81 @@
 
     <input type="hidden" id="flag_insert_update" value="1">
 
+
+<!-- ============================ MODAL DANH SACH BE TRONG LOP ====================================-->
+    <div id="Modal_DS_BE" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Danh sách bé trong lớp</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <table id="example" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Ngày sinh</th>
+                            <th>Giới tính</th>
+                            <th>Chiều cao</th>
+                            <th>Cân nặng</th>
+                            <th>SĐT cha</th>
+                            <th>SĐT mẹ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Doe</td>
+                            <td>Doe</td>
+                            <td>Doe</td>
+                            <td>Doe</td>
+                            <td>Doe</td>
+                            <td>Doe</td>
+                            <td>john@example.com</td>
+                            <td>john@example.com</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<!-- ============================ END MODAL DANH SACH BE TRONG LOP ================================-->
+
 </div>
 <!-- End page content-->
 
 <script>
-    $( '.select-nhannien-add' ).select2( {
-        placeholder: {
-            id: '',
-            text: 'Vui lòng chọn nhân viên'
-        },
-        maximumSelectionLength: 3
-    } );
-
-    $( '.select-nhannien-edit' ).select2( {
-        placeholder: {
-            id: '',
-            text: 'Vui lòng chọn nhân viên'
-        },
-        maximumSelectionLength: 3
-    } );
 
     $(document).ready(function () {
+        $( '.select-nhannien-add' ).select2( {
+            placeholder: {
+                id: '',
+                text: 'Vui lòng chọn nhân viên'
+            },
+            maximumSelectionLength: 3
+        } );
+
+        $( '.select-nhannien-edit' ).select2( {
+            placeholder: {
+                id: '',
+                text: 'Vui lòng chọn nhân viên'
+            },
+            maximumSelectionLength: 3
+        } );
+
+        $('select[name="loc_nien_khoa"]').change(function () {
+            console.log('aaa');
+            $('#btn-bo-loc').click();
+            // $('#form-bo-loc').submit();
+        });
+
        $('#btn-show-add').click(function () {
            $('#flag_insert_update').val(1); //bật cờ báo là đang ở form thêm mới lớp học
            // gán gia trị text về null để thêm mới
@@ -444,7 +545,46 @@
            $('.select-nhannien-edit').next(".select2-container").hide();
 
            $('.select-nhannien-add').val("").trigger('change');
-       })
+       });
+
+        $('#example').DataTable({
+            columns: [
+                { data: 'index' },
+                { data: 'ten' },
+                { data: 'ngaysinh' },
+                { data: 'gioitinh' },
+                { data: 'chieucao' },
+                { data: 'cannang' },
+                { data: 'sdtcha' },
+                { data: 'sdtme' },
+            ],
+        });
+
+
+        function show_list_be(id_lop) {
+            console.log(id_lop);
+            get_danh_sach_be_theo_lop(id_lop);
+            $('#Modal_DS_BE').modal('show');
+        }
+
+        $('.btn-list-be').click(function () {
+            var id_lop = $(this).data('id');
+            show_list_be(id_lop);
+        });
+
+        function get_danh_sach_be_theo_lop(id_lop) {
+            $.ajax({
+                type: "POST",
+                url: 'admin-xuly-lop.php?load_list_be=1&id_lop=' + id_lop,
+                success: function (result) {
+                    var data = JSON.parse(result);
+                    console.log(data);
+
+                    $('#example').dataTable().fnClearTable();
+                    $('#example').dataTable().fnAddData(data);
+                }
+            });
+        }
     });
     
     function check_ten_lop(item) {
