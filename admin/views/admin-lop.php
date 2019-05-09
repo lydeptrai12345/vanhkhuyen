@@ -5,8 +5,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">-->
+<!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
+
+<!--<link rel="stylesheet" href="../styles/admin/bootstrap.min.css">-->
+<link rel="stylesheet" href="../styles/admin/datatables.min.css">
+<script src="../js/datatables.min.js"></script>
 
 <!-- End header-->
 <script>
@@ -549,7 +553,12 @@
 
         $('#example').DataTable({
             columns: [
-                { data: 'index' },
+                {
+                    "className":      'details-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": '',
+                },
                 { data: 'ten' },
                 { data: 'ngaysinh' },
                 { data: 'gioitinh' },

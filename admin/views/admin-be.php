@@ -3,6 +3,22 @@
 <?php include "../../inc/myfunction.php";?>
 <!-- End header-->
 
+<link rel="stylesheet" href="../styles/admin/datatables.min.css">
+<script src="../js/datatables.min.js"></script>
+
+<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">-->
+<!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
+
+<?php
+    $str = "SELECT be.id, be.hinhbe, be.ten, be.ngaysinh, be.gioitinh, lophoc_chitiet.mo_ta, be.chieucao, be.cannang, be.diachi FROM be 
+                                              INNER JOIN lophoc_be ON be.id = lophoc_be.be_id 
+                                              INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id 
+                                              ORDER BY id DESC ";
+$data_be = mysqli_query( $dbc, $str );
+?>
+
+
+
 <script>
 	$( document ).ready( function () {
 		$( '#heading5 .panel-heading' ).attr( 'aria-expanded', 'true' );
@@ -10,6 +26,25 @@
 		$( '#collapse5 .list-group a:nth-child(1)' ).addClass( 'cus-active' );
 	} );
 </script>
+
+<style>
+    #tripRevenue {  }
+
+    #advanced-search {
+        margin-top: 20px;
+    }
+
+    label {
+        font-weight: normal;
+    }
+    td.details-control {
+        background: url('../images/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+    tr.shown td.details-control {
+        background: url('../images/details_close.png') no-repeat center center;
+    }
+</style>
 
 <div class="main-content-container container-fluid px-4" style="margin-top:10px">
 	<div class="row">
@@ -156,68 +191,121 @@
 					}
 				</style>
 				<div class="card-body p-0 text-center" style="margin: 30px 0">
-					<div class="search-container">
-						<form action="" method="get">
-							<div class="input-search">
-								<span class="glyphicon glyphicon-search" style="font-size: 16px;"></span>
-								<input name="searchKey" class="teeetet" type="text" placeholder="Nhập tên bé" <?php if(isset($_GET['searchKey'])) echo 'value="'.$_GET['searchKey'].'"'?>/>
-							</div>
-							<button name="btnSeach" class="btn-custom2" type="submit">Tìm kiếm</button>
-						</form>
-					</div>
+<!--					<div class="search-container">-->
+<!--						<form action="" method="get">-->
+<!--							<div class="input-search">-->
+<!--								<span class="glyphicon glyphicon-search" style="font-size: 16px;"></span>-->
+<!--								<input name="searchKey" class="teeetet" type="text" placeholder="Nhập tên bé" --><?php //if(isset($_GET['searchKey'])) echo 'value="'.$_GET['searchKey'].'"'?><!--/>-->
+<!--							</div>-->
+<!--							<button name="btnSeach" class="btn-custom2" type="submit">Tìm kiếm</button>-->
+<!--						</form>-->
+<!--					</div>-->
 
+                    <div class="row" style="padding: 5px 20px;">
+                        <div class="col-md-12">
+                            <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Họ và tên</th>
+                                    <th>Giới tính</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Lớp</th>
+                                    <th>Địa chỉ</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                    <div class="container-salary" style="margin-top: 30px;">
-                        <table class="table salary-table">
-                            <tr class="salary-title">
-                                <th scope="col" class="border-0" style="width: 40%;">Tên</th>
-                                <th scope="col" class="border-0" style="width: 30%;">Hình ảnh</th>
-                                <th scope="col" class="border-0" style="width: 10%;">Giới tính</th>
-                                <th scope="col" class="border-0" style="width: 10%;">Lớp</th>
-                                <th scope="col" class="border-0" style="width: 10%;"></th>
-                            </tr>
-                            <?php
-                                if (!isset($_GET['searchKey']) && empty($_GET['searchKey'])) {
-                                    $query = "SELECT be.id, be.hinhbe, be.ten, be.ngaysinh, be.gioitinh, lophoc_chitiet.mo_ta FROM be 
-                                              INNER JOIN lophoc_be ON be.id = lophoc_be.be_id 
-                                              INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id 
-                                              ORDER BY id DESC ";
-                                }
-                                else {
-                                    $query = "SELECT be.id, be.hinhbe, be.ten, be.ngaysinh, be.gioitinh, lophoc_chitiet.mo_ta FROM be 
-                                              INNER JOIN lophoc_be ON be.id = lophoc_be.be_id 
-                                              INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id WHERE ten LIKE '%{$_GET['searchKey']}%' ORDER BY REVERSE(SPLIT_STRING(REVERSE(TRIM(ten)),' ', 1))";
-                                }
-                                $results = mysqli_query( $dbc, $query );
-                                if ( mysqli_num_rows($results) > 0)
-                                    foreach ( $results as $key => $item ) {
-                                        ?>
-                                    <tr>
-                                        <td><?php echo $item['ten']." - ".getAge($item['ngaysinh'])." tuổi";?></td>
-                                        <td><img src="../images/hinhbe/<?php echo $item['hinhbe']?>" style="width: 100px; height: 120px;"></td>
-                                        <td><?php if($item['gioitinh'] == 1) echo 'Nam'; else echo 'Nữ';?></td>
-                                        <td><?php echo $item['mo_ta']?></td>
-                                        <td><a href="admin-be-sua.php?id=<?php echo $item['id']?>" class="btn-custom2" style="font-size: 12px;">Xem</a></td>
-                                    </tr>
-                                <?php
-                                    }
-                                else{
-                                    ?>
-                                    <tr><td colspan="5" align="center">Không tìm thấy</td></tr>
-                                <?php
-                                }
-                            ?>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-
-
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        var table;
+        $.ajax({
+            type: "GET",
+            url: 'admin-be-xuly.php?load_list_be=1&id_lop=',
+            success: function (result) {
+                var data = JSON.parse(result);
+                table = $('#tripRevenue').DataTable({
+                    data: data,
+                    columnDefs: [
+                        { targets: 1, className: 'dt-body-left' },
+                        { targets: 4, className: 'dt-body-left' },
+                        { targets: 5, className: 'dt-body-left' },
+                        { targets: 6, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
+                    ],
+                    columns: [
+                        {
+                            "className":      'details-control',
+                            "orderable":      false,
+                            "data":           null,
+                            "defaultContent": '',
+                            "width": "30px"
+                        },
+                        { data: 'ten' },
+                        { data: 'gioitinh' },
+                        { data: 'ngaysinh' },
+                        { data: 'mo_ta' },
+                        { data: 'diachi' },
+                        { "width": "50px" },
+                    ]
+                });
 
+                // table = $('#tripRevenue').dataTable();
+            }
+        });
+
+        function format ( d ) {
+            // `d` is the original data object for the row
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                '<tr>'+
+                '<td>Full name:</td>'+
+                '<td>'+d.name+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>Extension number:</td>'+
+                '<td>'+d.extn+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>Extra info:</td>'+
+                '<td>And any further details here (images etc)...</td>'+
+                '</tr>'+
+                '</table>';
+        }
+
+
+        $('#tripRevenue tbody').on('click', 'td.details-control', function () {
+            console.log(table)
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        } );
+
+        $('#tripRevenue tbody').on( 'click', 'button', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            alert( data[0] +"'s salary is: "+ data[ 5 ] );
+        } );
+    });
+</script>
 
 <!-- Footer-->
 <?php include "admin-footer.php";?>
