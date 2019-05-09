@@ -54,7 +54,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                                     <th>Chức vụ</th>
                                     <th>Phòng ban</th>
                                     <th>Email</th>
-                                    <th>Email</th>
+                                    <th>Trạng thái</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -109,7 +109,21 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                         { data: 'ten_phong_ban' },
                         { data: 'email' },
                         { data: '' },
-                    ]
+                        {
+                            data:   "trangthai",
+                            render: function ( data, type, row ) {
+                                if ( type === 'display' ) {
+                                    return '<input type="checkbox" class="editor-active">';
+                                }
+                                return data;
+                            },
+                            className: "dt-body-center"
+                        },
+                    ],
+                    rowCallback: function ( row, data ) {
+                        // Set the checked state of the checkbox in the table
+                        $('input.editor-active', row).prop( 'checked', data.trangthai == 1 );
+                    }
                 });
 
                 // table = $('#tripRevenue').dataTable();
@@ -165,6 +179,19 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
             }
             else
                 window.location.href = "admin-nhanvien-xem.php?id=" + data.id;
+        } );
+
+        $('#tripRevenue tbody').on( 'change', 'input.editor-active', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            if(confirm('Bạn có chắc chắn muốn cập nhật trạng thái của nhân viên vừa chọn?')) {
+                $.ajax( {
+                    type: "GET",
+                    url: "admin-nhanvien.php?&changeStatusId=" + data.id,
+                    success: function ( result ) {
+                        window.location.reload();
+                    }
+                } );
+            }
         } );
     });
 </script>
