@@ -82,9 +82,9 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                 var data = JSON.parse(result);
                 table = $('#tripRevenue').DataTable({
                     language: {
-                        "lengthMenu": "Hiển thị _MENU_ nhân viên",
+                        "lengthMenu": "Hiển thị _MENU_ nhân viên/ trang",
                         "zeroRecords": "Không tìm thấy kết quả",
-                        "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                        "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
                         "infoEmpty": "Không có dữ liệu",
                         "infoFiltered": "(Được lọc từ _MAX_ nhân viên)",
                         "search": "Tìm kiếm",
@@ -98,8 +98,8 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                         { targets: 1, className: 'dt-body-left' },
                         { targets: 4, className: 'dt-body-left' },
                         { targets: 5, className: 'dt-body-left' },
-                        { targets: 6, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
                         { targets: 7, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật nhân viên"><i class="material-icons action-icon">edit</i></a>' },
+
                     ],
                     columns: [
                         { data: 'id' },

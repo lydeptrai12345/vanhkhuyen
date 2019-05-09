@@ -245,9 +245,9 @@ $data_be = mysqli_query( $dbc, $str );
                 var data = JSON.parse(result);
                 table = $('#tripRevenue').DataTable({
                     language: {
-                        "lengthMenu": "Hiển thị _MENU_ bé",
+                        "lengthMenu": "Hiển thị _MENU_ bé/ trang",
                         "zeroRecords": "Không tìm thấy kết quả",
-                        "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                        "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
                         "infoEmpty": "Không có dữ liệu",
                         "infoFiltered": "(Được lọc từ _MAX_ bé)",
                         "search": "Tìm kiếm",
@@ -261,7 +261,7 @@ $data_be = mysqli_query( $dbc, $str );
                         { targets: 1, className: 'dt-body-left' },
                         { targets: 4, className: 'dt-body-left' },
                         { targets: 5, className: 'dt-body-left' },
-                        { targets: 6, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
+                        { targets: 6, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật bé"><i class="material-icons action-icon">edit</i></a>' },
                     ],
                     columns: [
                         {
@@ -329,6 +329,20 @@ $data_be = mysqli_query( $dbc, $str );
                 row.child( format(row.data()) ).show();
                 tr.addClass('shown');
             }
+        } );
+        $('#tripRevenue tbody').on( 'click', 'a', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            if($(this).data('action') == 1) {
+                $.ajax( {
+                    type: "GET",
+                    url: "admin-be.php?changeStatusId=" + data.id,
+                    success: function ( result ) {
+                        $('.table-data').html($(result).find('.table-data').html());
+                    }
+                } );
+            }
+            else
+                window.location.href = "admin-be-sua.php?id=" + data.id;
         } );
 
         $('#tripRevenue tbody').on( 'click', 'a', function () {

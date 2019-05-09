@@ -136,6 +136,7 @@
                                     <th>Tên bằng cấp</th>
                                     <th>Hệ số</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                             </table>
@@ -162,9 +163,9 @@
                     var data = JSON.parse(result);
                     table = $('#tripRevenue').DataTable({
                         language: {
-                            "lengthMenu": "Hiển thị _MENU_ bằng cấp",
+                            "lengthMenu": "Hiển thị _MENU_ bằng cấp/ trang",
                             "zeroRecords": "Không tìm thấy kết quả",
-                            "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                            "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
                             "infoEmpty": "Không có dữ liệu",
                             "infoFiltered": "(Được lọc từ _MAX_ bằng cấp)",
                             "search": "Tìm kiếm",
@@ -176,10 +177,11 @@
                         data: data,
                         columnDefs: [
                             { targets: 1, className: 'dt-body-left' },
-                            { targets: 3, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
+                            { targets: 3, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật bằng cấp"><i class="material-icons action-icon">edit</i></a>' },
+                            { targets: 4, data: null, defaultContent: '<a style="cursor: pointer" title="Xóa phòng ban"><i class="material-icons action-icon">delete_outline</i></a>' },
                         ],
                         columns: [
-                            { data: 'ten_bang_cap' },
+                            { data: 'bang_cap_id' },
                             { data: 'ten_bang_cap' },
                             { data: 'heso' },
                             { "width": "50px" },
@@ -190,23 +192,7 @@
                 }
             });
 
-            function format ( d ) {
-                // `d` is the original data object for the row
-                return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-                    '<tr>'+
-                    '<td><img class="img-be" src="../images/hinhbe/'+ d.hinhbe +'"> </img>:</td>'+
-                    '<td>'+d.name+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>Extension number:</td>'+
-                    '<td>'+d.extn+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>Extra info:</td>'+
-                    '<td>And any further details here (images etc)...</td>'+
-                    '</tr>'+
-                    '</table>';
-            }
+
 
 
             $('#tripRevenue tbody').on('click', 'td.details-control', function () {
@@ -224,6 +210,20 @@
                     row.child( format(row.data()) ).show();
                     tr.addClass('shown');
                 }
+            } );
+            $('#tripRevenue tbody').on( 'click', 'a', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                if($(this).data('action') == 1) {
+                    $.ajax( {
+                        type: "GET",
+                        url: "admin-bangcap-sua.php?changeStatusId=" + data.id,
+                        success: function ( result ) {
+                            $('.table-data').html($(result).find('.table-data').html());
+                        }
+                    } );
+                }
+                else
+                    window.location.href = "admin-bangcap-sua.php?id=" + data.id;
             } );
 
             $('#tripRevenue tbody').on( 'click', 'a', function () {

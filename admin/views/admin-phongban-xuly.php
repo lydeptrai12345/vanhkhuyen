@@ -1,11 +1,12 @@
 <?php
 
+
 include "../../inc/myconnect.php";
 include "../../inc/myfunction.php";
 
 
-if (isset($_GET['load_list_bangcap'])) {
-    $str = "SELECT * FROM bangcap ORDER BY heso ASC";
+if (isset($_GET['load_list_phongban'])) {
+    $str = "SELECT * FROM phongban ORDER BY ten_phong_ban ASC";
     $query = mysqli_query($dbc, $str);
     $result = array();
 
@@ -13,9 +14,8 @@ if (isset($_GET['load_list_bangcap'])) {
         $index = 1;
         while ($row = mysqli_fetch_array($query)) {
             $result[] = array(
-                'bang_cap_id' => $row['bang_cap_id'],
-                'ten_bang_cap' => $row['ten_bang_cap'],
-                'heso' => $row['heso'],
+                'phong_ban_id' => $row['phong_ban_id'],
+                'ten_phong_ban' => $row['ten_phong_ban'],
             );
         }
     }
