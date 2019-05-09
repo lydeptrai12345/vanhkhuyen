@@ -187,7 +187,7 @@
 							<select class="form-control" name="chucvu">
 								<option value="">Vui lòng chọn chức vụ</option>
 								<?php 
-                                    $query_cv="SELECT * FROM congviec";
+                                    $query_cv="SELECT * FROM congviec ORDER BY ten_cong_viec ASC";
                                     $cvs=mysqli_query($dbc,$query_cv);
                                     foreach ($cvs as $item) 
                                     {
@@ -305,39 +305,28 @@
 								<label>Ngày vào làm</label>
 								<input type="date" class="form-control" name="txtNgayVaoLam" placeholder="Vui lòng nhập ngày vào làm" value="<?php if(isset($ngayvaolam)) {echo $ngayvaolam;} ?>">
 							</div>
-							<div class="col">
-								<label style="display:block">Phòng ban <span class="dot-required">*</span></label>
-								<select class="form-control" name="phongban">
-									<option value="">Vui lòng chọn phòng ban</option>
-									<?php 
-                                    $query_pb="SELECT * FROM phongban";
+                            <div class="col">
+                                <label style="display:block">Phòng ban <span class="dot-required">*</span></label>
+                                <select class="form-control" name="phongban">
+                                    <option value="">Vui lòng chọn phòng ban</option>
+                                    <?php
+                                    $query_pb="SELECT * FROM phongban ORDER BY ten_phong_ban ASC";
                                     $pbs=mysqli_query($dbc,$query_pb);
-                                    foreach ($pbs as $item) 
-                                    {
-                                    	if($phongban == $item['phong_ban_id'])
-                               			{
-                               		?>
-									<option <?php echo 'selected = "selected"'; ?> value="
-										<?php echo $item['phong_ban_id']?>">
-										<?php echo $item['ten_phong_ban'] ?>
-									</option>
-									<?php
-									} else {
-										?>
-									<option value="<?php echo $item['phong_ban_id']?>">
-										<?php echo $item['ten_phong_ban'] ?>
-									</option>
-									<?php
-									}
-									}
-									?>
-								</select>
-								<?php
-								if ( isset( $errors ) && in_array( 'phongban', $errors ) ) {
-									echo "<p class='text-danger'>Bạn chưa chọn phòng ban</p>";
-								}
-								?>
-							</div>
+                                    foreach ($pbs as $item) {
+                                        ?>
+                                        <option <?php if(isset($_POST['phongban']) && $_POST['phongban'] == $item['phong_ban_id']) {echo 'selected="selected"';}?> value="<?php echo $item['phong_ban_id']?>">
+                                            <?php echo $item['ten_phong_ban'] ?>
+                                        </option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                                <?php
+                                if ( isset( $errors ) && in_array( 'phongban', $errors ) ) {
+                                    echo "<p class='text-danger'>Bạn chưa chọn phòng ban</p>";
+                                }
+                                ?>
+                            </div>
 						</div>
 						<br/>
 						<div class="row">
@@ -368,8 +357,8 @@
 								<label style="display:block">Bằng cấp <span class="dot-required">*</span></label>
 								<select multiple="multiple" class="form-control cus-selected" name="bangcap[]"
 										onChange="changeBangCap();">
-									<?php 
-                                    $query_bc="SELECT * FROM bangcap";
+									<?php
+                                    $query_bc="SELECT * FROM bangcap ORDER BY heso ASC";
                                     $bcs=mysqli_query($dbc,$query_bc);
 									//$query_bc_selected="SELECT bang_cap_id FROM nhanvien where id = ";
                                     //$bc_selected= mysqli_query($dbc,$query_bc_selected);
@@ -419,6 +408,7 @@
 						<br/>
 						<br/>
 						<button type="submit" class="btn btn-info">Lưu</button>
+                        <a href="admin-nhanvien-xem.php" class="btn btn-warning">Quay về</a>
 					</form>
 				</div>
 				<!-- End thêm loại tin -->

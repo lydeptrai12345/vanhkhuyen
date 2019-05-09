@@ -112,7 +112,8 @@
                                 }
                             ?>
 						</div>
-						<button type="submit" name="xacnhansua" class="btn btn-info">Sửa Thông Tin</button>
+						<button type="submit" name="xacnhansua" class="btn btn-info">Lưu</button>
+                        <a href="admin-congviec.php" class="btn btn-warning">Quay về</a>
 					</form>
 				</div>
 				<!-- End sua phòng ban -->

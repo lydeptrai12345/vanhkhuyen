@@ -109,6 +109,7 @@
                             ?>
                         </div>
 							<button type="submit" name="xacnhanthem" class="btn btn-info">Thêm Thông Tin</button>
+                        <a href="admin-bangcap.php" class="btn btn-warning">Quay về</a>
 					</form>
 				</div>
 			<?php
@@ -165,7 +166,7 @@
 	                                $per_page=1;
 	                            }
 	                        }
-							$query = "SELECT * FROM bangcap ORDER BY ten_bang_cap ASC LIMIT {$start},{$limit}";
+							$query = "SELECT * FROM bangcap ORDER BY heso ASC LIMIT {$start},{$limit}";
 							$results = mysqli_query($dbc, $query);
 							foreach ($results as $key => $item)
 							{ 

@@ -184,6 +184,7 @@
 		                echo "</ul>";
 		            echo "</nav>"          
                		?>
+
 				</div>
 				<!-- End danh sách loại tin -->
 			</div>

@@ -137,7 +137,7 @@
 							<select class="form-control" name="chucvu">
 								<option value="">Vui lòng chọn chức vụ</option>
 								<?php 
-                                    $query_cv="SELECT * FROM congviec";
+                                    $query_cv="SELECT * FROM congviec ORDER BY ten_cong_viec ASC";
                                     $cvs=mysqli_query($dbc,$query_cv);
                                     foreach ($cvs as $item) {
                                 ?>
@@ -273,7 +273,7 @@
 								<select class="form-control" name="phongban">
 									<option value="">Vui lòng chọn phòng ban</option>
 									<?php 
-                                    $query_pb="SELECT * FROM phongban";
+                                    $query_pb="SELECT * FROM phongban ORDER BY ten_phong_ban ASC";
                                     $pbs=mysqli_query($dbc,$query_pb);
                                     foreach ($pbs as $item) {
                                 ?>
@@ -318,12 +318,13 @@
 								<label style="display:block">Bằng cấp <span class="dot-required">*</span></label>
 								<select multiple="multiple" class="form-control cus-selected" name="bangcap[]" onChange="changeBangCap();">
 									<?php 
-                                    $query_bc="SELECT * FROM bangcap";
+                                    $query_bc="SELECT * FROM bangcap ORDER BY heso ASC";
                                     $bcs=mysqli_query($dbc,$query_bc);
                                     foreach ($bcs as $item) {
                                 ?>
 									<option <?php if(isset($_POST['bangcap']) && in_array($item['bang_cap_id'],$_POST['bangcap'])) {echo 'selected="selected"';}?> value="<?php echo $item['bang_cap_id']?>">
 										<?php echo $item['ten_bang_cap'] ?>
+
 									</option>
 									<?php
 									}
@@ -350,7 +351,8 @@
 						</div>
 						<br/>
 						<br/>
-						<button type="submit" class="btn btn-info">Thêm Thông Tin</button>
+						<button type="submit" class="btn btn-info">Thêm thông tin</button>
+                        <a href="admin-nhanvien.php" class="btn btn-warning">Quay về</a>
 					</form>
 				</div>
 				<!-- End thêm loại tin -->

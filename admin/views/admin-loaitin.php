@@ -98,6 +98,7 @@
                             ?>
                         </div>
 							<button type="submit" name="xacnhanthem" class="btn btn-info">Thêm Thông Tin</button>
+                        <a href="admin-loaitin.php" class="btn btn-warning">Quay về</a>
 					</form>
 				</div>
 			<?php

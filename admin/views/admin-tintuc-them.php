@@ -148,6 +148,7 @@
                             </script>
                         </div>
                             <button type="submit" class="btn btn-info">Thêm Thông Tin</button>
+                        <a href="admin-tintuc.php" class="btn btn-warning">Quay về</a>
                     </form>
                 </div>
             <!-- End thêm loại tin -->

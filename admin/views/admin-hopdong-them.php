@@ -157,6 +157,7 @@
                             <input class="form-control" name="txtGhiChu" placeholder="Vui lòng nhập ghi chú" value = "<?php if(isset($_POST['txtGhiChu'])) {echo $_POST['txtGhiChu'];} ?>">
                         </div>
                             <button type="submit" class="btn btn-info">Thêm hợp đồng</button>
+                        <a href="admin-hopdong.php?id=<?php echo $id;?>" class="btn btn-warning">Quay về</a>
                     </form>
                 </div>
             <!-- End thêm loại tin -->

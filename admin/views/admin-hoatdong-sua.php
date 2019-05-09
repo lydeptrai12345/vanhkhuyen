@@ -162,7 +162,8 @@
                             }
                             ?>
                         </div>
-                           <button type="submit" name="sua" class="btn btn-info">Sửa Thông Tin</button>
+                           <button type="submit" name="sua" class="btn btn-info">Lưu</button>
+                        <a href="admin-hoatdong.php" class="btn btn-warning">Quay về</a>
                     </form>
                 </div>
             <!-- End thêm loại tin -->

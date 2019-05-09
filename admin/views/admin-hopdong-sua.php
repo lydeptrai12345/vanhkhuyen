@@ -173,7 +173,8 @@
                             <label>Ghi Chú</label>
                             <input class="form-control" name="txtGhiChu" placeholder="Vui lòng nhập ghi chú" value = "<?php if(isset($ghi_chu)) {echo $ghi_chu;} ?>">
                         </div>
-                            <button type="submit" class="btn btn-info">Sửa hợp đồng</button>
+                            <button type="submit" class="btn btn-info">Lưu</button>
+                        <a href="admin-hopdong.php?id=<?php echo $id;?>" class="btn btn-warning">Quay về</a>
                     </form>
                 </div>
             <!-- End thêm loại tin -->

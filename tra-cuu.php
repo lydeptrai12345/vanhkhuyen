@@ -25,7 +25,7 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
             width: 100%;
         }
 
-        .a-chua-img img { width: 100%; height: 100%; }
+        .a-chua-img img { width: 90%; height: 100%; }
     </style>
     <section class="junior__classes__area section-lg-padding--top section-padding--md--bottom bg--white" style="padding-top: 40px">
         <div class="container">
@@ -103,7 +103,7 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
                             <div class="row ket-qua">
                                 <div class = col-3>
                                     <a href="" class="a-chua-img">
-                                        <img src="../admin/images/hinhbe/<?php echo $item['hinhbe'] ?>" alt="class images">
+                                        <img src="admin/images/hinhbe/<?php echo $item['hinhbe'] ?>" alt="class images">
                                     </a>
                                 </div>
                                 <div class=" col-8">
