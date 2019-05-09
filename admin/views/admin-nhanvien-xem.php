@@ -8,6 +8,23 @@
 					$('#heading6 .panel-heading').attr('aria-expanded','true');
 					$('#collapse6').addClass('show');
 					$('#collapse6 .list-group a:nth-child(1)').addClass('cus-active');
+
+            function inputFilter(inputFilter) {
+                return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+                    if (inputFilter(this.value)) {
+                        this.oldValue = this.value;
+                        this.oldSelectionStart = this.selectionStart;
+                        this.oldSelectionEnd = this.selectionEnd;
+                    } else if (this.hasOwnProperty("oldValue")) {
+                        this.value = this.oldValue;
+                        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                    }
+                })
+            }
+
+            $("#myTextBox").inputFilter(function(value) {
+                return /^\d*$/.test(value);
+            });
 		});
 	</script>
 
@@ -239,7 +256,7 @@
 						<div class="row">
 							<div class="col">
 								<label>Số điện thoại <span class="dot-required">*</span></label>
-								<input class="form-control" name="txtSoDienThoai" placeholder="Vui lòng nhập số điện thoại" value="<?php if(isset($dienthoai)) {echo $dienthoai;} ?>">
+								<input id="myTextBox" class="form-control" maxlength="10" name="txtSoDienThoai" placeholder="Vui lòng nhập số điện thoại" value="<?php if(isset($dienthoai)) {echo $dienthoai;} ?>">
 								<?php 
                                 if(isset($errors) && in_array('txtSoDienThoai',$errors))
                                 {

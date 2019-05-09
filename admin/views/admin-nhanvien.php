@@ -2,7 +2,8 @@
 <?php include "../../inc/myconnect.php";?>
 <?php include "../../inc/myfunction.php";?>
 <!-- End header-->
-
+<link rel="stylesheet" href="../styles/admin/datatables.min.css">
+<script src="../js/datatables.min.js"></script>
 <script>
 	$( document ).ready( function () {
 		$( '#heading6 .panel-heading' ).attr( 'aria-expanded', 'true' );
@@ -41,141 +42,134 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
 					<a class="btn btn-light" data-toggle="tooltip" title="Thêm Nhân viên" href="admin-nhanvien-them.php"><i class="material-icons action-icon">add</i></a>
 				</div>
 				<div class="card-body p-0 pb-3 text-center table-data">
-					<table class="table mb-0">
+                    <!--                    copy cai nay -->
+                    <div class="row" style="padding: 5px 20px;">
+                        <div class="col-md-12">
+                            <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Họ và tên</th>
+                                    <th>Giới tính</th>
+                                    <th>Chức vụ</th>
+                                    <th>Phòng ban</th>
+                                    <th>Email</th>
+                                    <th>Email</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-						<thead class="bg-light">
-							<tr>
-								<th scope="col" class="border-0">STT</th>
-								<th scope="col" class="border-0">Họ tên</th>
-								<th scope="col" class="border-0">Giới tính</th>
-								<th scope="col" class="border-0">Chức vụ</th>
-								<th scope="col" class="border-0">Phòng ban</th>
-								<th scope="col" class="border-0" style="width:10%">Chỉnh sửa</th>
-								<th scope="col" class="border-0" style="width:10%">Trạng thái</th>
-							</tr>
-						</thead>
-						<?php
-						//đặt số bản ghi cần hiện thị
-						$limit = 10;
-						//Xác định vị trí bắt đầu
-						if ( isset( $_GET[ 's' ] ) && filter_var( $_GET[ 's' ], FILTER_VALIDATE_INT, array( 'min_range' => 1 ) ) ) 
-						{
-							$start = $_GET[ 's' ];
-						} 
-						else {
-							$start = 0;
-						}
-						if ( isset( $_GET[ 'p' ] ) && filter_var( $_GET[ 'p' ], FILTER_VALIDATE_INT, array( 'min_range' => 1 ) ) ) {
-							$per_page = $_GET[ 'p' ];
-						} else {
-							//Nếu p không có, thì sẽ truy vấn CSDL để tìm xem có bao nhiêu page
-							$query_pg = "SELECT COUNT(id) FROM nhanvien";
-							$results_pg = mysqli_query( $dbc, $query_pg );
-							list( $record ) = mysqli_fetch_array( $results_pg, MYSQLI_NUM );
-							
-							//Tìm số trang bằng cách chia số dữ liệu cho số limit   
-							if ( $record > $limit ) {
-								$per_page = ceil( $record / $limit );
-							} else {
-								$per_page = 1;
-							}
-						}
-						$query = "SELECT * FROM nhanvien ORDER BY REVERSE(SPLIT_STRING(REVERSE(TRIM(ho_ten)),' ', 1)) LIMIT {$start},{$limit}";
-						$results = mysqli_query( $dbc, $query );
-						foreach ( $results as $key => $item ) {
-							?>
-						<tbody>
-							<tr>
-								<td>
-									<?php echo ($key+$start + 1) ?>
-								</td>
-								<td>
-									<?php echo $item['ho_ten'] ?>
-								</td>
-								<td>
-									<?php
-									if ( $item[ 'gioi_tinh' ] == 1 ) {
-										echo 'Nam';
-									} else {
-										echo 'Nữ';
-									}
-									?>
-								</td>
-								<td>
-									<?php
-									$q = "SELECT ten_cong_viec FROM congviec WHERE congviec_id={$item['cong_viec_id']}";
-									$rs = mysqli_fetch_assoc( mysqli_query( $dbc, $q ) );
-									echo $rs[ 'ten_cong_viec' ];
-									?>
-									<td>
-										<?php
-										$query_id = "SELECT phong_ban_id, ten_phong_ban FROM phongban WHERE phong_ban_id={$item['phong_ban_id']}";
-										$result_id = mysqli_query( $dbc, $query_id );
-										if ( mysqli_num_rows( $result_id ) == 1 ) {
-											list( $id, $name ) = mysqli_fetch_array( $result_id, MYSQLI_NUM );
-											echo $name;
-										}
-										?>
-									</td>
-									<td>
-										<a href="admin-nhanvien-xem.php?id=<?php echo $item['id']; ?>"><i class="material-icons action-icon">edit</i></a>
-									</td>
-									<td>
-										<a href="javascript:changeStatusEmp(<?php echo $item['id']; ?>);" onclick="return confirm('Bạn có muốn <?php if($item['trangthai']) echo 'vô hiệu hoá'; else echo 'kích hoạt' ?> <?php echo '&quot;'.$item['ho_ten'].'&quot;'; ?>')" class="change-status-btn"><i class="material-icons action-icon"><?php if($item['trangthai']) echo 'check_box'; else echo 'check_box_outline_blank' ?></i></a>
-									</td>
-							</tr>
-						</tbody>
-						<?php } ?>
-					</table>
-					<script>
-						function changeStatusEmp( id ) {							
-							$.ajax( {
-								type: "GET",
-								url: "admin-nhanvien.php?s="+<?php echo $start?>+"&p="+<?php echo $per_page?>+"&changeStatusId=" + id,
-								success: function ( result ) {
-									$('.table-data').html($(result).find('.table-data').html());
-								}
-							} );
-						}
-						//						$('.change-status-btn').on('click',function(){
-						//							var content = $(this).find('i').text();
-						//							if(content == 'check_box')
-						//								$(this).find('i').text('check_box_outline_blank');
-						//							else
-						//								$(this).find('i').text('check_box');
-						//						});
-					</script>
-					<?php
-					echo "<nav aria-label='Page navigation example'>";
-					echo "<ul class='pagination justify-content-center'>";
-					if ( $per_page > 1 ) {
-						$current_page = ( $start / $limit ) + 1;
-						//Nếu không phải là trang đầu thì hiện thị trang trước
-						if ( $current_page != 1 ) {
-							echo "<li class='page-item' class='float-left'><a class='page-link' href='admin-nhanvien.php?s=" . ( $start - $limit ) . "&p={$per_page}'>Trở về</a></li>";
-						}
-						//hiện thị những phần còn lại của trang
-						for ( $i = 1; $i <= $per_page; $i++ ) {
-							if ( $i != $current_page ) {
-								echo "<li class='page-item'><a class='page-link' href='admin-nhanvien.php?s=" . ( $limit * ( $i - 1 ) ) . "&p={$per_page}'>{$i}</a></li>";
-							} else {
-								echo "<li class='page-item' class='active'><a class='page-link'>{$i}</a></li>";
-							}
-						}
-						//Nếu không phải trang cuối thì hiện thị nút next
-						if ( $current_page != $per_page ) {
-							echo "<li class='page-item' ><a class='page-link' href='admin-nhanvien.php?s=" . ( $start + $limit ) . "&p={$per_page}'>Tiếp</a></li>";
-						}
-					}
-					echo "</ul>";
-					echo "</nav>"
-					?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--  end copy cai nay -->
 				</div>
 				<!-- End danh sách loại tin -->
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var table;
+        $.ajax({
+            type: "GET",
+            url: 'admin-nhanvien-xuly.php?load_list_nhanvien=1',
+            success: function (result) {
+                var data = JSON.parse(result);
+                table = $('#tripRevenue').DataTable({
+                    language: {
+                        "lengthMenu": "Hiển thị _MENU_ nhân viên",
+                        "zeroRecords": "Không tìm thấy kết quả",
+                        "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                        "infoEmpty": "Không có dữ liệu",
+                        "infoFiltered": "(Được lọc từ _MAX_ nhân viên)",
+                        "search": "Tìm kiếm",
+                        "paginate": {
+                            "previous": "Trở về",
+                            "next": "Tiếp"
+                        }
+                    },
+                    data: data,
+                    columnDefs: [
+                        { targets: 1, className: 'dt-body-left' },
+                        { targets: 4, className: 'dt-body-left' },
+                        { targets: 5, className: 'dt-body-left' },
+                        { targets: 6, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
+                        { targets: 7, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
+                    ],
+                    columns: [
+                        { data: 'id' },
+                        { data: 'ho_ten' },
+                        { data: 'gioi_tinh' },
+                        { data: 'ten_cong_viec' },
+                        { data: 'ten_phong_ban' },
+                        { data: 'email' },
+                        { data: '' },
+                    ]
+                });
+
+                // table = $('#tripRevenue').dataTable();
+            }
+        });
+
+        function format ( d ) {
+            // `d` is the original data object for the row
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                '<tr>'+
+                '<td><img class="img-be" src="../images/hinhbe/'+ d.hinhbe +'"> </img>:</td>'+
+                '<td>'+d.name+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>Extension number:</td>'+
+                '<td>'+d.extn+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>Extra info:</td>'+
+                '<td>And any further details here (images etc)...</td>'+
+                '</tr>'+
+                '</table>';
+        }
+
+
+        $('#tripRevenue tbody').on('click', 'td.details-control', function () {
+            console.log(table)
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        } );
+
+        $('#tripRevenue tbody').on( 'click', 'a', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            if($(this).data('action') == 1) {
+                $.ajax( {
+                    type: "GET",
+                    url: "admin-nhanvien.php?changeStatusId=" + data.id,
+                    success: function ( result ) {
+                        $('.table-data').html($(result).find('.table-data').html());
+                    }
+                } );
+            }
+            else
+                window.location.href = "admin-nhanvien-xem.php?id=" + data.id;
+        } );
+    });
+</script>
+
+
 <!-- Footer-->
 <?php include "admin-footer.php";?>
 <!-- End footer

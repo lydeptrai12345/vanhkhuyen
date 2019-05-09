@@ -2,10 +2,10 @@
 <?php include "../../inc/myconnect.php";?>
 <?php include "../../inc/myfunction.php";?>
 <!-- End header-->
-
+<!--copy cai nay-->
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
-
+<!-- end copy cai nay-->
 <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">-->
 <!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
 
@@ -21,6 +21,7 @@ $data_be = mysqli_query( $dbc, $str );
 
 <script>
 	$( document ).ready( function () {
+
 		$( '#heading5 .panel-heading' ).attr( 'aria-expanded', 'true' );
 		$( '#collapse5' ).addClass( 'show' );
 		$( '#collapse5 .list-group a:nth-child(1)' ).addClass( 'cus-active' );
@@ -206,6 +207,7 @@ $data_be = mysqli_query( $dbc, $str );
 <!--						</form>-->
 <!--					</div>-->
 
+<!--                    copy cai nay -->
                     <div class="row" style="padding: 5px 20px;">
                         <div class="col-md-12">
                             <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
@@ -226,6 +228,7 @@ $data_be = mysqli_query( $dbc, $str );
                             </table>
                         </div>
                     </div>
+                    <!--  end copy cai nay -->
 				</div>
 			</div>
 		</div>
@@ -246,7 +249,7 @@ $data_be = mysqli_query( $dbc, $str );
                         "zeroRecords": "Không tìm thấy kết quả",
                         "info": "Hiển thị trang _PAGE_ của _PAGES_",
                         "infoEmpty": "Không có dữ liệu",
-                        "infoFiltered": "(filtered from _MAX_ total records)",
+                        "infoFiltered": "(Được lọc từ _MAX_ bé)",
                         "search": "Tìm kiếm",
                         "paginate": {
                             "previous": "Trở về",

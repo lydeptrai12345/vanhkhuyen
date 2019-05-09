@@ -178,7 +178,7 @@
 						<div class="row">
 							<div class="col">
 								<label>Số điện thoại <span class="dot-required">*</span></label>
-								<input class="form-control" name="txtSoDienThoai" placeholder="Vui lòng nhập số điện thoại" value="<?php if(isset($_POST['txtSoDienThoai'])) {echo $_POST['txtSoDienThoai'];} ?>">
+								<input class="form-control" maxlength="10" name="txtSoDienThoai" placeholder="Vui lòng nhập số điện thoại" value="<?php if(isset($_POST['txtSoDienThoai'])) {echo $_POST['txtSoDienThoai'];} ?>">
 								<?php 
                                 if(isset($errors) && in_array('txtSoDienThoai',$errors))
                                 {
