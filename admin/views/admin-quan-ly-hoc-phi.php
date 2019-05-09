@@ -12,6 +12,26 @@ $str = "SELECT be.id, be.hinhbe, be.ten, be.ngaysinh, be.gioitinh, lophoc_chitie
                                               INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id 
                                               ORDER BY id DESC ";
 $data_be = mysqli_query( $dbc, $str );
+
+// lấy danh sách niên khóa
+$results_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY nam_ket_thuc DESC");
+
+$nien_khoa = isset($_GET['loc_nien_khoa']) ? $_GET['loc_nien_khoa'] : 0;
+
+// tinhs nieen khoa hien tai month > 6 && month
+$year = date("Y");
+if(date("m") > 6)
+    $nien_khoa_hien_tai = $year . "-" . $year + 1;
+else
+    $nien_khoa_hien_tai = ($year - 1) . "-" . $year;
+
+if(!$nien_khoa) $nien_khoa = $nien_khoa_hien_tai;
+
+
+// lấy danh sách khối
+$results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
+
+
 ?>
 
 
@@ -25,7 +45,7 @@ $data_be = mysqli_query( $dbc, $str );
 </script>
 
 <style>
-    #tripRevenue {  }
+    .error-message { color: #ff392a; }
 
     #advanced-search {
         margin-top: 20px;
@@ -74,13 +94,49 @@ $data_be = mysqli_query( $dbc, $str );
                                     <form action="">
                                         <div class="modal-body">
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <label for="">Niên khóa</label>
+                                                <div class="form-group col-md-12">
+                                                    <label style="display:block">Niên khóa <span class="dot-required">*</span></label>
+                                                    <select name="nien_khoa" id="" class="form-control">
+                                                        <?php foreach ($results_nien_khoa as $item):?>
+                                                            <?php if($nien_khoa != 0) :?>
+                                                                <option <?php if($nien_khoa == $item['ten_nien_khoa']) echo "selected";?>
+                                                                        data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                                        data-id="<?php echo $item['id'];?>"
+                                                                        value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                                                </option>
+                                                            <?php else:?>
+                                                                <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
+                                                                        data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                                        data-id="<?php echo $item['id'];?>"
+                                                                        value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                                                </option>
+                                                            <?php endif;?>
 
+                                                        <?php endforeach;?>
+                                                    </select>
+                                                    <small style="display: none" class="error-message e-3"><i>Vui lòng chọn niên khóa</i></small>
+                                                </div>
+
+                                                <div class="form-group col-md-12">
+                                                    <label style="display:block">Khối <span class="dot-required">*</span></label>
+                                                    <select name="khoi" id="" class="form-control">
+                                                        <!--                                            <option value="0">Chọn loại lớp học</option>-->
+                                                        <?php foreach ($results_lop_hoc as $item):?>
+                                                            <option value="<?php echo $item['id']?>"><?php echo $item['ten_lop']?></option>
+                                                        <?php endforeach;?>
+                                                    </select>
+                                                    <small style="display: none" class="error-message e-2"><i>Vui lòng khối</i></small>
+                                                </div>
+
+                                                <div class="form-group col-md-12">
+                                                    <label for="">Học phí <span class="dot-required">*</span></label>
+                                                    <input name="hoc_phi" type="text" class="form-control formatCurrency text-right" value="0">
+                                                    <small style="display: none" class="error-message e-4"><i>Học phí phải lớn hơn 1000</i></small>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
+                                            <button id="btn-hoc-phi" type="button" class="btn btn-success">Lưu lại</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                         </div>
                                     </form>
@@ -119,10 +175,15 @@ $data_be = mysqli_query( $dbc, $str );
 
 <script>
     $(document).ready(function () {
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+
         var table;
         $.ajax({
             type: "GET",
-            url: 'admin-be-xuly.php?load_list_be=1&id_lop=',
+            url: 'admin-be-xuly.php?load_list_be=1',
             success: function (result) {
                 var data = JSON.parse(result);
                 table = $('#tripRevenue').DataTable({
@@ -131,7 +192,7 @@ $data_be = mysqli_query( $dbc, $str );
                         "zeroRecords": "Không tìm thấy kết quả",
                         "info": "Hiển thị trang _PAGE_ của _PAGES_",
                         "infoEmpty": "Không có dữ liệu",
-                        "infoFiltered": "(filtered from _MAX_ total records)",
+                        "infoFiltered": "(Được lọc từ _MAX_ bé)",
                         "search": "Tìm kiếm",
                         "paginate": {
                             "previous": "Trở về",
@@ -167,7 +228,6 @@ $data_be = mysqli_query( $dbc, $str );
         });
 
         function format ( d ) {
-
             var str = '<div class="row">\n' +
                 '    <div class="col-md-3">\n' +
                 '        <img class="img-be" src="../images/hinhbe/'+ d.hinhbe +'" alt="">\n' +
@@ -202,6 +262,56 @@ $data_be = mysqli_query( $dbc, $str );
             var data = table.row( $(this).parents('tr') ).data();
             console.log(data);
         } );
+
+        function validate_hoc_phi (nien_khoa, khoi, hoc_phi) {
+
+            var hoc_phi = parseFloat(replaceAll(hoc_phi));
+
+            if(!khoi) { $('.e-2').show(); return -1; }
+            else $('.e-2').hide();
+
+            if(!nien_khoa) { $('.e-3').show(); return -1; }
+            else $('.e-3').hide();
+
+            if(hoc_phi < 1000) { $('.e-4').show(); return -1; }
+            else $('.e-4').hide();
+
+            return 1;
+        }
+
+        //
+        $('#btn-hoc-phi').click(function () {
+            var nien_khoa = $('select[name="nien_khoa"]').children('option:selected').data('id');
+            var khoi = $('select[name="khoi"]').val();
+            var hoc_phi = $('input[name="hoc_phi"]').val();
+            if (validate_hoc_phi(nien_khoa, khoi, hoc_phi) == 1) {
+                $.ajax({
+                    type: "POST",
+                    url: 'admin-quan-ly-hoc-phi-xu-ly.php',
+                    data: { add: 1, nien_khoa: nien_khoa, khoi: khoi, hoc_phi: hoc_phi },
+                    success : function (result){
+                        console.log(result);
+                        if (result == "1") {
+                            alert("Thêm học phí thành công!");
+                            location.reload();
+                        }
+                        else if(result == "-2") alert("Thông tin chưa đúng!");
+                        else if(result == "-3") alert("Học phí đã tồn tại niên khóa và khối vừa chọn!");
+                        else alert("Lỗi không thêm được học phí!");
+                    }
+                });
+            }
+        });
+
+        function replaceAll (value) {
+            if(value == 0 || value == null || value == null) return 0;
+            var argWs = value.toString();
+            for (var intI=0; intI < argWs.length; intI++){
+                argWs = argWs.replace(",","");
+                argWs = argWs.replace(".","");
+            }
+            return argWs;
+        }
     });
 </script>
 
