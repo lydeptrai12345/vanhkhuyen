@@ -99,7 +99,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                         { targets: 4, className: 'dt-body-left' },
                         { targets: 5, className: 'dt-body-left' },
                         { targets: 6, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
-                        { targets: 7, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
+                        { targets: 7, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật nhân viên"><i class="material-icons action-icon">edit</i></a>' },
                     ],
                     columns: [
                         { data: 'id' },
@@ -108,7 +108,6 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                         { data: 'ten_cong_viec' },
                         { data: 'ten_phong_ban' },
                         { data: 'email' },
-                        { data: '' },
                         {
                             data:   "trangthai",
                             render: function ( data, type, row ) {
@@ -119,6 +118,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                             },
                             className: "dt-body-center"
                         },
+                        { data: '' },
                     ],
                     rowCallback: function ( row, data ) {
                         // Set the checked state of the checkbox in the table

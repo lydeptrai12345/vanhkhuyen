@@ -35,7 +35,7 @@ if (isset($_GET['load_list_nhanvien'])) {
             $result[] = array(
                 'id' => $row['id'],
                 'ho_ten' => $row['ho_ten'],
-                'gioi_tinh' => $row['gioi_tinh'] ? "Nam" : "Nữ",
+                'gioi_tinh' => ($row['gioi_tinh'] == 1) ? "Nam" : "Nữ",
                 'dien_thoai' => $row['dien_thoai'],
                 'email' => $row['email'],
                 'ngay_sinh' => date_format(date_create($row['ngay_sinh']), 'd/m/Y'),
