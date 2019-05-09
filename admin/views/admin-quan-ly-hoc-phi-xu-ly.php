@@ -36,3 +36,28 @@ if(isset($_GET['load_list_be'])) {
     }
     echo json_encode($result);
 }
+
+
+// Them moi hoc phi
+if(isset($_POST['add'])) {
+    $nien_khoa = isset($_POST['nien_khoa']) ? (int)$_POST['nien_khoa'] : 0;
+    $khoi = isset($_POST['khoi']) ? (int)$_POST['khoi'] : 0;
+    $hoc_phi = isset($_POST['hoc_phi']) ? (float)str_replace(".","", $_POST['hoc_phi']) : 0;
+
+    if($nien_khoa > 0 && $khoi > 0 && $hoc_phi > 1000){
+        // kiểm tra niên khóa và khối có học phí hay chưa
+        $query_check = mysqli_query($dbc,"SELECT * FROM hoc_phi WHERE nien_khoa_id = {$nien_khoa} AND lop_hoc_id = {$khoi}");
+        if(count(mysqli_fetch_all($query_check)) > 0) echo -3;
+        else {
+            $str = "INSERT INTO hoc_phi (nien_khoa_id, lop_hoc_id, so_tien, ngay_tao) VALUES ({$nien_khoa}, {$khoi}, {$hoc_phi}, NOW())";
+            $query = mysqli_query($dbc, $str);
+            if(mysqli_affected_rows($dbc) == 1) {
+                echo 1;
+            }
+            else{
+                echo -1;
+            }
+        }
+    }
+    else echo -2;
+}

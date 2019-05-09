@@ -210,7 +210,7 @@
                                                 <option value="<?php echo $item['id']?>"><?php echo $item['ten_lop']?></option>
                                             <?php endforeach;?>
                                         </select>
-                                        <small style="display: none" class="error-message e-2"><i>Vui lòng loại lớp học</i></small>
+                                        <small style="display: none" class="error-message e-2"><i>Vui lòng chọn khối</i></small>
                                     </div>
                                     <div class="form-group">
                                         <label style="display:block">Niên khóa <span class="dot-required">*</span></label>

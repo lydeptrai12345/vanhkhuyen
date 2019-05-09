@@ -285,22 +285,6 @@ $data_be = mysqli_query( $dbc, $str );
         });
 
         function format ( d ) {
-            // `d` is the original data object for the row
-            // return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-            //     '<tr>'+
-            //     '<td><img class="img-be" src="../images/hinhbe/'+ d.hinhbe +'"> </img>:</td>'+
-            //     '<td>'+d.name+'</td>'+
-            //     '</tr>'+
-            //     '<tr>'+
-            //     '<td>Extension number:</td>'+
-            //     '<td>'+d.extn+'</td>'+
-            //     '</tr>'+
-            //     '<tr>'+
-            //     '<td>Extra info:</td>'+
-            //     '<td>And any further details here (images etc)...</td>'+
-            //     '</tr>'+
-            //     '</table>';
-
             var str = '<div class="row">\n' +
                 '    <div class="col-md-3">\n' +
                 '        <img class="img-be" src="../images/hinhbe/'+ d.hinhbe +'" alt="">\n' +
