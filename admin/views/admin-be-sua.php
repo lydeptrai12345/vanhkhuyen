@@ -168,7 +168,7 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
                             }
                             if (isset($_GET['id'])) $id_be = (int)$_GET['id'];
                             $query_tt .= " WHERE id={$id_be}";
-                            echo $query_tt;
+
                             $results_tt = mysqli_query( $dbc, $query_tt );
                             if ( mysqli_affected_rows( $dbc ) >= 0 ) {
                                 // xóa thông tin lớp của bé để cập nhật lại thông tin lớp mới
