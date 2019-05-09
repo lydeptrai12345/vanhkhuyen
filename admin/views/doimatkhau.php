@@ -20,7 +20,7 @@
 		<div class="col">
 			<div class="card card-small mb-4">
 				<?php
-                if($_SERVER['REQUEST_METHOD']=='POST') 
+                if($_SERVER['REQUEST_METHOD']=='POST')
                 {
                     $errors=array();
                     if(empty($_POST['txtDMatkhau']))
@@ -35,15 +35,16 @@
                     {
                         $errors[]='txtDMatkhauXN';
                     }
+
                     if(empty($errors))
                     {
                         $query="UPDATE nguoidung
                                 SET mat_khau='{$dmatkhau}'
                                 WHERE id = {$_SESSION['uid']} 
                         ";
-                        $results=mysqli_query($dbc,$query);
-                        //Kiểm tra sửa thành công hay không    
-                        if(mysqli_affected_rows($dbc)==1)
+                        $results = $query;
+                        // thực hiện câu truy vấnKiểm tra sửa thành công hay không
+                        if(mysqli_query($dbc, $query)==1)
                         {
                         ?>
                         	<script>
@@ -56,7 +57,7 @@
                         {
                             echo "<script>";
                         	echo 'alert("Đổi mật khẩu không thành công")';
-                        	echo "</script>";   
+                        	echo "</script>";
                         }
                     }
                 }
