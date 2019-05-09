@@ -267,10 +267,6 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 
             var hoc_phi = parseFloat(replaceAll(hoc_phi));
 
-            // type = $('#flag_insert_update').val();
-            // if(type == 1) arr_nhan_vien = $('.select-nhannien-add').val();
-            // else arr_nhan_vien = $('.select-nhannien-edit').val();
-
             if(!khoi) { $('.e-2').show(); return -1; }
             else $('.e-2').hide();
 
