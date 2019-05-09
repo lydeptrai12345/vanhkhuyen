@@ -44,6 +44,11 @@ $data_be = mysqli_query( $dbc, $str );
     tr.shown td.details-control {
         background: url('../images/details_close.png') no-repeat center center;
     }
+
+    .img-be {
+        height: 100px;
+        width: 50%;tinhtrangsuckhoe
+    }
 </style>
 
 <div class="main-content-container container-fluid px-4" style="margin-top:10px">
@@ -280,7 +285,7 @@ $data_be = mysqli_query( $dbc, $str );
             // `d` is the original data object for the row
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
                 '<tr>'+
-                '<td>Full name:</td>'+
+                '<td><img class="img-be" src="../images/hinhbe/'+ d.hinhbe +'"> </img>:</td>'+
                 '<td>'+d.name+'</td>'+
                 '</tr>'+
                 '<tr>'+

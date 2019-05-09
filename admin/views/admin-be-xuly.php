@@ -38,11 +38,18 @@ if(isset($_GET['load_list_be'])) {
                 'ngaysinh' => date_format(date_create($row['ngaysinh']),'d/m/Y'),
                 'gioitinh' => $row['gioitinh'] ? "Nam" : "Nữ",
                 'cannang'  => $row['cannang'],
+                'tencha'  => $row['tencha'],
                 'sdtcha'   => $row['sdtcha'],
+                'tenme'   => $row['tenme'],
                 'sdtme'    => $row['sdtme'],
                 'diachi'   => $row['diachi'],
                 'chieucao' => $row['chieucao'],
                 'mo_ta'    => $row['mo_ta'],
+                'tinhtrangsuckhoe'    => $row['tinhtrangsuckhoe'],
+                'benhbamsinh'    => $row['benhbamsinh'],
+                'hinhbe'    => $row['hinhbe'],
+                'matracuu'    => $row['matracuu'],
+                'trangthai'    => $row['trangthai'],
             );
         }
     }
