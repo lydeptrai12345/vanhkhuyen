@@ -236,6 +236,18 @@ $data_be = mysqli_query( $dbc, $str );
             success: function (result) {
                 var data = JSON.parse(result);
                 table = $('#tripRevenue').DataTable({
+                    language: {
+                        "lengthMenu": "Hiển thị _MENU_ bé",
+                        "zeroRecords": "Không tìm thấy kết quả",
+                        "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                        "infoEmpty": "Không có dữ liệu",
+                        "infoFiltered": "(filtered from _MAX_ total records)",
+                        "search": "Tìm kiếm",
+                        "paginate": {
+                            "previous": "Trở về",
+                            "next": "Tiếp"
+                        }
+                    },
                     data: data,
                     columnDefs: [
                         { targets: 1, className: 'dt-body-left' },
@@ -300,9 +312,9 @@ $data_be = mysqli_query( $dbc, $str );
             }
         } );
 
-        $('#tripRevenue tbody').on( 'click', 'button', function () {
+        $('#tripRevenue tbody').on( 'click', 'a', function () {
             var data = table.row( $(this).parents('tr') ).data();
-            alert( data[0] +"'s salary is: "+ data[ 5 ] );
+            console.log(data);
         } );
     });
 </script>
