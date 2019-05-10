@@ -36,6 +36,14 @@
 						} else {
 							$name = $_POST[ 'txtTenNhanVien' ];
 						}
+                        if(empty($_POST['txtEmail']))
+                        {
+                            $errors[] = 'txtEmail';
+                        }
+                        else
+                        {
+                            $email = $_POST['txtEmail'];
+                        }
 						if ( empty( $_POST[ 'bangcap' ] ) ) {
 							$errors[] = 'bangcap';
 						} else {
@@ -121,9 +129,15 @@
                             ?>
 						</div>
 						<div class="form-group">
-							<label>Email</label>
+							<label>Email<span class="dot-required">*</span></label>
 							<input type="email" class="form-control" name="txtEmail" placeholder="Vui lòng nhập Email" value="<?php if(isset($_POST['txtEmail'])) {echo $_POST['txtEmail'];} ?>">
-						</div>
+                            <?php
+                            if(isset($errors) && in_array('txtEmail',$errors))
+                            {
+                                echo "<p class='text-danger'>Bạn chưa nhập email</p>";
+                            }
+                            ?>
+                        </div>
 						<div class="form-group">
 							<label>Địa chỉ</label>
 							<input class="form-control" name="txtDiaChi" placeholder="Vui lòng nhập địa chỉ" value="<?php if(isset($_POST['txtDiaChi'])) {echo $_POST['txtDiaChi'];} ?>">

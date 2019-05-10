@@ -91,6 +91,14 @@
 						} else {
 							$name = $_POST[ 'txtTenNhanVien' ];
 						}
+                        if(empty($_POST['txtEmail']))
+                        {
+                            $errors[] = 'txtEmail';
+                        }
+                        else
+                        {
+                            $email = $_POST['txtEmail'];
+                        }
 						if ( empty( $_POST[ 'bangcap' ] ) ) {
 							$errors[] = 'bangcap';
 							$bangcap = '';
@@ -134,7 +142,6 @@
 						}
 						$mucluong = str_replace('.', '', $_POST[ 'txtMucLuong' ]);
 						$heso = $_POST[ 'txtHeSo' ];
-						$email = $_POST[ 'txtEmail' ];
 						$diachi = $_POST[ 'txtDiaChi' ];
 						$gioitinh = $_POST[ 'slGioiTinh' ];
 						$ngayvaolam = $_POST[ 'txtNgayVaoLam' ];
@@ -188,7 +195,7 @@
                             ?>
 						</div>
 						<div class="form-group">
-							<label>Email</label>
+							<label>Email<span class="dot-required">*</span></label>
 							<input type="email" class="form-control" name="txtEmail" placeholder="Vui lòng nhập Email" value="<?php if(isset($email)) {echo $email;} ?>">
 						</div>
 						<div class="form-group">

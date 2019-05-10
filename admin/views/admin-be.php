@@ -16,9 +16,6 @@
                                               GROUP BY be.id ORDER BY id DESC ";
 $data_be = mysqli_query( $dbc, $str );
 ?>
-
-
-
 <script>
 	$( document ).ready( function () {
 
@@ -34,7 +31,6 @@ $data_be = mysqli_query( $dbc, $str );
     #advanced-search {
         margin-top: 20px;
     }
-
     label {
         font-weight: normal;
     }
@@ -70,7 +66,9 @@ $data_be = mysqli_query( $dbc, $str );
 						border-collapse: unset;
 						overflow: hidden;
 					}
-					
+					.chitietbe{
+                        margin-bottom: 4px !important;
+                    }
 					.salary-table td.textStr {
 						text-align: left;
 					}
@@ -197,15 +195,6 @@ $data_be = mysqli_query( $dbc, $str );
 					}
 				</style>
 				<div class="card-body p-0 text-center" style="margin: 30px 0">
-<!--					<div class="search-container">-->
-<!--						<form action="" method="get">-->
-<!--							<div class="input-search">-->
-<!--								<span class="glyphicon glyphicon-search" style="font-size: 16px;"></span>-->
-<!--								<input name="searchKey" class="teeetet" type="text" placeholder="Nhập tên bé" --><?php //if(isset($_GET['searchKey'])) echo 'value="'.$_GET['searchKey'].'"'?><!--/>-->
-<!--							</div>-->
-<!--							<button name="btnSeach" class="btn-custom2" type="submit">Tìm kiếm</button>-->
-<!--						</form>-->
-<!--					</div>-->
 
 <!--                    copy cai nay -->
                     <div class="row" style="padding: 5px 20px;">
@@ -286,14 +275,16 @@ $data_be = mysqli_query( $dbc, $str );
 
         function format ( d ) {
             var str = '<div class="row">\n' +
-                '    <div class="col-md-3">\n' +
-                '        <img class="img-be" src="../images/hinhbe/'+ d.hinhbe +'" alt="">\n' +
-                '    </div>\n' +
-                '    <div class="col-md-9">\n' +
-                '        <h6>asdsaddsd</h6>\n' +
-                '        <p>dasdsadsadsad adasdasdasd asdsa dsa das dsa</p>\n' +
-                '    </div>\n' +
-                '</div>';
+                '                    <div class="col-md-3">\n' +
+                '                        <img class="img-be" src="../images/hinhbe/'+ d.hinhbe +'" alt="">\n' +
+                '                    </div>\n' +
+                '                    <div class="col-md-9">\n' +
+                '                        <p class="text-left chitietbe">Cân nặng: '+ d.cannang +'kg - Chiều cao: '+ d.chieucao +'cm</p>\n' +
+                '                        <p class="text-left chitietbe">Tình trạng sức khỏe: '+ d.tinhtrangsuckhoe +' - Bệnh bẩm sinh: '+ d.benhbamsinh +' </p>\n' +
+                '                        <p class="text-left chitietbe">Tên cha: '+ d.tencha +' - SĐT cha: '+ d.sdtcha +'</p>\n' +
+                '                        <p class="text-left chitietbe">Tên mẹ: '+ d.tenme +' - SĐT mẹ: '+ d.sdtme +'</p>\n' +
+                '                    </div>\n' +
+                '                </div>'
             return str;
         }
 

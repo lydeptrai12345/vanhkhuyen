@@ -10,6 +10,12 @@
 					$('#collapse1 .list-group a:nth-child(3)').addClass('cus-active');
 		});
 	</script>
+<style>
+    .img-tintuc {
+        height: 70px ;
+        width: 70px;
+    }
+</style>
 
 <!-- Page content-->
 <div class="main-content-container container-fluid px-4">
@@ -87,9 +93,9 @@
                     data: data,
                     columnDefs: [
                         { targets: 0, data: null },
-                        { targets: 2, className: 'dt-body-center' },
-                        { targets: 3, className: 'dt-body-center' },
-                        { targets: 4, className: 'dt-body-center' },
+                        { targets: 2, className: 'dt-body-left' },
+                        { targets: 3, className: 'dt-body-left' },
+                        { targets: 4, className: 'dt-body-left' },
                         {
                             targets: 5,
                             data: null,
@@ -99,12 +105,26 @@
                     ],
                     columns: [
                         { width: "30px" },
-                        { data: 'hinh' },
+                        {
+                            data:   "hinh",
+                            width: "80px",
+                            render: function ( data, type, row ) {
+                                if ( type === 'display' ) {
+                                    return '<img class="img-tintuc" />';
+                                }
+                                return data;
+                            },
+                            className: "dt-body-center"
+                        },
                         { data: 'tieude', },
-                        { data: 'loai_tin_id', },
-                        { data: 'nguoi_dang', },
+                        { data: 'ten', },
+                        { data: 'ten_nguoi_dung',},
                         { width: "60px" }
-                    ]
+                    ],
+                    rowCallback: function ( row, data ) {
+                        // Set the checked state of the checkbox in the table
+                        $('img.img-tintuc', row).prop( 'src', '../images/tintuc/' + data.hinh );
+                    }
                 });
 
                 // PHẦN THỨ TỰ TABLE

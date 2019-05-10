@@ -6,7 +6,9 @@ include "../../inc/myfunction.php";
 
 
 if (isset($_GET['load_list_tintuc'])) {
-    $str = "SELECT * FROM tintuc";
+    $str = "SELECT tintuc.id, tintuc.tieude,tintuc.tomtat,tintuc.noidung,tintuc.hinh, loaitin.ten, nguoidung.ten_nguoi_dung  FROM `tintuc` 
+            INNER JOIN loaitin ON tintuc.loai_tin_id=loaitin.id 
+            INNER JOIN nguoidung ON tintuc.nguoi_dang=nguoidung.id";
     $query = mysqli_query($dbc, $str);
     $result = array();
 
@@ -19,8 +21,8 @@ if (isset($_GET['load_list_tintuc'])) {
                 'tomtat' => $row['tomtat'],
                 'noidung' => $row['noidung'],
                 'hinh' => $row['hinh'],
-                'loai_tin_id' => $row['loai_tin_id'],
-                'nguoi_dang' => $row['nguoi_dang'],
+                'ten' => $row['ten'],
+                'ten_nguoi_dung' => $row['ten_nguoi_dung'],
             );
         }
     }

@@ -84,7 +84,7 @@ else {
                                 if(!in_array('hinhBe',$errors))
                                     $mesErrorHinhBe = "Kich thước phải nhỏ hơn 1MB";
                             } else {
-                                $temp_file = "../images/temp-image/".$_FILES[ 'hinhBe' ]['name'];
+                                $temp_file = "../images/hinhbe/".$_FILES[ 'hinhBe' ]['name'];
                                 copy($_FILES[ 'hinhBe' ]['tmp_name'],$temp_file);
                             }
                         }
@@ -362,13 +362,7 @@ else {
                             <div class="col">
                                 <div class="form-group">
                                     <label>Tên mẹ</label>
-                                    <input class="form-control" name="txtTenMe" maxlength="10" placeholder="Vui lòng nhập tên mẹ" value="<?php if(isset($detail_be->tenme)) {echo $detail_be->tenme;} ?>">
-                                    <?php
-                                    if(isset($errors) && in_array('txtTenMe',$errors))
-                                    {
-                                        echo "<p class='text-danger'>Bạn chưa nhập tên mẹ</p>";
-                                    }
-                                    ?>
+                                    <input class="form-control" name="txtTenMe" maxlength="255" placeholder="Vui lòng nhập tên mẹ" value="<?php if(isset($detail_be->tenme)) {echo $detail_be->tenme;} ?>">
                                 </div>
                                 <div class="form-group" style="margin-bottom: 7px;">
                                     <label>Số điện thoại mẹ</label>
