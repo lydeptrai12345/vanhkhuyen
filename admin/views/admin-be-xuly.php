@@ -38,7 +38,7 @@ if(isset($_GET['load_list_be'])) {
                 'be_id'    => $row['be_id'],
                 'ten'      => $row['ten'],
                 'ngaysinh' => date_format(date_create($row['ngaysinh']),'d/m/Y'),
-                'gioitinh' => $row['gioitinh'] ? "Nam" : "Nữ",
+                'gioitinh' => ($row['gioitinh'] == 1) ? "Nam" : "Nữ",
                 'cannang'  => $row['cannang'],
                 'tencha'  => $row['tencha'],
                 'sdtcha'   => $row['sdtcha'],

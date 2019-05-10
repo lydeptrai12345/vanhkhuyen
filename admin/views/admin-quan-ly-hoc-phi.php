@@ -157,11 +157,13 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                                     <?php foreach ($results_nien_khoa as $item):?>
                                         <?php if($nien_khoa != 0) :?>
                                             <option <?php if($nien_khoa == $item['ten_nien_khoa']) echo "selected";?>
+                                                    data-id="<?php echo $item['id'];?>"
                                                     data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
                                                     value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
                                             </option>
                                         <?php else:?>
                                             <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
+                                                    data-id="<?php echo $item['id'];?>"
                                                     data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
                                                     value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
                                             </option>
@@ -173,20 +175,10 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
                             <div class="form-group col-md-3">
                                 <label class="text-left">Lớp</label>
-                                <select name="loc_nien_khoa" id="" class="form-control">
-                                    <?php foreach ($results_nien_khoa as $item):?>
-                                        <?php if($nien_khoa != 0) :?>
-                                            <option <?php if($nien_khoa == $item['ten_nien_khoa']) echo "selected";?>
-                                                    data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
-                                                    value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
-                                            </option>
-                                        <?php else:?>
-                                            <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
-                                                    data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
-                                                    value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
-                                            </option>
-                                        <?php endif;?>
-
+                                <select name="loc_lop_hoc" id="" class="form-control" disabled>
+                                    <option value="0">Chọn lớp học</option>
+                                    <?php foreach ($data_lop_hoc as $item):?>
+                                        <option data-khoi="<?php echo $item['khoi_id']?>" value="<?php echo $item['id']?>"><?php echo $item['mo_ta']?></option>
                                     <?php endforeach;?>
                                 </select>
                             </div>
@@ -213,6 +205,24 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                                     <th>Học phí</th>
                                     <th>Ngày tạo</th>
                                     <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-md-12">
+                            <table id="table-hoc-phi" class="table display w-100 hover cell-border compact stripe">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã số</th>
+                                    <th>Họ và tên</th>
+                                    <th>Lớp</th>
+                                    <th>Niên khóa</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -391,19 +401,74 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         data.forEach(function (item) {
                             str += '<option data-khoi="'+ item.khoi_id +'" value="'+ item.id +'">'+ item.mo_ta +'</option>'
                         });
-                        $('select[name="lop_hoc"]').html(str);
+                        $('select[name="loc_lop_hoc"]').html(str);
                     }
                     else{
-                        $('select[name="lop_hoc"]').html('<option data-khoi="0" value="0">Chưa có lớp</option>');
-                        $('button[name="btn-submit-be"]').attr('disabled', 'disabled');
+                        $('select[name="loc_lop_hoc"]').html('<option data-khoi="0" value="0">Chưa có lớp</option>');
                     }
 
                 }
             });
-            $('select[name="lop_hoc"]').removeAttr('disabled');
-            setTimeout(function () {
-                $('select[name="lop_hoc"]').change();
-            },500);
+            $('select[name="loc_lop_hoc"]').removeAttr('disabled');
+        }
+
+
+
+        var table_hp;
+        if($('select[name="loc_lop_hoc"]').val() > 0){
+            $.ajax({
+                type: "GET",
+                url: 'admin-quan-ly-hoc-phi-xu-ly.php?danh_sach_hoc_phi=1',
+                success: function (result) {
+                    var data = JSON.parse(result);
+                    console.log(data);
+                    // table_hp = $('#tripRevenue').DataTable({
+                    //     language: {
+                    //         "lengthMenu": "Hiển thị _MENU_ bé",
+                    //         "zeroRecords": "Không tìm thấy kết quả",
+                    //         "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                    //         "infoEmpty": "Không có dữ liệu",
+                    //         "infoFiltered": "(Được lọc từ _MAX_ bé)",
+                    //         "search": "Tìm kiếm",
+                    //         "paginate": {
+                    //             "previous": "Trở về",
+                    //             "next": "Tiếp"
+                    //         }
+                    //     },
+                    //     data: data,
+                    //     columnDefs: [
+                    //         { targets: 0, data: null },
+                    //         { targets: 1, className: 'dt-body-center' },
+                    //         { targets: 2, className: 'dt-body-left' },
+                    //         { targets: 4, className: 'dt-body-right' },
+                    //         { targets: 6, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
+                    //     ],
+                    //     columns: [
+                    //         {
+                    //             className:      'details-control',
+                    //             orderable:      false,
+                    //             data:           null,
+                    //             defaultContent: '',
+                    //             width: "30px"
+                    //         },
+                    //         { data: null, width: '30px' },
+                    //         { data: 'ten_lop' },
+                    //         { data: 'ten_nien_khoa', width: '130px' },
+                    //         { data: 'so_tien' },
+                    //         { data: 'ngay_tao' },
+                    //         { width: '50px' },
+                    //     ],
+                    //     order: [[ 1, 'asc' ]],
+                    // });
+                    //
+                    // // PHẦN THỨ TỰ TABLE
+                    // table.on( 'order.dt search.dt', function () {
+                    //     table.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                    //         cell.innerHTML = i+1;
+                    //     } );
+                    // } ).draw();
+                }
+            });
         }
     });
 </script>
