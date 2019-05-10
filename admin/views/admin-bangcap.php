@@ -44,6 +44,7 @@
                     {
                         $name = $_POST['txtTenbangcap'];
                     }
+
                     if(!is_numeric($_POST['txtHeSo']))
                     {
                         $errors[] = 'txtHeSo';
@@ -136,7 +137,6 @@
                                     <th>Tên bằng cấp</th>
                                     <th>Hệ số</th>
                                     <th></th>
-                                    <th></th>
                                 </tr>
                                 </thead>
                             </table>
@@ -176,19 +176,44 @@
                         },
                         data: data,
                         columnDefs: [
+                            { targets: 0, data: null },
                             { targets: 1, className: 'dt-body-left' },
-                            { targets: 3, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật bằng cấp"><i class="material-icons action-icon">edit</i></a>' },
-                            { targets: 4, data: null, defaultContent: '<a style="cursor: pointer" title="Xóa phòng ban"><i class="material-icons action-icon">delete_outline</i></a>' },
+                            { targets: 2, className: 'dt-body-right' },
+                            {
+                                targets: 3,
+                                data: null,
+                                defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật bằng cấp"><i class="material-icons action-icon">edit</i></a> ' +
+                                    '<a data-action="2" style="cursor: pointer" title="Xóa bằng cấp"><i class="material-icons action-icon">delete_outline</i></a>'
+                            }
                         ],
                         columns: [
-                            { data: 'bang_cap_id' },
+                            { width: "30px" },
                             { data: 'ten_bang_cap' },
-                            { data: 'heso' },
-                            { "width": "50px" },
+                            { data: 'heso', width: "100px" },
+                            { width: "60px" }
                         ]
                     });
 
-                    // table = $('#tripRevenue').dataTable();
+                    // PHẦN THỨ TỰ TABLE
+                    table.on( 'order.dt search.dt', function () {
+                        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                            cell.innerHTML = i+1;
+                        } );
+                    } ).draw();
+
+
+                    table.on( 'click', 'a', function () {
+                        var data = table.row( $(this).parents('tr') ).data();
+                        console.log(data);
+                        if($(this).data('action') == 1) {
+                            window.location.href = "admin-bangcap-sua.php?id=" + data.bang_cap_id;
+                        }
+                        else{
+                            if(confirm("Bạn có chắc chắn muốn xóa bằng cấp vừa chọn")) {
+                                window.location.href = "admin-bangcap-xoa.php?id=" + data.bang_cap_id;
+                            }
+                        }
+                    });
                 }
             });
 
@@ -210,25 +235,6 @@
                     row.child( format(row.data()) ).show();
                     tr.addClass('shown');
                 }
-            } );
-            $('#tripRevenue tbody').on( 'click', 'a', function () {
-                var data = table.row( $(this).parents('tr') ).data();
-                if($(this).data('action') == 1) {
-                    $.ajax( {
-                        type: "GET",
-                        url: "admin-bangcap-sua.php?changeStatusId=" + data.id,
-                        success: function ( result ) {
-                            $('.table-data').html($(result).find('.table-data').html());
-                        }
-                    } );
-                }
-                else
-                    window.location.href = "admin-bangcap-sua.php?id=" + data.id;
-            } );
-
-            $('#tripRevenue tbody').on( 'click', 'a', function () {
-                var data = table.row( $(this).parents('tr') ).data();
-                console.log(data);
             } );
         });
     </script>

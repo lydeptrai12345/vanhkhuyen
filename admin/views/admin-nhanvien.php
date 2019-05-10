@@ -11,6 +11,12 @@
 		$( '#collapse6 .list-group a:nth-child(1)' ).addClass( 'cus-active' );
 	} );
 </script>
+
+<style>
+    table tbody td a.btn-edit:hover { color: #106dff; }
+</style>
+
+
 <?php 
 //Kiểm tra ID có phải là kiểu số không, filter_var kiem tra có thuộc tính trim sẽ loại bỏ khoảng trắng
 if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_VALIDATE_INT,array('min_range'=>1)))
@@ -48,7 +54,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                             <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
                                 <thead>
                                 <tr>
-                                    <th>STT</th>
+                                    <th></th>
                                     <th>Họ và tên</th>
                                     <th>Giới tính</th>
                                     <th>Chức vụ</th>
@@ -95,21 +101,24 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                     },
                     data: data,
                     columnDefs: [
+                        { targets: 0, searchable: false, "orderable": false, data: null },
                         { targets: 1, className: 'dt-body-left' },
+                        { targets: 3, className: 'dt-body-left' },
                         { targets: 4, className: 'dt-body-left' },
                         { targets: 5, className: 'dt-body-left' },
-                        { targets: 7, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật nhân viên"><i class="material-icons action-icon">edit</i></a>' },
+                        { targets: 7, data: null, defaultContent: '<a class="btn-edit" style="cursor: pointer" title="Cập nhật nhân viên"><i class="material-icons action-icon">edit</i></a>' },
 
                     ],
                     columns: [
-                        { data: 'id' },
+                        { width: "30px" },
                         { data: 'ho_ten' },
                         { data: 'gioi_tinh' },
-                        { data: 'ten_cong_viec' },
+                        { data: 'ten_cong_viec', width: "100px" },
                         { data: 'ten_phong_ban' },
-                        { data: 'email' },
+                        { data: 'email', width: "130px" },
                         {
                             data:   "trangthai",
+                            width: "80px",
                             render: function ( data, type, row ) {
                                 if ( type === 'display' ) {
                                     return '<input type="checkbox" class="editor-active">';
@@ -120,13 +129,19 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                         },
                         { data: '' },
                     ],
+                    order: [[ 1, 'asc' ]],
                     rowCallback: function ( row, data ) {
                         // Set the checked state of the checkbox in the table
                         $('input.editor-active', row).prop( 'checked', data.trangthai == 1 );
                     }
                 });
 
-                // table = $('#tripRevenue').dataTable();
+                // PHẦN THỨ TỰ TABLE
+                table.on( 'order.dt search.dt', function () {
+                    table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                        cell.innerHTML = i+1;
+                    } );
+                } ).draw();
             }
         });
 

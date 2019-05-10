@@ -33,6 +33,10 @@ if(!isset($_SESSION['uid']))
 </head>
 <body class="h-100">
 
+<style>
+    table tbody td a.btn-edit:hover { color: #106dff; }
+</style>
+
 <div class="container-fluid">
     <div class="row">
 

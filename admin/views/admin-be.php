@@ -316,17 +316,18 @@ $data_be = mysqli_query( $dbc, $str );
         } );
         $('#tripRevenue tbody').on( 'click', 'a', function () {
             var data = table.row( $(this).parents('tr') ).data();
+            console.log(data);
             if($(this).data('action') == 1) {
                 $.ajax( {
                     type: "GET",
-                    url: "admin-be.php?changeStatusId=" + data.id,
+                    url: "admin-be.php?changeStatusId=" + data.be_id,
                     success: function ( result ) {
                         $('.table-data').html($(result).find('.table-data').html());
                     }
                 } );
             }
             else
-                window.location.href = "admin-be-sua.php?id=" + data.id;
+                window.location.href = "admin-be-sua.php?id=" + data.be_id;
         } );
 
         $('#tripRevenue tbody').on( 'click', 'a', function () {
