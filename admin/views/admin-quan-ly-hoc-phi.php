@@ -415,61 +415,52 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
 
         var table_hp;
-        if($('select[name="loc_lop_hoc"]').val() > 0){
-            $.ajax({
-                type: "GET",
-                url: 'admin-quan-ly-hoc-phi-xu-ly.php?danh_sach_hoc_phi=1',
-                success: function (result) {
-                    var data = JSON.parse(result);
-                    console.log(data);
-                    // table_hp = $('#tripRevenue').DataTable({
-                    //     language: {
-                    //         "lengthMenu": "Hiển thị _MENU_ bé",
-                    //         "zeroRecords": "Không tìm thấy kết quả",
-                    //         "info": "Hiển thị trang _PAGE_ của _PAGES_",
-                    //         "infoEmpty": "Không có dữ liệu",
-                    //         "infoFiltered": "(Được lọc từ _MAX_ bé)",
-                    //         "search": "Tìm kiếm",
-                    //         "paginate": {
-                    //             "previous": "Trở về",
-                    //             "next": "Tiếp"
-                    //         }
-                    //     },
-                    //     data: data,
-                    //     columnDefs: [
-                    //         { targets: 0, data: null },
-                    //         { targets: 1, className: 'dt-body-center' },
-                    //         { targets: 2, className: 'dt-body-left' },
-                    //         { targets: 4, className: 'dt-body-right' },
-                    //         { targets: 6, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
-                    //     ],
-                    //     columns: [
-                    //         {
-                    //             className:      'details-control',
-                    //             orderable:      false,
-                    //             data:           null,
-                    //             defaultContent: '',
-                    //             width: "30px"
-                    //         },
-                    //         { data: null, width: '30px' },
-                    //         { data: 'ten_lop' },
-                    //         { data: 'ten_nien_khoa', width: '130px' },
-                    //         { data: 'so_tien' },
-                    //         { data: 'ngay_tao' },
-                    //         { width: '50px' },
-                    //     ],
-                    //     order: [[ 1, 'asc' ]],
-                    // });
-                    //
-                    // // PHẦN THỨ TỰ TABLE
-                    // table.on( 'order.dt search.dt', function () {
-                    //     table.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                    //         cell.innerHTML = i+1;
-                    //     } );
-                    // } ).draw();
-                }
-            });
-        }
+        $.ajax({
+            type: "GET",
+            url: 'admin-quan-ly-hoc-phi-xu-ly.php?danh_sach_hoc_phi=1&loc_nien_khoa=' + $('select[name="loc_nien_khoa"]').find('option:selected').data('id'),
+            success: function (result) {
+                var data = JSON.parse(result);
+                console.log(data);
+                table_hp = $('#table-hoc-phi').DataTable({
+                    language: {
+                        "lengthMenu": "Hiển thị _MENU_ bé",
+                        "zeroRecords": "Không tìm thấy kết quả",
+                        "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                        "infoEmpty": "Không có dữ liệu",
+                        "infoFiltered": "(Được lọc từ _MAX_ bé)",
+                        "search": "Tìm kiếm",
+                        "paginate": {
+                            "previous": "Trở về",
+                            "next": "Tiếp"
+                        }
+                    },
+                    data: data,
+                    columnDefs: [
+                        { targets: 0, data: null },
+                        { targets: 1, className: 'dt-body-center' },
+                        { targets: 2, className: 'dt-body-left' },
+                        { targets: 4, className: 'dt-body-right' },
+                        { targets: 5, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
+                    ],
+                    columns: [
+                        { width: '30px' },
+                        { data: 'be_id', width: '60px' },
+                        { data: 'ten' },
+                        { data: 'mo_ta', width: '130px' },
+                        { data: 'ten_nien_khoa' },
+                        { data: 'ngay_thanh_toan' }
+                    ],
+                    order: [[ 1, 'asc' ]],
+                });
+
+                // PHẦN THỨ TỰ TABLE
+                table_hp.on( 'order.dt search.dt', function () {
+                    table_hp.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                        cell.innerHTML = i+1;
+                    } );
+                } ).draw();
+            }
+        });
     });
 </script>
 

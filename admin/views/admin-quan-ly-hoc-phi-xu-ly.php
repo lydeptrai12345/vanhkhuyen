@@ -58,19 +58,19 @@ if(isset($_POST['add'])) {
 
 if(isset($_GET['danh_sach_hoc_phi'])) {
     $nien_khoa = $_GET['loc_nien_khoa'];
-    $lop = $_GET['loc_lop_hoc'];
+    $lop = (isset($_GET['loc_lop_hoc']) && $_GET['loc_lop_hoc'] > 0) ? $_GET['loc_lop_hoc'] : 0;
     $str = "SELECT
             *,
-            (SELECT so_tien FROM hoc_phi WHERE hoc_phi.nien_khoa_id = n.id AND hoc_phi.lop_hoc_id = c.lop_hoc_id LIMIT 1) AS 'hoc_phi',	
+            (SELECT so_tien FROM hoc_phi WHERE hoc_phi.nien_khoa_id = {$nien_khoa} AND hoc_phi.lop_hoc_id = c.lop_hoc_id LIMIT 1) AS 'hoc_phi',	
             (SELECT ngay_thanh_toan FROM hoc_phi_chi_tiet WHERE hoc_phi_chi_tiet.be_id = b.id LIMIT 1) as 'ngay_thanh_toan'
             FROM
                 be AS b
                 INNER JOIN lophoc_be AS l ON b.id = l.be_id
                 INNER JOIN lophoc_chitiet AS c ON l.lop_hoc_chi_tiet_id = c.id
                 INNER JOIN nienkhoa as n ON n.id = c.nien_khoa_id
-                WHERE n.id = {$nien_khoa}
-                AND l.lop_hoc_chi_tiet_id = {$lop}
-                GROUP BY b.id";
+                WHERE n.id = {$nien_khoa} ";
+    if ($lop > 0) $str .= "AND l.lop_hoc_chi_tiet_id = {$lop}";
+    $str .= "GROUP BY b.id";
 
     $query = mysqli_query($dbc, $str);
     $result = array();
