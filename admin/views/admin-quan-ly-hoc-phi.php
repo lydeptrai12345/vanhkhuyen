@@ -32,6 +32,8 @@ if(!$nien_khoa) $nien_khoa = $nien_khoa_hien_tai;
 $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 
 
+$data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_ta, lophoc.id AS 'khoi_id' FROM lophoc_chitiet INNER JOIN lophoc ON lophoc_chitiet.lop_hoc_id = lophoc.id");
+
 ?>
 
 
@@ -147,7 +149,58 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                     </div>
                 </div>
                 <div class="card-body p-0 text-center" style="margin: 30px 0">
+                    <form id="form-bo-loc" action="admin-lop.php" method="get" class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="text-left">Niên khóa</label>
+                                <select name="loc_nien_khoa" id="" class="form-control">
+                                    <?php foreach ($results_nien_khoa as $item):?>
+                                        <?php if($nien_khoa != 0) :?>
+                                            <option <?php if($nien_khoa == $item['ten_nien_khoa']) echo "selected";?>
+                                                    data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                    value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                            </option>
+                                        <?php else:?>
+                                            <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
+                                                    data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                    value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                            </option>
+                                        <?php endif;?>
 
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="text-left">Lớp</label>
+                                <select name="loc_nien_khoa" id="" class="form-control">
+                                    <?php foreach ($results_nien_khoa as $item):?>
+                                        <?php if($nien_khoa != 0) :?>
+                                            <option <?php if($nien_khoa == $item['ten_nien_khoa']) echo "selected";?>
+                                                    data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                    value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                            </option>
+                                        <?php else:?>
+                                            <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
+                                                    data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                    value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                            </option>
+                                        <?php endif;?>
+
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="text-left">Thanh toán</label>
+                                <select name="thanh_toan" id="" class="form-control">
+                                    <option value="0">Chưa thanh toán</option>
+                                    <option value="1">Đã thanh toán</option>
+                                </select>
+                            </div>
+                            <button id="btn-bo-loc" type="submit" class="hidden"></button>
+                        </div>
+                    </form>
                     <div class="row" style="padding: 5px 20px;">
                         <div class="col-md-12">
                             <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
@@ -320,6 +373,37 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                 argWs = argWs.replace(".","");
             }
             return argWs;
+        }
+
+        $('select[name="loc_nien_khoa"]').change(function () {
+            get_data_lop_hoc_theo_nien_khoa($(this).val());
+        });
+
+        function get_data_lop_hoc_theo_nien_khoa(id_nien_khoa) {
+            $.ajax({
+                type: "POST",
+                url: 'admin-be-xuly.php',
+                data: { 'get_data_lop_hoc' : 1, 'id_nien_khoa': id_nien_khoa },
+                success : function (result){
+                    var data = JSON.parse(result);
+                    var str = "";
+                    if(data.length > 0) {
+                        data.forEach(function (item) {
+                            str += '<option data-khoi="'+ item.khoi_id +'" value="'+ item.id +'">'+ item.mo_ta +'</option>'
+                        });
+                        $('select[name="lop_hoc"]').html(str);
+                    }
+                    else{
+                        $('select[name="lop_hoc"]').html('<option data-khoi="0" value="0">Chưa có lớp</option>');
+                        $('button[name="btn-submit-be"]').attr('disabled', 'disabled');
+                    }
+
+                }
+            });
+            $('select[name="lop_hoc"]').removeAttr('disabled');
+            setTimeout(function () {
+                $('select[name="lop_hoc"]').change();
+            },500);
         }
     });
 </script>

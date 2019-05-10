@@ -11,7 +11,7 @@
  Target Server Version : 100134
  File Encoding         : 65001
 
- Date: 09/05/2019 23:31:39
+ Date: 10/05/2019 17:18:49
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `bangcap`  (
 INSERT INTO `bangcap` VALUES (1, 'Đại Học', '4.33');
 INSERT INTO `bangcap` VALUES (2, 'Cao đẳng', '3.66');
 INSERT INTO `bangcap` VALUES (5, 'Trung Cấp', '3.6');
-INSERT INTO `bangcap` VALUES (6, 'Không có', '1');
+INSERT INTO `bangcap` VALUES (6, 'ffsdfsfsdfsdfdsfsdfdsfsdf', '1');
 INSERT INTO `bangcap` VALUES (7, 'Thạc sĩ', '4.65');
 INSERT INTO `bangcap` VALUES (8, 'Tiến sĩ', '4.97');
 
@@ -60,7 +60,7 @@ CREATE TABLE `be`  (
   `matracuu` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `trangthai` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of be
@@ -69,6 +69,12 @@ INSERT INTO `be` VALUES (36, 'Trần Văn A', '2019-04-28', 1, '100', '40', 'dsa
 INSERT INTO `be` VALUES (37, 'Nguyễn Thị Bé Tư', '2017-05-05', 2, '90', '30', 'sdfsfff', 'sffsfsfsff', 'dsfsfdsfsdfdsfsfsdfsf', '4761_68480132711623.jpg', 'dsfdfdsfsdfdsf', '9980808080', 'fdsfsfdsfdsf', '0890980808', '', 1);
 INSERT INTO `be` VALUES (38, 'aaaaaaaaaaaaaaaaaaaaa', '2019-04-28', 1, '56', '12', 'fhfghfghgf fhhfhfghfhfhfh', 'gfhgfhfhgfhgfhf', 'hfghgfhfgh', '0379_02429226178426.png', 'hfghgfhgfhfh', '9808989080', '', '', '', 1);
 INSERT INTO `be` VALUES (39, 'cfsdfsfsf', '2019-05-01', 2, '67', '56', 'fsdfđsfsdfdsf', 'sdfdfdsfdf', 'sdfdsfsdfdsf', '4379_33746167249468.jpg', 'fsdfdfsdfd', '0890809809', '', '', '', 1);
+INSERT INTO `be` VALUES (40, 'Tran Van Duc', '2019-05-01', 1, '100', '30', 'dffsffsdfdff', 'sdfsfsdf', 'sdfdsfsdfsdfdfd', '2464_13664548194817.jpg', 'fsdfdfdsfdsf', '7575757756', '', '', '', 1);
+INSERT INTO `be` VALUES (41, 'fsdfsdfsdfsfsf', '2019-05-08', 2, '45', '56', 'trete', 'teteterete', 'ertetetertet', '8418_48740508677276.jpg', 'tretrtret', '7456546464', '', '', '', 1);
+INSERT INTO `be` VALUES (42, '10000301233', '2019-04-28', 1, '3213', '313', '32131', '1321331', '321313213', '8701_95852417950247.jpg', '123131231', '3123213132', '', '', '', 1);
+INSERT INTO `be` VALUES (43, 'Nguyen van a', '2019-04-28', 1, '56', '56', 'rtfdgdgdgg', 'fdgg', 'fdgdgdfg', '1864_94265126930246.jpg', 'dfgfdgfdgdg', '7567575675', '', '', '', 1);
+INSERT INTO `be` VALUES (44, 'tẻtretete', '2019-04-28', 2, '67', '45', 'ytrryry', 'rytryryr', 'ỷyryytyrytryr', '6179_42440684754008.jpg', 'êttertt', '7567765757', '', '', '', 1);
+INSERT INTO `be` VALUES (45, 'Nguyên Thị Bé Bự', '2019-04-28', 2, '70', '50', 'trtetreteetetrt', 'trêttetretrettêtrtete', 'tểttetertretrete', '3354_39964166825038.jpg', 'tẻtretetetertet', '7757675756', '', '', '', 1);
 
 -- ----------------------------
 -- Table structure for congtac
@@ -172,15 +178,15 @@ CREATE TABLE `hoc_phi`  (
   `so_tien` decimal(25, 0) NULL DEFAULT NULL,
   `ngay_tao` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of hoc_phi
 -- ----------------------------
 INSERT INTO `hoc_phi` VALUES (3, 2, 2, 10000000, '2019-05-09 23:08:57');
-INSERT INTO `hoc_phi` VALUES (4, 1, 2, 1000000, '2019-05-09 23:16:50');
-INSERT INTO `hoc_phi` VALUES (5, 1, 2, 100000, '2019-05-09 23:21:01');
 INSERT INTO `hoc_phi` VALUES (6, 1, 1, 2000000, '2019-05-09 23:28:44');
+INSERT INTO `hoc_phi` VALUES (7, 3, 1, 3000000, '2019-05-10 10:14:45');
+INSERT INTO `hoc_phi` VALUES (8, 1, 2, 5000000, '2019-05-10 14:45:32');
 
 -- ----------------------------
 -- Table structure for hoc_phi_chi_tiet
@@ -198,7 +204,16 @@ CREATE TABLE `hoc_phi_chi_tiet`  (
   INDEX `id_chi_tiet_lop`(`lop_hoc_chi_tiet_id`) USING BTREE,
   CONSTRAINT `id_bes` FOREIGN KEY (`be_id`) REFERENCES `be` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `id_chi_tiet_lop` FOREIGN KEY (`lop_hoc_chi_tiet_id`) REFERENCES `lophoc_chitiet` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of hoc_phi_chi_tiet
+-- ----------------------------
+INSERT INTO `hoc_phi_chi_tiet` VALUES (1, 2000000, 40, '2019-05-10 12:11:55', 21, 35);
+INSERT INTO `hoc_phi_chi_tiet` VALUES (2, 3000000, 41, '2019-05-10 12:13:15', 21, 42);
+INSERT INTO `hoc_phi_chi_tiet` VALUES (3, 10000000, 42, '2019-05-10 12:14:29', 21, 40);
+INSERT INTO `hoc_phi_chi_tiet` VALUES (4, 2000000, 45, '2019-05-10 15:55:33', 21, 35);
+INSERT INTO `hoc_phi_chi_tiet` VALUES (5, 10000000, 45, '2019-05-10 15:59:02', 21, 40);
 
 -- ----------------------------
 -- Table structure for hopdong
@@ -308,7 +323,7 @@ CREATE TABLE `lophoc_be`  (
   INDEX `id_be`(`be_id`) USING BTREE,
   CONSTRAINT `id_be` FOREIGN KEY (`be_id`) REFERENCES `be` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `lophoc_chi_tiet` FOREIGN KEY (`lop_hoc_chi_tiet_id`) REFERENCES `lophoc_chitiet` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of lophoc_be
@@ -317,6 +332,13 @@ INSERT INTO `lophoc_be` VALUES (12, 36, 40);
 INSERT INTO `lophoc_be` VALUES (13, 37, 42);
 INSERT INTO `lophoc_be` VALUES (18, 38, 42);
 INSERT INTO `lophoc_be` VALUES (20, 39, 43);
+INSERT INTO `lophoc_be` VALUES (21, 40, 35);
+INSERT INTO `lophoc_be` VALUES (22, 41, 42);
+INSERT INTO `lophoc_be` VALUES (23, 42, 40);
+INSERT INTO `lophoc_be` VALUES (24, 43, 40);
+INSERT INTO `lophoc_be` VALUES (25, 44, 42);
+INSERT INTO `lophoc_be` VALUES (27, 45, 35);
+INSERT INTO `lophoc_be` VALUES (28, 45, 40);
 
 -- ----------------------------
 -- Table structure for lophoc_chitiet
