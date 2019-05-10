@@ -35,6 +35,7 @@ if(!isset($_SESSION['uid']))
 
 <style>
     table tbody td a.btn-edit:hover { color: #106dff; }
+    .main-sidebar { z-index: 1000 !important; }
 </style>
 
 <div class="container-fluid">

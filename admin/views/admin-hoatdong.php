@@ -98,7 +98,7 @@
                         { width: "30px" },
                         { data: 'tieu_de' },
                         { data: 'tieu_de'},
-                        { data: 'nguoi_dang' },
+                        { data: 'ten_nguoi_dung' },
                         { width: "60px" }
                     ]
                 });

@@ -176,7 +176,7 @@
                     columns: [
                         { width: "30px" },
                         { data: 'ten' },
-                        { data: 'the_loai_cha', },
+                        { data: 'ten_cha', },
                         { width: "60px" }
                     ]
                 });

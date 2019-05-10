@@ -68,7 +68,7 @@
         var table;
         $.ajax({
             type: "GET",
-            url: 'admin-loaitin-xuly.php?load_list_loaitin=1',
+            url: 'admin-tintuc-xuly.php?load_list_tintuc=1',
             success: function (result) {
                 var data = JSON.parse(result);
                 table = $('#tripRevenue').DataTable({

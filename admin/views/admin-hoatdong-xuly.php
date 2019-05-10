@@ -21,8 +21,8 @@ if(isset($_POST['get_data_nguoidung'])) {
 }
 
 if (isset($_GET['load_list_hoatdong'])) {
-    $str = "SELECT hoatdong.id as 'id',hoatdong.tieu_de,hoatdong.mo_ta,nguoidung.nhan_vien_id
-            FROM hoatdong INNER JOIN nguoidung ON  ";
+    $str = "SELECT hoatdong.id as 'id',hoatdong.tieu_de,hoatdong.mo_ta,nguoidung.nhan_vien_id, nguoidung.ten_nguoi_dung
+            FROM hoatdong INNER JOIN nguoidung ON hoatdong.nguoi_dang = nguoidung.id";
     $query = mysqli_query($dbc, $str);
     $result = array();
 
@@ -33,7 +33,7 @@ if (isset($_GET['load_list_hoatdong'])) {
                 'id' => $row['id'],
                 'tieu_de' => $row['tieu_de'],
                 'mo_ta' => $row['mo_ta'],
-                'nguoi_dang' => $row['nguoi_dang'],
+                'ten_nguoi_dung' => $row['ten_nguoi_dung'],
             );
         }
     }
