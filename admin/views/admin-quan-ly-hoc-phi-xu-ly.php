@@ -81,13 +81,13 @@ if(isset($_GET['danh_sach_hoc_phi'])) {
         while ($row = mysqli_fetch_array($query)){
             $result[] = array (
                 'lop_hoc_id'    => $row['lop_hoc_id'],
-                'ngay_thanh_toan'      => date_format(date_create($row['ngay_thanh_toan']),'d/m/Y'),
+                'ngay_thanh_toan' => ($row['ngay_thanh_toan']) ? date_format(date_create($row['ngay_thanh_toan']),'d/m/Y') : "",
                 'nien_khoa_id'  => $row['nien_khoa_id'],
                 'hoc_phi'       => number_format((float)$row['hoc_phi']),
                 'ten_nien_khoa' => $row['ten_nien_khoa'],
                 'be_id'    => $row['be_id'],
                 'ten'      => $row['ten'],
-                'ngaysinh' => date_format(date_create($row['ngaysinh']),'d/m/Y'),
+                'ngaysinh' => ($row['ngaysinh']) ? date_format(date_create($row['ngaysinh']),'d/m/Y') : 0,
                 'gioitinh' => ($row['gioitinh'] == 1) ? "Nam" : "Nữ",
                 'tencha'  => $row['tencha'],
                 'sdtcha'   => $row['sdtcha'],
@@ -97,9 +97,27 @@ if(isset($_GET['danh_sach_hoc_phi'])) {
                 'chieucao' => $row['chieucao'],
                 'mo_ta'    => $row['mo_ta'],
                 'matracuu'    => $row['matracuu'],
-                'trangthai'    => $row['trangthai'],
+                'lop_hoc_chi_tiet_id'    => $row['lop_hoc_chi_tiet_id'],
+                'trangthai'    => ($row['ngay_thanh_toan']) ? 1 : 0,
             );
         }
     }
     echo json_encode($result);
+}
+
+// Đóng tiền học phí
+if(isset($_POST['dong_tien'])) {
+    $so_tien = $_POST['so_tien'];
+    $be_id = $_POST['be_id'];
+    $lop_hoc_chi_tiet = $_POST['lop_hoc_chi_tiet'];
+    $nhan_vien = $_POST['nhan_vien'];
+    $str = "INSERT INTO hoc_phi_chi_tiet (so_tien, be_id, nhan_vien_id, lop_hoc_chi_tiet_id, ngay_thanh_toan) VALUES ({$so_tien}, {$be_id}, {$nhan_vien}, {$lop_hoc_chi_tiet})";
+
+    $result = mysqli_query($dbc, $str);
+    if(mysqli_affected_rows($dbc) == 1) {
+        echo 1;
+    }
+    else{
+        echo -1;
+    }
 }

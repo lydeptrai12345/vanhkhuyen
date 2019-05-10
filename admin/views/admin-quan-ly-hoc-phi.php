@@ -71,6 +71,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 </style>
 
 <div class="main-content-container container-fluid px-4" style="margin-top:10px">
+    <input id="nguoi_dung" type="hidden" value="<?php echo $_SESSION['uid']?>">
     <div class="row">
         <div class="col">
             <div class="card card-small mb-4">
@@ -223,6 +224,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                                     <th>Lớp</th>
                                     <th>Niên khóa</th>
                                     <th>Trạng thái</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -440,7 +442,8 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         { targets: 1, className: 'dt-body-center' },
                         { targets: 2, className: 'dt-body-left' },
                         { targets: 4, className: 'dt-body-right' },
-                        { targets: 5, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
+                        // { targets: 5, className: 'dt-body-right' },
+                        { targets: 6, data: null, defaultContent: '<a style="cursor: pointer"><i class="material-icons action-icon">print</i></a>' },
                     ],
                     columns: [
                         { width: '30px' },
@@ -448,9 +451,24 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         { data: 'ten' },
                         { data: 'mo_ta', width: '130px' },
                         { data: 'ten_nien_khoa' },
-                        { data: 'ngay_thanh_toan' }
+                        {
+                            data:   "trangthai",
+                            width: "80px",
+                            render: function ( data, type, row ) {
+                                if ( type === 'display' ) {
+                                    return '<input type="checkbox" class="editor-active">';
+                                }
+                                return data;
+                            },
+                            className: "dt-body-center"
+                        },
+                        { data: null, width: '50px' }
                     ],
                     order: [[ 1, 'asc' ]],
+                    rowCallback: function ( row, data ) {
+                        // Set the checked state of the checkbox in the table
+                        $('input.editor-active', row).prop( 'checked', data.trangthai == 1 );
+                    }
                 });
 
                 // PHẦN THỨ TỰ TABLE
@@ -461,6 +479,32 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                 } ).draw();
             }
         });
+
+        $('#table-hoc-phi tbody').on( 'click', 'a', function () {
+            var data = table_hp.row( $(this).parents('tr') ).data();
+            console.log(data);
+        } );
+
+        $('#table-hoc-phi tbody').on( 'change', 'input.editor-active', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            if(confirm('Bạn có chắc chắn muốn cập nhật trạng thái của nhân viên vừa chọn?')) {
+                $.ajax( {
+                    type: "POST",
+                    url: "" + data.id,
+                    data: {
+                        dong_tien: 1,
+                        so_tien: data.hoc_phi,
+                        be_id: be_id,
+                        lop_hoc_chi_tiet: 0,
+                        nhan_vien: $('#nguoi_dung').val()
+
+                    }
+                    success: function ( result ) {
+                        window.location.reload();
+                    }
+                } );
+            }
+        } );
     });
 </script>
 
