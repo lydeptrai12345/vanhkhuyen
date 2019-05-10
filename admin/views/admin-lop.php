@@ -8,9 +8,11 @@
 <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">-->
 <!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
 
-<!--<link rel="stylesheet" href="../styles/admin/bootstrap.min.css">-->
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
 
 <!-- End header-->
 <script>
@@ -22,7 +24,7 @@
 <style>
     span.select2-container { width: 100% !important; }
     .error-message { color: #ff392a; }
-    .modal { z-index: 9999999; }
+    .modal { z-index: 1050; }
     .modal-lg { max-width: 1000px !important; }
 
     #example_filter label input{ border: 1px solid #ddd !important; }
@@ -551,23 +553,23 @@
            $('.select-nhannien-add').val("").trigger('change');
        });
 
-        $('#example').DataTable({
-            columns: [
-                {
-                    "className":      'details-control',
-                    "orderable":      false,
-                    "data":           null,
-                    "defaultContent": '',
-                },
-                { data: 'ten' },
-                { data: 'ngaysinh' },
-                { data: 'gioitinh' },
-                { data: 'chieucao' },
-                { data: 'cannang' },
-                { data: 'sdtcha' },
-                { data: 'sdtme' },
-            ],
-        });
+        // $('#example').DataTable({
+        //     columns: [
+        //         {
+        //             "className":      'details-control',
+        //             "orderable":      false,
+        //             "data":           null,
+        //             "defaultContent": '',
+        //         },
+        //         { data: 'ten' },
+        //         { data: 'ngaysinh' },
+        //         { data: 'gioitinh' },
+        //         { data: 'chieucao' },
+        //         { data: 'cannang' },
+        //         { data: 'sdtcha' },
+        //         { data: 'sdtme' },
+        //     ],
+        // });
 
 
         function show_list_be(id_lop) {

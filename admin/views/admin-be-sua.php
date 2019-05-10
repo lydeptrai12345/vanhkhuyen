@@ -8,7 +8,25 @@
 $data_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc_chitiet");
 
 // lấy danh sách niên khóa
-$data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
+$data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY nam_ket_thuc DESC");
+
+// tinhs nieen khoa hien tai month > 6 && month
+$year = date("Y");
+if(date("m") > 6)
+    $nien_khoa_hien_tai = $year . "-" . $year + 1;
+else
+    $nien_khoa_hien_tai = ($year - 1) . "-" . $year;
+
+if(isset($_GET['id']) && (int)$_GET['id'] > 0) {
+    // lấy danh sách niên khóa
+    $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa WHERE id NOT IN (SELECT nien_khoa_id FROM lophoc_be INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id WHERE lophoc_be.be_id = {$_GET['id']} GROUP BY nien_khoa_id) ORDER BY nam_ket_thuc DESC");
+    $data_lop_be_da_hoc = json_decode(lay_thong_tin_lop_hoc_cua_be($dbc, $_GET['id']));
+}
+else {
+    echo "<script>alert('Không lấy được thông tin của bé')</script>>";
+    header("admin-be.php");
+}
+
 ?>
 
 
@@ -135,14 +153,6 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
                             $errors[] = 'parents';
                         }
 
-                        if (!$_POST['nien_khoa']) {
-                            $errors[] = 'nien_khoa';
-                        }
-
-                        if (!isset($_POST['lop_hoc']) || !$_POST['lop_hoc']) {
-                            $errors[] = 'lop_hoc';
-                        }
-
                         if ( empty( $errors )) {
                             if(!$have_dad){
                                 $tencha = '';
@@ -171,13 +181,21 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
 
                             $results_tt = mysqli_query( $dbc, $query_tt );
                             if ( mysqli_affected_rows( $dbc ) >= 0 ) {
-                                // xóa thông tin lớp của bé để cập nhật lại thông tin lớp mới
-                                $delete_lop_hoc_cua_be = mysqli_query($dbc, "DELETE FROM lophoc_be WHERE be_id = {$id_be}");
-                                $data_be = mysqli_affected_rows($dbc);
-                                $lop_hoc_chi_tiet_id = $_POST['lop_hoc'];
-                                if($data_be > 0 && $lop_hoc_chi_tiet_id){
-                                    $insert_vao_lop_hoc = mysqli_query($dbc, "INSERT INTO lophoc_be (be_id, lop_hoc_chi_tiet_id) VALUES ({$id_be}, {$lop_hoc_chi_tiet_id})");
+
+                                // lấy id bé mới được thêm vào
+                                if (isset($_POST['lop_hoc']) && (int)$_POST['lop_hoc'] > 0) {
+                                    $lop_hoc_chi_tiet_id = $_POST['lop_hoc'];
+
+                                    $insert_vao_lop_hoc = mysqli_query($dbc, "INSERT INTO lophoc_be (be_id, lop_hoc_chi_tiet_id) VALUES ({$_GET['id']}, {$lop_hoc_chi_tiet_id})");
+
+                                    if($_POST['thanh_toan'] == 1){
+                                        $hoc_phi = str_replace(",","", $_POST['hoc_phi']);
+                                        $q = "INSERT INTO hoc_phi_chi_tiet (be_id, lop_hoc_chi_tiet_id, nhan_vien_id, ngay_thanh_toan, so_tien) VALUES ({$_GET['id']}, {$lop_hoc_chi_tiet_id}, {$_SESSION['uid']}, NOW(), {$hoc_phi})";
+                                        mysqli_query($dbc, $q);
+                                    }
                                 }
+
+
                                 ?>
                                 <script>
                                     alert( "Cập nhật thành công" );
@@ -375,47 +393,109 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
                         <div class="row parent-zone">
                             <div class="title-absolute"><span>Thông Lớp học</span></div>
 
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Niên khóa</label>
-                                    <select name="nien_khoa" id="" class="form-control">
-                                        <option value="0">Chọn Niên khóa</option>
-                                        <?php foreach ($data_nien_khoa as $item):?>
-                                            <option <?php if($detail_be->nien_khoa_id == $item['id']) echo "selected"?> value="<?php echo $item['id']?>"><?php echo $item['ten_nien_khoa']?></option>
-                                        <?php endforeach;?>
-                                    </select>
+                            <div class="row w-100 add-lop-hoc">
+                                <div class="col-md-3 col-3">
+                                    <div class="form-group">
+                                        <label>Niên khóa</label>
+                                        <select name="nien_khoa" id="" class="form-control">
+                                            <option value="0">Chọn Niên khóa</option>
+                                            <?php foreach ($data_nien_khoa as $item):?>
+                                                <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
+                                                        data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                        value="<?php echo $item['id']?>"
+                                                        <?php if($nien_khoa_hien_tai != $item['ten_nien_khoa']) echo "disabled"?>
+                                                >
+                                                    <?php echo $item['ten_nien_khoa']?>
+                                                </option>
+                                            <?php endforeach;?>
+                                        </select>
 
-                                    <?php
-                                    if(isset($errors) && in_array('nien_khoa',$errors))
-                                    {
-                                        echo "<p class='text-danger'>Bạn chưa chọn niên khóa</p>";
-                                    }
-                                    ?>
+                                        <?php
+                                        if(isset($errors) && in_array('nien_khoa',$errors))
+                                        {
+                                            echo "<p class='text-danger'>Bạn chưa chọn niên khóa</p>";
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Lớp học</label>
+                                        <select name="lop_hoc" id="" class="form-control" disabled>
+                                            <option value="0">Chọn lớp học</option>
+                                            <?php foreach ($data_lop_hoc as $item):?>
+                                                <option data-khoi="<?php echo $item['khoi_id']?>" value="<?php echo $item['id']?>"><?php echo $item['mo_ta']?></option>
+                                            <?php endforeach;?>
+                                        </select>
+
+                                        <?php
+                                        if(isset($errors) && in_array('lop_hoc',$errors))
+                                        {
+                                            echo "<p class='text-danger'>Bạn chưa chọn niên khóa</p>";
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <div class="col-3 div_hoc_phi" style="display: none">
+                                    <div class="form-group">
+                                        <label for="">Học phí</label>
+                                        <input name="hoc_phi" class="form-control" type="text" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-2 div_thanh_toan" style="display: none">
+                                    <div class="form-group">
+                                        <label for="">Thanh toán</label>
+                                        <br>
+                                        <div class="">
+                                            <a class="btn-thanh-toan" style="cursor: pointer">
+                                                <i class="material-icons action-icon">check_box_outline_blank</i>
+                                            </a>
+                                            <input value="0" type="hidden" name="thanh_toan">
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Lớp học</label>
-                                    <select name="lop_hoc" id="" class="form-control">
-                                        <option value="0">Chọn lớp học</option>
-                                        <?php foreach ($data_lop_hoc as $item):?>
-                                            <option <?php if($detail_be->lop_hoc_chi_tiet_id == $item['id']) echo "selected"?> value="<?php echo $item['id']?>"><?php echo $item['mo_ta']?></option>
-                                        <?php endforeach;?>
-                                    </select>
-
-                                    <?php
-                                    if(isset($errors) && in_array('lop_hoc',$errors))
-                                    {
-                                        echo "<p class='text-danger'>Bạn chưa chọn niên khóa</p>";
-                                    }
-                                    ?>
-
-                                    <script>
-                                        var id_lop_hoc = <?php echo $detail_be->lop_hoc_chi_tiet_id;?>
-                                    </script>
+                            <div class="row" id="message-lop" style="display: none">
+                                <div class="col-md-12">
+                                    <h6 class="dot-required">Bé đã có lớp trong niên khóa hiện tại. Không thể thêm lớp mới</h6>
                                 </div>
                             </div>
+
+                            <div class="col-12" style="padding-left: 0"><h6>Lịch sử lớp học của bé</h6></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Niên khóa</th>
+                                    <th>Lớp</th>
+                                    <th>Học phí</th>
+                                    <th>Ngày thanh toán</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php if(($data_lop_be_da_hoc) > 0): ?>
+                                    <?php foreach ($data_lop_be_da_hoc as $item):?>
+                                        <script> var flag_be_co_lop_trong_nien_khoa = <?php if($nien_khoa_hien_tai == $item->ten_nien_khoa) echo 1; else echo 0; ?> </script>
+                                        <tr>
+                                            <td><?php echo $item->ten_nien_khoa?></td>
+                                            <td><?php echo $item->mo_ta?></td>
+                                            <td><?php echo number_format($item->hoc_phi)?></td>
+                                            <td>
+                                                <?php
+                                                    if($item->ngay_thanh_toan)
+                                                        echo date_format(date_create($item->ngay_thanh_toan), "d/m/Y");
+                                                    else echo 'Chưa thanh toán';
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach;?>
+                                <?php endif; ?>
+                                </tbody>
+                            </table>
                         </div>
                         <!-- =========================== END THÔNG TIN LOP HOC ===========================-->
 
@@ -440,11 +520,15 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
         $( '#collapse5 .list-group a:nth-child(1)' ).addClass( 'cus-active' );
 
 
+        Number.prototype.format = function(n, x) {
+            var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+            return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+        };
         $('select[name="nien_khoa"]').change(function () {
             get_data_lop_hoc_theo_nien_khoa($(this).val());
         });
 
-        function get_data_lop_hoc_theo_nien_khoa(id_nien_khoa, id_lop_hoc) {
+        function get_data_lop_hoc_theo_nien_khoa(id_nien_khoa) {
             $.ajax({
                 type: "POST",
                 url: 'admin-be-xuly.php',
@@ -453,22 +537,84 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
                     var data = JSON.parse(result);
                     var str = "";
                     if(data.length > 0) {
+                        $('button[name="btn-submit-be"]').removeAttr('disabled');
                         data.forEach(function (item) {
-                            if(item.id == id_lop_hoc) {
-                                str += '<option selected value="'+ item.id +'">'+ item.mo_ta +'</option>';
-                            }
-                            else str += '<option value="'+ item.id +'">'+ item.mo_ta +'</option>';
+                            str += '<option data-khoi="'+ item.khoi_id +'" value="'+ item.id +'">'+ item.mo_ta +'</option>'
                         });
                         $('select[name="lop_hoc"]').html(str);
+                    }
+                    else{
+                        $('select[name="lop_hoc"]').html('<option data-khoi="0" value="0">Chưa có lớp</option>');
+                        $('button[name="btn-submit-be"]').attr('disabled', 'disabled');
                     }
 
                 }
             });
             $('select[name="lop_hoc"]').removeAttr('disabled');
+            setTimeout(function () {
+                $('select[name="lop_hoc"]').change();
+            },500);
         }
 
-        get_data_lop_hoc_theo_nien_khoa($('select[name="nien_khoa"]').val(), id_lop_hoc);
-    } );
+        function get_hoc_phi_theo_khoi() {
+            var nien_khoa = $('select[name="nien_khoa"]').val();
+            var khoi = $('select[name="lop_hoc"]').children("option:selected").data('khoi');
+            $.ajax({
+                type: "GET",
+                url: 'admin-be-xuly.php?get_hoc_phi_theo_khoi=1&nien_khoa=' + nien_khoa + '&khoi=' + khoi,
+                success : function (result){
+                    var data = JSON.parse(result);
+                    if(data) {
+                        var money = parseFloat(data.so_tien);
+                        $('input[name="hoc_phi"]').val(money.format());
+                        $('.div_hoc_phi').show();
+                        $('.div_thanh_toan').show();
+                    }
+                    else {
+                        $('.div_thanh_toan').hide();
+                        $('input[name="thanh_toan"]').val(1);
+                        $('.btn-thanh-toan').click();
+                        $('input[name="hoc_phi"]').val('Lớp học này chưa có học phí');
+                    }
+                    console.log(data);
+                }
+            });
+        }
+
+        $('select[name="lop_hoc"]').change(function () {
+            get_hoc_phi_theo_khoi();
+        });
+
+        var nien_khoa = $('select[name="nien_khoa"]').val();
+
+        if(nien_khoa > 0) {
+            get_data_lop_hoc_theo_nien_khoa(nien_khoa);
+        }
+        else {
+            if(flag_be_co_lop_trong_nien_khoa == 1) {
+                $('.add-lop-hoc').hide();
+                $('#message-lop').show();
+            }
+            else{
+                $('.add-lop-hoc').show();
+                $('#message-lop').hide();
+            }
+        }
+
+
+        $('.btn-thanh-toan').click(function () {
+            var thanhtoan = $('input[name="thanh_toan"]').val();
+            if(thanhtoan == 1) {
+                $(this).html('<i class="material-icons action-icon">check_box_outline_blank</i>')
+                $('input[name="thanh_toan"]').val(0);
+            }
+            else{
+                $(this).html('<i class="material-icons action-icon">check_box</i>')
+                $('input[name="thanh_toan"]').val(1);
+            }
+        });
+
+    });
 
     function showPreview( objFileInput ) {
         var filename = objFileInput.value.split('.').pop().toLowerCase();

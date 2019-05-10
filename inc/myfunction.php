@@ -72,4 +72,32 @@ function getAge($birthDate){
 		$age = $age +1;
 	return $age;
 }
+
+function lay_thong_tin_lop_hoc_cua_be ($dbc, $be_id) {
+    $str = "SELECT be_id, lophoc_chitiet.nien_khoa_id,ten_nien_khoa, lophoc_be.lop_hoc_chi_tiet_id, lophoc_chitiet.mo_ta, lophoc_chitiet.lop_hoc_id as 'khoi',
+            (SELECT so_tien FROM hoc_phi WHERE hoc_phi.nien_khoa_id = lophoc_chitiet.nien_khoa_id AND hoc_phi.lop_hoc_id = lophoc_chitiet.lop_hoc_id LIMIT 1) AS 'hoc_phi',
+            (SELECT ngay_thanh_toan FROM hoc_phi_chi_tiet WHERE hoc_phi_chi_tiet.be_id = {$be_id} LIMIT 1) as 'ngay_thanh_toan'
+            FROM lophoc_be 
+            INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id 
+            INNER JOIN nienkhoa ON lophoc_chitiet.nien_khoa_id = nienkhoa.id
+            WHERE be_id = {$be_id}";
+    $query = mysqli_query($dbc, $str);
+    $result = array();
+
+    if (mysqli_num_rows($query) > 0)
+    {
+        while ($row = mysqli_fetch_array($query)){
+            $result[] = array(
+                'be_id' => $row['be_id'],
+                'lop_hoc_chi_tiet_id' => $row['lop_hoc_chi_tiet_id'],
+                'nien_khoa_id' => $row['nien_khoa_id'],
+                'ten_nien_khoa' => $row['ten_nien_khoa'],
+                'mo_ta' => $row['mo_ta'],
+                'hoc_phi' => $row['hoc_phi'],
+                'ngay_thanh_toan' => $row['ngay_thanh_toan'],
+            );
+        }
+    }
+    return json_encode($result);
+}
 ?>
