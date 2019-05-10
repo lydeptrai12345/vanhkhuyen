@@ -112,12 +112,12 @@
                                 ?>
                             </div>
                             <button type="submit" name="xacnhanthem" class="btn btn-info">Thêm Thông Tin</button>
+                            <a href="admin-bangcap.php" class="btn btn-warning">Quay về</a>
                         </form>
                     </div>
                     <?php
                 }
                 ?>
-                <div class="card-body p-0 pb-3 text-center table-data">
 
                     <!-- End thêm loại tin -->
 
@@ -128,6 +128,7 @@
                             <button type="submit" name="them" class="btn btn-light"><i class="material-icons action-icon">add</i></button>
                         </form>
                     </div>
+                    <div class="card-body p-0 pb-3 text-center">
                     <div class="row" style="padding: 5px 20px;">
                         <div class="col-md-12">
                             <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
@@ -142,6 +143,7 @@
                             </table>
                         </div>
                     </div>
+
                     <!-- End danh sách loại tin -->
                 </div>
             </div>
@@ -177,8 +179,8 @@
                         data: data,
                         columnDefs: [
                             { targets: 0, data: null },
-                            { targets: 1, className: 'dt-body-left' },
-                            { targets: 2, className: 'dt-body-right' },
+                            { targets: 1, className: 'dt-body-center' },
+                            { targets: 2, className: 'dt-body-center' },
                             {
                                 targets: 3,
                                 data: null,

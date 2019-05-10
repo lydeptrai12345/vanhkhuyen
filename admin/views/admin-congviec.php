@@ -131,7 +131,6 @@
                                     <th>Tên chức vụ</th>
                                     <th>Phụ cấp</th>
                                     <th></th>
-                                    <th></th>
                                 </tr>
                                 </thead>
                             </table>
@@ -173,22 +172,47 @@
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 1, className: 'dt-body-left' },
-                        { targets: 3, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật công việc"><i class="material-icons action-icon">edit</i></a>' },
-                        { targets: 4, data: null, defaultContent: '<a style="cursor: pointer" title="Xóa phòng ban"><i class="material-icons action-icon">delete_outline</i></a>' },
+                        { targets: 0, data: null },
+                        { targets: 1, className: 'dt-body-center' },
+                        { targets: 2, className: 'dt-body-center' },
+                        {
+                            targets: 3,
+                            data: null,
+                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật chức vụ"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" style="cursor: pointer" title="Xóa chức vụ"><i class="material-icons action-icon">delete_outline</i></a>'
+                        }
                     ],
                     columns: [
-                        { data: 'congviec_id' },
+                        { width: "30px" },
                         { data: 'ten_cong_viec' },
-                        { data: 'phucap' },
-                        { "width": "50px" },
+                        { data: 'phucap' , width: "100px"},
+                        { "width": "60px" },
                     ]
                 });
 
-                // table = $('#tripRevenue').dataTable();
+                // PHẦN THỨ TỰ TABLE
+                table.on( 'order.dt search.dt', function () {
+                    table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                        cell.innerHTML = i+1;
+                    } );
+                } ).draw();
+
+
+                table.on( 'click', 'a', function () {
+                    var data = table.row( $(this).parents('tr') ).data();
+                    console.log(data);
+                    if($(this).data('action') == 1) {
+                        window.location.href = "admin-congviec-sua.php?id=" + data.congviec_id;
+                    }
+                    else{
+                        if(confirm("Bạn có chắc chắn muốn xóa chức vụ vừa chọn")) {
+                            window.location.href = "admin-congviec -xoa.php?id=" + data.congviec_id;
+                        }
+                    }
+                });
             }
         });
-
+        // table = $('#tripRevenue').dataTable();
 
 
 

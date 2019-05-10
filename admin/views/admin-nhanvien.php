@@ -107,7 +107,6 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                         { targets: 4, className: 'dt-body-left' },
                         { targets: 5, className: 'dt-body-left' },
                         { targets: 7, data: null, defaultContent: '<a class="btn-edit" style="cursor: pointer" title="Cập nhật nhân viên"><i class="material-icons action-icon">edit</i></a>' },
-
                     ],
                     columns: [
                         { width: "30px" },
