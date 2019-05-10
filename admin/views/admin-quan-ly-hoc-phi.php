@@ -5,6 +5,7 @@
 
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
+<script src="../js/printThis.js"></script>
 
 <?php
 $str = "SELECT be.id, be.hinhbe, be.ten, be.ngaysinh, be.gioitinh, lophoc_chitiet.mo_ta, be.chieucao, be.cannang, be.diachi FROM be 
@@ -236,6 +237,16 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="" style="display: none">
+        <div id="print-hoc-phi" class="">
+            <h1>aaaaaaaaaaa</h1>
+            <h1>aaaaaaaaaaa</h1>
+            <h1>aaaaaaaaaaa</h1>
+            <h1>aaaaaaaaaaa</h1>
+        </div>
+
     </div>
 </div>
 
@@ -486,21 +497,28 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
         } );
 
         $('#table-hoc-phi tbody').on( 'change', 'input.editor-active', function () {
-            var data = table.row( $(this).parents('tr') ).data();
+            var da = table_hp.row( $(this).parents('tr') ).data();
+            console.log(da)
             if(confirm('Bạn có chắc chắn muốn cập nhật trạng thái của nhân viên vừa chọn?')) {
                 $.ajax( {
                     type: "POST",
-                    url: "" + data.id,
+                    url: "admin-quan-ly-hoc-phi-xu-ly.php",
                     data: {
                         dong_tien: 1,
-                        so_tien: data.hoc_phi,
-                        be_id: be_id,
-                        lop_hoc_chi_tiet: 0,
-                        nhan_vien: $('#nguoi_dung').val()
+                        so_tien: da.hoc_phi,
+                        be_id: da.be_id,
+                        lop_hoc_chi_tiet: da.lop_hoc_chi_tiet_id,
+                        nhan_vien: $('#nguoi_dung').val(),
 
-                    }
+                    },
                     success: function ( result ) {
-                        window.location.reload();
+                        if(result == "1")
+                        {
+                            if (confirm("Thanh toán học phí thành công! Bạn có muốn in hóa đơn?")) {
+                                $('#print-hoc-phi').printThis();
+                            }
+                        }
+                        else alert("That bai")
                     }
                 } );
             }
