@@ -26,7 +26,7 @@ if(isset($_POST['get_data_lop_hoc'])) {
 if(isset($_GET['load_list_be'])) {
     $str = "SELECT be.id as 'be_id',be.ten,be.ngaysinh,be.gioitinh,be.chieucao,lophoc_chitiet.mo_ta,be.cannang,be.diachi,be.tinhtrangsuckhoe,be.benhbamsinh,be.hinhbe,be.tencha,be.sdtcha,be.tenme,be.sdtme,be.matracuu,be.chieucao,be.trangthai 
             FROM be INNER JOIN lophoc_be ON be.id = lophoc_be.be_id 
-            INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id ORDER BY be.id DESC";
+            INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id GROUP BY be.id ORDER BY be.id DESC";
     $query = mysqli_query($dbc, $str);
     $result = array();
 

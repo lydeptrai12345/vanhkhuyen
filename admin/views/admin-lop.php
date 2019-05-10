@@ -62,7 +62,7 @@
             <h3 class="page-title">Lớp học</h3>
         </div>
     </div>
-    <!-- End Page Header -->
+    <!-- End Page Headers -->
 
     <!-- Default Light Table -->
     <div class="row">

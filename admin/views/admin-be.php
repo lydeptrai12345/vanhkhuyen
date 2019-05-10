@@ -13,7 +13,7 @@
     $str = "SELECT be.id, be.hinhbe, be.ten, be.ngaysinh, be.gioitinh, lophoc_chitiet.mo_ta, be.chieucao, be.cannang, be.diachi FROM be 
                                               INNER JOIN lophoc_be ON be.id = lophoc_be.be_id 
                                               INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id 
-                                              ORDER BY id DESC ";
+                                              GROUP BY be.id ORDER BY id DESC ";
 $data_be = mysqli_query( $dbc, $str );
 ?>
 
