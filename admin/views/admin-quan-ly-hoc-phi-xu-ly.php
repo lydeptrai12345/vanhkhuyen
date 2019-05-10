@@ -55,3 +55,51 @@ if(isset($_POST['add'])) {
 
 
 // ĐÓng tiền học phí
+
+if(isset($_GET['danh_sach_hoc_phi'])) {
+    $nien_khoa = $_GET['loc_nien_khoa'];
+    $lop = $_GET['loc_lop_hoc'];
+    $str = "SELECT
+            *,
+            (SELECT so_tien FROM hoc_phi WHERE hoc_phi.nien_khoa_id = n.id AND hoc_phi.lop_hoc_id = c.lop_hoc_id LIMIT 1) AS 'hoc_phi',	
+            (SELECT ngay_thanh_toan FROM hoc_phi_chi_tiet WHERE hoc_phi_chi_tiet.be_id = b.id LIMIT 1) as 'ngay_thanh_toan'
+            FROM
+                be AS b
+                INNER JOIN lophoc_be AS l ON b.id = l.be_id
+                INNER JOIN lophoc_chitiet AS c ON l.lop_hoc_chi_tiet_id = c.id
+                INNER JOIN nienkhoa as n ON n.id = c.nien_khoa_id
+                WHERE n.id = {$nien_khoa}
+                AND l.lop_hoc_chi_tiet_id = {$lop}
+                GROUP BY b.id";
+
+    $query = mysqli_query($dbc, $str);
+    $result = array();
+
+    if (mysqli_num_rows($query) > 0)
+    {
+        $index = 1;
+        while ($row = mysqli_fetch_array($query)){
+            $result[] = array (
+                'lop_hoc_id'    => $row['lop_hoc_id'],
+                'ngay_thanh_toan'      => date_format(date_create($row['ngay_thanh_toan']),'d/m/Y'),
+                'nien_khoa_id'  => $row['nien_khoa_id'],
+                'hoc_phi'       => number_format((float)$row['hoc_phi']),
+                'ten_nien_khoa' => $row['ten_nien_khoa'],
+                'be_id'    => $row['be_id'],
+                'ten'      => $row['ten'],
+                'ngaysinh' => date_format(date_create($row['ngaysinh']),'d/m/Y'),
+                'gioitinh' => ($row['gioitinh'] == 1) ? "Nam" : "Nữ",
+                'tencha'  => $row['tencha'],
+                'sdtcha'   => $row['sdtcha'],
+                'tenme'   => $row['tenme'],
+                'sdtme'    => $row['sdtme'],
+                'diachi'   => $row['diachi'],
+                'chieucao' => $row['chieucao'],
+                'mo_ta'    => $row['mo_ta'],
+                'matracuu'    => $row['matracuu'],
+                'trangthai'    => $row['trangthai'],
+            );
+        }
+    }
+    echo json_encode($result);
+}
