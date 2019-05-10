@@ -5,7 +5,8 @@ include "../../inc/myfunction.php";
 
 if(isset($_POST['get_data_lop_hoc'])) {
     $id_nien_khoa = (int)$_POST['id_nien_khoa'];
-    $query = mysqli_query($dbc, "SELECT * FROM lophoc_chitiet WHERE nien_khoa_id = {$id_nien_khoa}");
+    $query = mysqli_query($dbc, "SELECT lophoc_chitiet.id, lophoc_chitiet.mo_ta, lophoc.id AS 'khoi_id' FROM lophoc_chitiet INNER JOIN lophoc ON lophoc_chitiet.lop_hoc_id = lophoc.id WHERE nien_khoa_id = {$id_nien_khoa}");
+
     $result = array();
 
     if (mysqli_num_rows($query) > 0)
@@ -13,7 +14,8 @@ if(isset($_POST['get_data_lop_hoc'])) {
         while ($row = mysqli_fetch_array($query)){
             $result[] = array(
                 'id' => $row['id'],
-                'mo_ta' => $row['mo_ta']
+                'mo_ta' => $row['mo_ta'],
+                'khoi_id' => $row['khoi_id']
             );
         }
     }
@@ -54,4 +56,16 @@ if(isset($_GET['load_list_be'])) {
         }
     }
     echo json_encode($result);
+}
+
+
+// Lấy thông tin học phí theo khôi
+if(isset($_GET['get_hoc_phi_theo_khoi'])) {
+    $nien_khoa = $_GET['nien_khoa'];
+    $khoi = $_GET['khoi'];
+//    echo "SELECT * FROM hoc_phi WHERE nien_khoa_id = {$nien_khoa} AND lop_hoc_id = {$khoi}";
+    $query = mysqli_query($dbc, "SELECT * FROM hoc_phi WHERE nien_khoa_id = {$nien_khoa} AND lop_hoc_id = {$khoi}");
+    $result = mysqli_fetch_object($query);
+    echo json_encode($result);
+
 }

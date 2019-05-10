@@ -154,6 +154,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                 <thead>
                                 <tr>
                                     <th></th>
+                                    <th>STT</th>
                                     <th>Khối</th>
                                     <th>Niên khóa</th>
                                     <th>Học phí</th>
@@ -183,9 +184,10 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
         var table;
         $.ajax({
             type: "GET",
-            url: 'admin-be-xuly.php?load_list_be=1',
+            url: 'admin-quan-ly-hoc-phi-xu-ly.php?load_list_hoc_phi=1',
             success: function (result) {
                 var data = JSON.parse(result);
+                console.log(data);
                 table = $('#tripRevenue').DataTable({
                     language: {
                         "lengthMenu": "Hiển thị _MENU_ bé",
@@ -201,29 +203,36 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 1, className: 'dt-body-left' },
-                        { targets: 4, className: 'dt-body-left' },
-                        { targets: 5, className: 'dt-body-left' },
+                        { targets: 0, data: null },
+                        { targets: 1, className: 'dt-body-center' },
+                        { targets: 2, className: 'dt-body-left' },
+                        { targets: 4, className: 'dt-body-right' },
                         { targets: 6, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
                     ],
                     columns: [
                         {
-                            "className":      'details-control',
-                            "orderable":      false,
-                            "data":           null,
-                            "defaultContent": '',
-                            "width": "30px"
+                            className:      'details-control',
+                            orderable:      false,
+                            data:           null,
+                            defaultContent: '',
+                            width: "30px"
                         },
-                        { data: 'ten' },
-                        { data: 'gioitinh' },
-                        { data: 'ngaysinh' },
-                        { data: 'mo_ta' },
-                        { data: 'diachi' },
-                        { "width": "50px" },
-                    ]
+                        { data: null, width: '30px' },
+                        { data: 'ten_lop' },
+                        { data: 'ten_nien_khoa', width: '130px' },
+                        { data: 'so_tien' },
+                        { data: 'ngay_tao' },
+                        { width: '50px' },
+                    ],
+                    order: [[ 1, 'asc' ]],
                 });
 
-                // table = $('#tripRevenue').dataTable();
+                // PHẦN THỨ TỰ TABLE
+                table.on( 'order.dt search.dt', function () {
+                    table.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                        cell.innerHTML = i+1;
+                    } );
+                } ).draw();
             }
         });
 
