@@ -553,23 +553,23 @@
            $('.select-nhannien-add').val("").trigger('change');
        });
 
-        // $('#example').DataTable({
-        //     columns: [
-        //         {
-        //             "className":      'details-control',
-        //             "orderable":      false,
-        //             "data":           null,
-        //             "defaultContent": '',
-        //         },
-        //         { data: 'ten' },
-        //         { data: 'ngaysinh' },
-        //         { data: 'gioitinh' },
-        //         { data: 'chieucao' },
-        //         { data: 'cannang' },
-        //         { data: 'sdtcha' },
-        //         { data: 'sdtme' },
-        //     ],
-        // });
+        $('#example').DataTable({
+            columns: [
+                {
+                    "className":      'details-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": '',
+                },
+                { data: 'ten' },
+                { data: 'ngaysinh' },
+                { data: 'gioitinh' },
+                { data: 'chieucao' },
+                { data: 'cannang' },
+                { data: 'sdtcha' },
+                { data: 'sdtme' },
+            ],
+        });
 
 
         function show_list_be(id_lop) {
