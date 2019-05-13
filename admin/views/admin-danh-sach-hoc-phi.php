@@ -37,6 +37,12 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
 ?>
 
+<style>
+    .action-icon {
+        font-size: 15px !important;
+        color: #5A6169;
+    }
+</style>
 
 
 <script>
@@ -140,7 +146,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                                     <th>Lớp</th>
                                     <th>Niên khóa</th>
                                     <th>Thanh toán</th>
-                                    <th></th>
+                                    <th>In</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -249,7 +255,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         { data: 'ten_lop' },
                         { data: 'ten_nien_khoa', width: '130px' },
                         { data: 'so_tien' },
-                        { data: 'ngay_tao' },
+                        { data: 'ngay_tao', width: '100px' },
                         { width: '50px' },
                     ],
                     order: [[ 1, 'asc' ]],
@@ -386,6 +392,25 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
             })
         });
 
+        $('select[name="thanh_toan"]').change(function () {
+            var loc_nien_khoa = $('select[name="loc_nien_khoa"]').find('option:selected').data('id');
+            var lop_hoc = $('select[name="loc_lop_hoc"]').val();
+            $.ajax({
+                type: "GET",
+                url: 'admin-quan-ly-hoc-phi-xu-ly.php?danh_sach_hoc_phi=1&loc_nien_khoa=' + loc_nien_khoa + '&loc_lop_hoc=' + lop_hoc + '&thanh_toan=' + $(this).val(),
+                success: function (result) {
+                    var data = JSON.parse(result);
+                    if(data.length > 0) {
+                        $('#table-hoc-phi').dataTable().fnClearTable();
+                        $('#table-hoc-phi').dataTable().fnAddData(data);
+                    }
+                    else {
+                        $('#table-hoc-phi').dataTable().fnClearTable();
+                    }
+                }
+            })
+        });
+
         function get_data_lop_hoc_theo_nien_khoa(id_nien_khoa) {
             $.ajax({
                 type: "POST",
@@ -437,6 +462,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         { targets: 0, data: null },
                         { targets: 1, className: 'dt-body-center' },
                         { targets: 2, className: 'dt-body-left' },
+                        { targets: 3, className: 'dt-body-left' },
                         { targets: 4, className: 'dt-body-center' },
                         // { targets: 5, className: 'dt-body-right' },
                         { targets: 6, data: null, defaultContent: '<a style="cursor: pointer" class="print-old"><i class="material-icons action-icon">print</i></a>' },
@@ -449,7 +475,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         { data: 'ten_nien_khoa' },
                         {
                             data:   "trangthai",
-                            width: "80px",
+                            width: "100px",
                             render: function ( data, type, row ) {
                                 if ( type === 'display' ) {
                                     return '<input type="checkbox" class="editor-active">';

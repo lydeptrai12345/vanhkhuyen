@@ -59,6 +59,8 @@ if(isset($_POST['add'])) {
 if(isset($_GET['danh_sach_hoc_phi'])) {
     $nien_khoa = $_GET['loc_nien_khoa'];
     $lop = (isset($_GET['loc_lop_hoc']) && $_GET['loc_lop_hoc'] > 0) ? $_GET['loc_lop_hoc'] : 0;
+    $thanh_toan = (isset($_GET['$thanh_toan']) && $_GET['$thanh_toan'] > 0) ? $_GET['$thanh_toan'] : 0;
+
     $str = "SELECT
             *,
             (SELECT so_tien FROM hoc_phi WHERE hoc_phi.nien_khoa_id = {$nien_khoa} AND hoc_phi.lop_hoc_id = c.lop_hoc_id LIMIT 1) AS 'hoc_phi',	
@@ -69,7 +71,11 @@ if(isset($_GET['danh_sach_hoc_phi'])) {
                 INNER JOIN lophoc_chitiet AS c ON l.lop_hoc_chi_tiet_id = c.id
                 INNER JOIN nienkhoa as n ON n.id = c.nien_khoa_id
                 WHERE n.id = {$nien_khoa} ";
+
     if ($lop > 0) $str .= "AND l.lop_hoc_chi_tiet_id = {$lop}";
+
+    if($thanh_toan > 0) $str .= "AND ngay_thanh_toan <> NULL";
+
     $str .= "GROUP BY b.id";
 
     $query = mysqli_query($dbc, $str);
