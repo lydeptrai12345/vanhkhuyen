@@ -128,8 +128,9 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                             <div class="form-group col-md-3">
                                 <label class="text-left">Thanh toán</label>
                                 <select name="thanh_toan" id="" class="form-control">
-                                    <option value="0">Chưa thanh toán</option>
+                                    <option value="0">Tất cả</option>
                                     <option value="1">Đã thanh toán</option>
+                                    <option value="2">Chưa thanh toán</option>
                                 </select>
                             </div>
                             <button id="btn-bo-loc" type="submit" class="hidden"></button>

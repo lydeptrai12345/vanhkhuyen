@@ -59,7 +59,7 @@ if(isset($_POST['add'])) {
 if(isset($_GET['danh_sach_hoc_phi'])) {
     $nien_khoa = $_GET['loc_nien_khoa'];
     $lop = (isset($_GET['loc_lop_hoc']) && $_GET['loc_lop_hoc'] > 0) ? $_GET['loc_lop_hoc'] : 0;
-    $thanh_toan = (isset($_GET['$thanh_toan']) && $_GET['$thanh_toan'] > 0) ? $_GET['$thanh_toan'] : 0;
+    $thanh_toan = (isset($_GET['thanh_toan'])) ? (int)$_GET['thanh_toan'] : 0;
 
     $str = "SELECT
             *,
@@ -74,9 +74,11 @@ if(isset($_GET['danh_sach_hoc_phi'])) {
 
     if ($lop > 0) $str .= "AND l.lop_hoc_chi_tiet_id = {$lop}";
 
-    if($thanh_toan > 0) $str .= "AND ngay_thanh_toan <> NULL";
+//    if ($thanh_toan > 0) $str .= " AND ngay_thanh_toan <> NULL";
+//    else $str .= " AND ngay_thanh_toan == NULL";
 
-    $str .= "GROUP BY b.id";
+    $str .= " GROUP BY b.id";
+//    echo $str;
 
     $query = mysqli_query($dbc, $str);
     $result = array();
@@ -85,28 +87,82 @@ if(isset($_GET['danh_sach_hoc_phi'])) {
     {
         $index = 1;
         while ($row = mysqli_fetch_array($query)){
-            $result[] = array (
-                'lop_hoc_id'    => $row['lop_hoc_id'],
-                'ngay_thanh_toan' => $row['ngay_thanh_toan'],
-                'nien_khoa_id'  => $row['nien_khoa_id'],
-                'hoc_phi'       => number_format((float)$row['hoc_phi']),
-                'ten_nien_khoa' => $row['ten_nien_khoa'],
-                'be_id'    => $row['be_id'],
-                'ten'      => $row['ten'],
-                'ngaysinh' => ($row['ngaysinh']) ? date_format(date_create($row['ngaysinh']),'d/m/Y') : 0,
-                'gioitinh' => ($row['gioitinh'] == 1) ? "Nam" : "Nữ",
-                'tencha'  => $row['tencha'],
-                'sdtcha'   => $row['sdtcha'],
-                'tenme'   => $row['tenme'],
-                'sdtme'    => $row['sdtme'],
-                'diachi'   => $row['diachi'],
-                'chieucao' => $row['chieucao'],
-                'mo_ta'    => $row['mo_ta'],
-                'diachi'    => $row['diachi'],
-                'matracuu'    => $row['matracuu'],
-                'lop_hoc_chi_tiet_id'    => $row['lop_hoc_chi_tiet_id'],
-                'trangthai'    => ($row['ngay_thanh_toan']) ? 1 : 0,
-            );
+//            echo empty($row['ngay_thanh_toan']) ? "true" : "false";
+            if($thanh_toan == 1 && !empty($row['ngay_thanh_toan'])) {
+                echo 1;
+                $result[] = array (
+                    'lop_hoc_id'    => $row['lop_hoc_id'],
+                    'ngay_thanh_toan' => $row['ngay_thanh_toan'],
+                    'nien_khoa_id'  => $row['nien_khoa_id'],
+                    'hoc_phi'       => number_format((float)$row['hoc_phi']),
+                    'ten_nien_khoa' => $row['ten_nien_khoa'],
+                    'be_id'    => $row['be_id'],
+                    'ten'      => $row['ten'],
+                    'ngaysinh' => ($row['ngaysinh']) ? date_format(date_create($row['ngaysinh']),'d/m/Y') : 0,
+                    'gioitinh' => ($row['gioitinh'] == 1) ? "Nam" : "Nữ",
+                    'tencha'  => $row['tencha'],
+                    'sdtcha'   => $row['sdtcha'],
+                    'tenme'   => $row['tenme'],
+                    'sdtme'    => $row['sdtme'],
+                    'diachi'   => $row['diachi'],
+                    'chieucao' => $row['chieucao'],
+                    'mo_ta'    => $row['mo_ta'],
+                    'diachi'    => $row['diachi'],
+                    'matracuu'    => $row['matracuu'],
+                    'lop_hoc_chi_tiet_id'    => $row['lop_hoc_chi_tiet_id'],
+                    'trangthai'    => ($row['ngay_thanh_toan']) ? 1 : 0,
+                );
+            }
+            else if($thanh_toan == 2 && empty($row['ngay_thanh_toan'])) {
+                echo 2;
+                $result[] = array (
+                    'lop_hoc_id'    => $row['lop_hoc_id'],
+                    'ngay_thanh_toan' => $row['ngay_thanh_toan'],
+                    'nien_khoa_id'  => $row['nien_khoa_id'],
+                    'hoc_phi'       => number_format((float)$row['hoc_phi']),
+                    'ten_nien_khoa' => $row['ten_nien_khoa'],
+                    'be_id'    => $row['be_id'],
+                    'ten'      => $row['ten'],
+                    'ngaysinh' => ($row['ngaysinh']) ? date_format(date_create($row['ngaysinh']),'d/m/Y') : 0,
+                    'gioitinh' => ($row['gioitinh'] == 1) ? "Nam" : "Nữ",
+                    'tencha'  => $row['tencha'],
+                    'sdtcha'   => $row['sdtcha'],
+                    'tenme'   => $row['tenme'],
+                    'sdtme'    => $row['sdtme'],
+                    'diachi'   => $row['diachi'],
+                    'chieucao' => $row['chieucao'],
+                    'mo_ta'    => $row['mo_ta'],
+                    'diachi'    => $row['diachi'],
+                    'matracuu'    => $row['matracuu'],
+                    'lop_hoc_chi_tiet_id'    => $row['lop_hoc_chi_tiet_id'],
+                    'trangthai'    => ($row['ngay_thanh_toan']) ? 1 : 0,
+                );
+            }
+            else {
+                echo 3;
+                $result[] = array (
+                    'lop_hoc_id'    => $row['lop_hoc_id'],
+                    'ngay_thanh_toan' => $row['ngay_thanh_toan'],
+                    'nien_khoa_id'  => $row['nien_khoa_id'],
+                    'hoc_phi'       => number_format((float)$row['hoc_phi']),
+                    'ten_nien_khoa' => $row['ten_nien_khoa'],
+                    'be_id'    => $row['be_id'],
+                    'ten'      => $row['ten'],
+                    'ngaysinh' => ($row['ngaysinh']) ? date_format(date_create($row['ngaysinh']),'d/m/Y') : 0,
+                    'gioitinh' => ($row['gioitinh'] == 1) ? "Nam" : "Nữ",
+                    'tencha'  => $row['tencha'],
+                    'sdtcha'   => $row['sdtcha'],
+                    'tenme'   => $row['tenme'],
+                    'sdtme'    => $row['sdtme'],
+                    'diachi'   => $row['diachi'],
+                    'chieucao' => $row['chieucao'],
+                    'mo_ta'    => $row['mo_ta'],
+                    'diachi'    => $row['diachi'],
+                    'matracuu'    => $row['matracuu'],
+                    'lop_hoc_chi_tiet_id'    => $row['lop_hoc_chi_tiet_id'],
+                    'trangthai'    => ($row['ngay_thanh_toan']) ? 1 : 0,
+                );
+            }
         }
     }
     echo json_encode($result);
