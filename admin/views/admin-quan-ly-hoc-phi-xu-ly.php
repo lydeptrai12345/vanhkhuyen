@@ -54,11 +54,13 @@ if(isset($_POST['add'])) {
 }
 
 
-// ĐÓng tiền học phí
+// Dạm sách học phí
 
 if(isset($_GET['danh_sach_hoc_phi'])) {
     $nien_khoa = $_GET['loc_nien_khoa'];
     $lop = (isset($_GET['loc_lop_hoc']) && $_GET['loc_lop_hoc'] > 0) ? $_GET['loc_lop_hoc'] : 0;
+    $thanh_toan = (isset($_GET['$thanh_toan']) && $_GET['$thanh_toan'] > 0) ? $_GET['$thanh_toan'] : 0;
+
     $str = "SELECT
             *,
             (SELECT so_tien FROM hoc_phi WHERE hoc_phi.nien_khoa_id = {$nien_khoa} AND hoc_phi.lop_hoc_id = c.lop_hoc_id LIMIT 1) AS 'hoc_phi',	
@@ -69,7 +71,11 @@ if(isset($_GET['danh_sach_hoc_phi'])) {
                 INNER JOIN lophoc_chitiet AS c ON l.lop_hoc_chi_tiet_id = c.id
                 INNER JOIN nienkhoa as n ON n.id = c.nien_khoa_id
                 WHERE n.id = {$nien_khoa} ";
+
     if ($lop > 0) $str .= "AND l.lop_hoc_chi_tiet_id = {$lop}";
+
+    if($thanh_toan > 0) $str .= "AND ngay_thanh_toan <> NULL";
+
     $str .= "GROUP BY b.id";
 
     $query = mysqli_query($dbc, $str);
@@ -121,4 +127,27 @@ if(isset($_POST['dong_tien'])) {
     else{
         echo -1;
     }
+}
+
+//Load list lop hoc theo nien khoa
+if(isset($_POST['load_list_lop_hoc'])) {
+    $nien_khoa = isset($_POST['nien_khoa']) ? (int)$_POST['nien_khoa'] : 0;
+    $str = "SELECT lophoc_chitiet.id,lophoc_chitiet.mo_ta,lophoc.id AS 'khoi_id' FROM lophoc_chitiet
+	        INNER JOIN lophoc ON lophoc_chitiet.lop_hoc_id = lophoc.id WHERE lophoc_chitiet.nien_khoa_id  = {$nien_khoa}";
+
+    $query = mysqli_query($dbc, $str);
+    $result = array();
+
+    if (mysqli_num_rows($query) > 0)
+    {
+        $index = 1;
+        while ($row = mysqli_fetch_array($query)){
+            $result[] = array (
+                'id'    => $row['id'],
+                'mo_ta'    => $row['mo_ta'],
+                'khoi_id'  => $row['khoi_id']
+            );
+        }
+    }
+    echo json_encode($result);
 }
