@@ -57,8 +57,6 @@ if(isset($_GET['load_list_be'])) {
     }
     echo json_encode($result);
 }
-
-
 // Lấy thông tin học phí theo khôi
 if(isset($_GET['get_hoc_phi_theo_khoi'])) {
     $nien_khoa = $_GET['nien_khoa'];

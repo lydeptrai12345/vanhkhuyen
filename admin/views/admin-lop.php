@@ -349,112 +349,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-0 pb-3 text-center">
-                    <table class="table mb-0">
+                <div class="card-body p-0 text-center" style="margin: 30px 0">
+                    <!--                    copy cai nay -->
+                    <div class="row" style="padding: 5px 20px;">
+                        <div class="col-md-12">
+                            <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên lớp</th>
+                                    <th>Niên khóa</th>
+                                    <th>Số lượng giáo viên</th>
+                                    <th>Số lượng bé</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                        <thead class="bg-light">
-                        <tr>
-                            <th scope="col" class="border-0" style="width: 100px">STT</th>
-                            <th scope="col" class="border-0 text-left">Tên lớp</th>
-                            <th scope="col" class="border-0" style="width: 120px">Niên khóa</th>
-                            <th scope="col" class="border-0" style="width: 120px">SL NV</th>
-                            <th scope="col" class="border-0" style="width: 120px">SL bé</th>
-                            <th scope="col" class="border-0" style="width: 120px">Thao tác</th>
-                        </tr>
-                        </thead>
-                        <?php
-                        //đặt số bản ghi cần hiện thị
-                        $limit=10;
-                        //Xác định vị trí bắt đầu
-                        if(isset($_GET['s']) && filter_var($_GET['s'],FILTER_VALIDATE_INT,array('min_range'=>1)))
-                        {
-                            $start=$_GET['s'];
-                        }
-                        else
-                        {
-                            $start=0;
-                        }
-                        if(isset($_GET['p']) && filter_var($_GET['p'],FILTER_VALIDATE_INT,array('min_range'=>1)))
-                        {
-                            $per_page=$_GET['p'];
-                        }
-                        else
-                        {
-                            //Nếu p không có, thì sẽ truy vấn CSDL để tìm xem có bao nhiêu page
-                            $query_pg="SELECT COUNT(id) FROM lophoc_chitiet";
-                            $results_pg=mysqli_query($dbc,$query_pg);
-                            list($record)=mysqli_fetch_array($results_pg,MYSQLI_NUM);
-                            //Tìm số trang bằng cách chia số dữ liệu cho số limit
-                            if($record > $limit)
-                            {
-                                $per_page=ceil($record/$limit);
-                            }
-                            else
-                            {
-                                $per_page=1;
-                            }
-                        }
-                        $query = "SELECT l.id,l.mo_ta, n.ten_nien_khoa, 
-                                    (SELECT COUNT(id) FROM lophoc_be WHERE l.id = lophoc_be.lop_hoc_chi_tiet_id)	AS sl_be,
-                                    (SELECT COUNT(id) FROM lophoc_nhanvien WHERE l.id = lophoc_nhanvien.lop_hoc_chi_tiet_id) AS sl_nhan_vien
-                                  FROM lophoc_chitiet AS l INNER JOIN nienkhoa AS n ON l.nien_khoa_id = n.id 
-                                  WHERE n.ten_nien_khoa = '{$nien_khoa}'
-                                  ORDER BY id ASC LIMIT {$start},{$limit}
-                                ";
-
-                        $results = mysqli_query($dbc, $query);
-                        foreach ($results as $key => $item)
-                        {
-                            ?>
-                            <tbody>
-                            <tr>
-                                <td><?php echo ($key + 1) ?></td>
-                                <td class="text-left"><?php echo $item['mo_ta'] ?></td>
-                                <td><?php echo $item['ten_nien_khoa']?></td>
-                                <td><?php echo $item['sl_nhan_vien']?></td>
-                                <td><a class="btn-list-be" data-id="<?php echo $item['id']?>" style="cursor: pointer"><?php echo $item['sl_be']?></a></td>
-                                <td>
-                                    <a onclick="show_form_edit(<?php echo $item['id']?>)" class="btn-edit" style="cursor: pointer" title="Cập nhật lớp học">
-                                        <i class="material-icons action-icon">edit</i>
-                                    </a>
-                                    <a onclick="delete_lop_hoc(<?php echo $item['id']?>)" class="btn-remove" style="cursor: pointer" title="Xóa lớp học"><i class="material-icons action-icon">delete_outline</i></a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        <?php } ?>
-                    </table>
-                    <?php
-                    echo "<nav aria-label='Page navigation example'>";
-                    echo "<ul class='pagination justify-content-center'>";
-                    if($per_page > 1)
-                    {
-                        $current_page=($start/$limit) + 1;
-                        //Nếu không phải là trang đầu thì hiện thị trang trước
-                        if($current_page !=1)
-                        {
-                            echo "<li class='page-item' class='float-left'><a class='page-link' href='admin-lop.php?s=".($start - $limit)."&p={$per_page}'>Trở về</a></li>";
-                        }
-                        //hiện thị những phần còn lại của trang
-                        for ($i=1; $i <= $per_page ; $i++)
-                        {
-                            if($i != $current_page)
-                            {
-                                echo "<li class='page-item'><a class='page-link' href=admin-lop.php?s=".($limit *($i - 1))."&p={$per_page}'>{$i}</a></li>";
-                            }
-                            else
-                            {
-                                echo "<li class='page-item' class='active'><a class='page-link'>{$i}</a></li>";
-                            }
-                        }
-                        //Nếu không phải trang cuối thì hiện thị nút next
-                        if($current_page != $per_page)
-                        {
-                            echo "<li class='page-item' ><a class='page-link' href='admin-lop.php?s=".($start + $limit)."&p={$per_page}'>Tiếp</a></li>";
-                        }
-                    }
-                    echo "</ul>";
-                    echo "</nav>"
-                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--  end copy cai nay -->
                 </div>
                 <!-- End danh sách loại tin -->
             </div>
@@ -489,16 +405,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Doe</td>
-                            <td>Doe</td>
-                            <td>Doe</td>
-                            <td>Doe</td>
-                            <td>Doe</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
-                            <td>john@example.com</td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -553,24 +459,102 @@
            $('.select-nhannien-add').val("").trigger('change');
        });
 
-        $('#example').DataTable({
-            columns: [
-                {
-                    "className":      'details-control',
-                    "orderable":      false,
-                    "data":           null,
-                    "defaultContent": '',
-                },
-                { data: 'ten' },
-                { data: 'ngaysinh' },
-                { data: 'gioitinh' },
-                { data: 'chieucao' },
-                { data: 'cannang' },
-                { data: 'sdtcha' },
-                { data: 'sdtme' },
-            ],
-        });
+        var tb = $('#example').DataTable({
+            language: {
+                "lengthMenu": "Hiển thị _MENU_ bé/ trang",
+                "zeroRecords": "Không tìm thấy kết quả",
+                "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
+                "infoEmpty": "Không có dữ liệu",
+                "infoFiltered": "(Được lọc từ _MAX_ bé)",
+                "search": "Tìm kiếm",
+                "paginate": {
+                    "previous": "Trở về",
+                    "next": "Tiếp"
+                }
+            },
 
+        });
+        // PHẦN THỨ TỰ TABLE
+        tb.on( 'order.dt search.dt', function () {
+            tb.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+
+        $.ajax({
+            type: "GET",
+            url: 'admin-xuly-lop.php?load_list_lop=1',
+            success: function (result) {
+                var data = JSON.parse(result);
+                table_lop = $('#tripRevenue').DataTable({
+                    language: {
+                        "lengthMenu": "Hiển thị _MENU_ lớp/ trang",
+                        "zeroRecords": "Không tìm thấy kết quả",
+                        "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
+                        "infoEmpty": "Không có dữ liệu",
+                        "infoFiltered": "(Được lọc từ _MAX_ lớp)",
+                        "search": "Tìm kiếm",
+                        "paginate": {
+                            "previous": "Trở về",
+                            "next": "Tiếp"
+                        }
+                    },
+                    data: data,
+                    columnDefs: [
+                        { targets: 0, data: null },
+                        { targets: 1, className: 'dt-body-center' },
+                        { targets: 2, className: 'dt-body-center' },
+                        {
+                            targets: 4,
+                            data: null,
+                            defaultContent: '<a class="show" data-action="3" style="cursor: pointer" title="Xem danh sách lớp"><span></span> <i class="glyphicon glyphicon-list-alt"></i></a> '
+                        },
+                        {
+                            targets: 5,
+                            data: null,
+                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật bằng cấp"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" style="cursor: pointer" title="Xóa bằng cấp"><i class="material-icons action-icon">delete_outline</i></a>'
+                        }
+                    ],
+                    columns: [
+                        { width: "30px" },
+                        { data: 'mo_ta' },
+                        { data: 'ten_nien_khoa',},
+                        { data: 'sl_nhan_vien',},
+                        { data: 'null',},
+                        { width: "60px" }
+                    ],
+                    rowCallback: function ( row, data ) {
+                        // Set the checked state of the checkbox in the table
+                        $('span', row).html(data.sl_be);
+                    }
+                });
+
+                // PHẦN THỨ TỰ TABLE
+                table_lop.on( 'order.dt search.dt', function () {
+                    table_lop.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                        cell.innerHTML = i+1;
+                    } );
+                } ).draw();
+
+
+                table_lop.on( 'click', 'a', function () {
+                    var data = table_lop.row( $(this).parents('tr') ).data();
+                    console.log(data);
+                    if($(this).data('action') == 1) {
+                        // window.location.href = "admin-lop-sua.php?id=" + data.bang_cap_id;
+                        show_form_edit(data.id)
+                        // $('#myModal').modal('show');
+                    }
+                    else if ($(this).data('action') == 2){
+                        delete_lop_hoc(data.id)
+                    }
+                    else if ($(this).data('action') == 3){
+                        show_list_be(data.id)
+                    }
+                });
+            }
+        });
 
         function show_list_be(id_lop) {
             console.log(id_lop);
@@ -769,6 +753,7 @@
                 location.reload();
             }
         });
+
     }
 </script>
 

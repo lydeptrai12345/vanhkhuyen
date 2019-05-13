@@ -4,6 +4,7 @@
 <!-- End header-->
 
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
+<!--<link rel="stylesheet" href="../../css/bootstrap.min.css">-->
 <script src="../js/datatables.min.js"></script>
 <script src="../js/printThis.js"></script>
 
@@ -245,7 +246,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
             <div class="row">
                 <div class="col-md-6">
                     <h6 class="m-b-5 p-b-5">TRƯỜNG MẦM NON VÀNH KHUYÊN</h6>
-                    <p class="m-b-5 p-b-5">Địa chỉ: sfsfsdffsdf</p>
+                    <p class="m-b-5 p-b-5">Địa chỉ: 256</p>
                     <p class="m-b-5 p-b-5">Website: sfsfsdffsdf</p>
                 </div>
                 <div class="col-md-12" style="margin-top: 20px">
@@ -588,7 +589,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
             $('#print-hoc-phi').printThis({
                 importCSS: false,
-                loadCSS: [ "../css/bootstrap.min.css", "../admin/css/print-hoa-don.css"],
+                loadCSS: [ "../mamnonvanhkhuyen/css/bootstrap.min.css", "../mamnonvanhkhuyen/admin/css/print-hoa-don.css"],
             });
         }
         

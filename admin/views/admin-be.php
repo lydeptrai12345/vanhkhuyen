@@ -47,7 +47,14 @@ $data_be = mysqli_query( $dbc, $str );
         width: 50%;tinhtrangsuckhoe
     }
 </style>
-
+<?php
+//Kiểm tra ID có phải là kiểu số không, filter_var kiem tra có thuộc tính trim sẽ loại bỏ khoảng trắng
+if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_VALIDATE_INT,array('min_range'=>1)))
+{
+    $query_nd = "UPDATE be SET trangthai = !trangthai WHERE id = {$_GET['changeStatusId']}";
+    $results_nd= mysqli_query($dbc, $query_nd);
+}
+?>
 <div class="main-content-container container-fluid px-4" style="margin-top:10px">
 	<div class="row">
 		<div class="col">
@@ -208,6 +215,7 @@ $data_be = mysqli_query( $dbc, $str );
                                     <th>Ngày sinh</th>
                                     <th>Lớp</th>
                                     <th>Địa chỉ</th>
+                                    <th>Trạng thái</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -250,7 +258,7 @@ $data_be = mysqli_query( $dbc, $str );
                         { targets: 1, className: 'dt-body-left' },
                         { targets: 4, className: 'dt-body-left' },
                         { targets: 5, className: 'dt-body-left' },
-                        { targets: 6, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật bé"><i class="material-icons action-icon">edit</i></a>' },
+                        { targets: 7, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật bé"><i class="material-icons action-icon">edit</i></a>' },
                     ],
                     columns: [
                         {
@@ -265,9 +273,26 @@ $data_be = mysqli_query( $dbc, $str );
                         { data: 'ngaysinh' },
                         { data: 'mo_ta' },
                         { data: 'diachi' },
-                        { "width": "50px" },
-                    ]
+                        {
+                            data:   "trangthai",
+                            width: "80px",
+                            render: function ( data, type, row ) {
+                                if ( type === 'display' ) {
+                                    return '<input type="checkbox" class="editor-active">';
+                                }
+                                return data;
+                            },
+                            className: "dt-body-center"
+                        },
+                        { data: '' },
+                    ],
+                    order: [[ 1, 'asc' ]],
+                    rowCallback: function ( row, data ) {
+                        // Set the checked state of the checkbox in the table
+                        $('input.editor-active', row).prop( 'checked', data.trangthai == 1 );
+                    }
                 });
+
 
                 // table = $('#tripRevenue').dataTable();
             }
@@ -325,7 +350,20 @@ $data_be = mysqli_query( $dbc, $str );
             var data = table.row( $(this).parents('tr') ).data();
             console.log(data);
         } );
+        $('#tripRevenue tbody').on( 'change', 'input.editor-active', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            if(confirm('Bạn có chắc chắn muốn cập nhật trạng thái của bé vừa chọn?')) {
+                $.ajax( {
+                    type: "GET",
+                    url: "admin-be.php?&changeStatusId=" + data.be_id,
+                    success: function ( result ) {
+                        window.location.reload();
+                    }
+                } );
+            }
+        } );
     });
+
 </script>
 
 <!-- Footer-->

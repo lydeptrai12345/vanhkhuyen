@@ -168,3 +168,32 @@ if(isset($_GET['load_list_be'])) {
         echo json_encode($result);
     }
 }
+
+
+
+if(isset($_GET['load_list_lop'])) {
+    $str = "SELECT l.id,l.mo_ta, n.ten_nien_khoa, 
+                                    (SELECT COUNT(id) FROM lophoc_be WHERE l.id = lophoc_be.lop_hoc_chi_tiet_id)	AS sl_be,
+                                    (SELECT COUNT(id) FROM lophoc_nhanvien WHERE l.id = lophoc_nhanvien.lop_hoc_chi_tiet_id) AS sl_nhan_vien
+                                  FROM lophoc_chitiet AS l INNER JOIN nienkhoa AS n ON l.nien_khoa_id = n.id 
+                                  ORDER BY id ASC
+                                ";
+
+    $query = mysqli_query($dbc, $str);
+    $result = array();
+
+    if (mysqli_num_rows($query) > 0)
+    {
+        $index = 1;
+        while ($row = mysqli_fetch_array($query)){
+            $result[] = array (
+                'id'    => $row['id'],
+                'mo_ta'      => $row['mo_ta'],
+                'ten_nien_khoa'  => $row['ten_nien_khoa'],
+                'sl_be'  => $row['sl_be'],
+                'sl_nhan_vien'   => $row['sl_nhan_vien'],
+            );
+        }
+    }
+    echo json_encode($result);
+}
