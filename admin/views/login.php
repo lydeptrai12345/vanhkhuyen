@@ -51,26 +51,26 @@ if(isset($_SESSION['uid']))
             }
             if(empty($errors))
             {
-                $query="SELECT id, ten_nguoi_dung, mat_khau, quyen FROM nguoidung WHERE ten_nguoi_dung='{$taikhoan}' AND mat_khau='{$matkhau}' AND ( quyen = 1 OR quyen = 2 )";
-                $result=mysqli_query($dbc,$query);
-                if(mysqli_num_rows($result)==1)
-                {
-                    list($id, $taikhoan, $matkhau, $quyen)=mysqli_fetch_array($result,MYSQLI_NUM);
-                    $_SESSION['uid']=$id;
-                    $_SESSION['username']=$taikhoan;
-                    $_SESSION['matkhau']=$matkhau;
-                    $_SESSION['quyen']=$quyen;
-					//clear temp file
-					$files = glob('../images/temp-image/*'); 
-					foreach($files as $file){ 
-					  if(is_file($file))
-						unlink($file); 
-					}
-                    header('Location: '.((isset($_GET['redirect']) && strlen(trim($_GET['redirect']))>0)?$_GET['redirect']:'index.php'));
-                }
-                else
-                {
-                    $message="<p class='text-danger'>Tài khoản hoặc mật khẩu không đúng</p>";
+                $query = "SELECT nguoidung.id, ten_nguoi_dung, mat_khau, quyen, ho_ten FROM nguoidung 
+                        INNER JOIN nhanvien ON nguoidung.nhan_vien_id = nhanvien.id
+                        WHERE ten_nguoi_dung='{$taikhoan}' AND mat_khau='{$matkhau}' AND ( quyen = 1 OR quyen = 2 )";
+                $result = mysqli_query($dbc, $query);
+                if (mysqli_num_rows($result) == 1) {
+                    list($id, $taikhoan, $matkhau, $quyen, $ho_ten) = mysqli_fetch_array($result, MYSQLI_NUM);
+                    $_SESSION['uid'] = $id;
+                    $_SESSION['username'] = $taikhoan;
+                    $_SESSION['ho_ten'] = $ho_ten;
+                    $_SESSION['matkhau'] = $matkhau;
+                    $_SESSION['quyen'] = $quyen;
+                    //clear temp file
+                    $files = glob('../images/temp-image/*');
+                    foreach ($files as $file) {
+                        if (is_file($file))
+                            unlink($file);
+                    }
+                    header('Location: ' . ((isset($_GET['redirect']) && strlen(trim($_GET['redirect'])) > 0) ? $_GET['redirect'] : 'index.php'));
+                } else {
+                    $message = "<p class='text-danger'>Tài khoản hoặc mật khẩu không đúng</p>";
                 }
             }
         }

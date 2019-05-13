@@ -96,6 +96,7 @@ if(isset($_GET['danh_sach_hoc_phi'])) {
                 'diachi'   => $row['diachi'],
                 'chieucao' => $row['chieucao'],
                 'mo_ta'    => $row['mo_ta'],
+                'diachi'    => $row['diachi'],
                 'matracuu'    => $row['matracuu'],
                 'lop_hoc_chi_tiet_id'    => $row['lop_hoc_chi_tiet_id'],
                 'trangthai'    => ($row['ngay_thanh_toan']) ? 1 : 0,

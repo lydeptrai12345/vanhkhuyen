@@ -73,6 +73,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
 <div class="main-content-container container-fluid px-4" style="margin-top:10px">
     <input id="nguoi_dung" type="hidden" value="<?php echo $_SESSION['uid']?>">
+    <input id="ho_ten_nguoi_dung" type="hidden" value="<?php echo $_SESSION['ho_ten']?>">
     <div class="row">
         <div class="col">
             <div class="card card-small mb-4">
@@ -240,11 +241,48 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
     </div>
 
     <div class="" style="display: none">
-        <div id="print-hoc-phi" class="">
-            <h1>aaaaaaaaaaa</h1>
-            <h1>aaaaaaaaaaa</h1>
-            <h1>aaaaaaaaaaa</h1>
-            <h1>aaaaaaaaaaa</h1>
+        <div id="print-hoc-phi" class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="m-b-5 p-b-5">TRƯỜNG MẦM NON VÀNH KHUYÊN</h6>
+                    <p class="m-b-5 p-b-5">Địa chỉ: sfsfsdffsdf</p>
+                    <p class="m-b-5 p-b-5">Website: sfsfsdffsdf</p>
+                </div>
+                <div class="col-md-12" style="margin-top: 20px">
+                    <h5 class="text-center">BIÊN LAI THU HỌC PHÍ</h5>
+                </div>
+                <div class="col-md-12" style="margin-top: 20px">
+                    <p class="content-hoa-don"><b>Họ tên người nộp: </b> <span class="nguoi-nop">Trần Thị Tủn</span></p>
+                    <p class="content-hoa-don"><b>Lớp: </b> <span class="ten-lop">Lớp mầm 1</span></p>
+                    <p class="content-hoa-don"><b>Địa chỉ: </b><span class="dia-chi"></span></p>
+                    <p class="content-hoa-don"><b>Lý do thu: </b>Đóng tiền học phí</p>
+                    <p class="content-hoa-don"><b>Số tiền: </b><span class="so-tien">10,000,000</span> VNĐ</p>
+                    <p class="content-hoa-don hinh-thuc"><b>Hình thức: </b>Thanh toán bằng tiền mặt</p>
+                </div>
+            </div>
+
+            <ul class="footer-hoa-don">
+                <li>
+                    <p class="content-hoa-don ngay-thanh-toan">Ngày 13 tháng 5 năm 2019</p>
+                    <p class="content-hoa-don "><b>Người thu tiền</b></p>
+                    <p class="content-hoa-don ">(Ký và ghi rõ họ tên)</p>
+                    <br><br><br>
+                    <p class="content-hoa-don" style="margin-top: 50px">
+                        <b> <span class="nguoi-thu-tien">Trần Thị Thu</span></b>
+                    </p>
+                </li>
+                <li>
+                    <div class="" style="float: right">
+                        <p class="content-hoa-don text-center ngay-thanh-toan">Ngày 13 tháng 5 năm 2019</p>
+                        <p class="content-hoa-don text-center"><b>Người nộp</b></p>
+                        <p class="content-hoa-don text-center">(Ký và ghi rõ họ tên)</p>
+                        <br><br><br>
+                        <p class="content-hoa-don text-center" style="padding-top: 50px">
+                            <b><span class="nguoi-nop">Trần Thị Tủn</span></b>
+                        </p>
+                    </div>
+                </li>
+            </ul>
         </div>
 
     </div>
@@ -512,11 +550,17 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
                     },
                     success: function ( result ) {
+                        $('.nguoi-nop').html(da.ten);
+                        $('.ten-lop').html(da.mo_ta);
+                        $('.dia-chi').html(da.diachi);
+                        $('.so-tien').html(da.hoc_phi);
+                        $('.nguoi-thu-tien').html($('#ho_ten_nguoi_dung').val());
                         if(result == "1")
                         {
-                            if (confirm("Thanh toán học phí thành công! Bạn có muốn in hóa đơn?")) {
-                                $('#print-hoc-phi').printThis();
-                            }
+                            $('#print-hoc-phi').printThis({
+                                importCSS: false,
+                                loadCSS: [ "../css/bootstrap.min.css", "../admin/css/print-hoa-don.css"],
+                            });
                         }
                         else alert("That bai")
                     }
