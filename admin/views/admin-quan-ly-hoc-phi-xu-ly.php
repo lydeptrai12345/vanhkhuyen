@@ -54,7 +54,7 @@ if(isset($_POST['add'])) {
 }
 
 
-// ĐÓng tiền học phí
+// Dạm sách học phí
 
 if(isset($_GET['danh_sach_hoc_phi'])) {
     $nien_khoa = $_GET['loc_nien_khoa'];
@@ -121,4 +121,27 @@ if(isset($_POST['dong_tien'])) {
     else{
         echo -1;
     }
+}
+
+//Load list lop hoc theo nien khoa
+if(isset($_POST['load_list_lop_hoc'])) {
+    $nien_khoa = isset($_POST['nien_khoa']) ? (int)$_POST['nien_khoa'] : 0;
+    $str = "SELECT lophoc_chitiet.id,lophoc_chitiet.mo_ta,lophoc.id AS 'khoi_id' FROM lophoc_chitiet
+	        INNER JOIN lophoc ON lophoc_chitiet.lop_hoc_id = lophoc.id WHERE lophoc_chitiet.nien_khoa_id  = {$nien_khoa}";
+
+    $query = mysqli_query($dbc, $str);
+    $result = array();
+
+    if (mysqli_num_rows($query) > 0)
+    {
+        $index = 1;
+        while ($row = mysqli_fetch_array($query)){
+            $result[] = array (
+                'id'    => $row['id'],
+                'mo_ta'    => $row['mo_ta'],
+                'khoi_id'  => $row['khoi_id']
+            );
+        }
+    }
+    echo json_encode($result);
 }

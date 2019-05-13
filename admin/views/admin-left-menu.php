@@ -267,6 +267,7 @@
 							<a class="list-group-item cus-collapse-item" href="admin-lop.php"><span class="glyphicon glyphicon-menu-right" style="top: 0.5px;margin-right: 5px;font-size: 12px"></span>Quản lý lớp</a>
 <!--							<a class="list-group-item cus-collapse-item" href="#"><span class="glyphicon glyphicon-menu-right" style="top: 0.5px;margin-right: 5px;font-size: 12px"></span>Quản lý năm học</a>-->
 							<a class="list-group-item cus-collapse-item" href="admin-quan-ly-hoc-phi.php"><span class="glyphicon glyphicon-menu-right" style="top: 0.5px;margin-right: 5px;font-size: 12px"></span>Quản lý học phí</a>
+							<a class="list-group-item cus-collapse-item" href="admin-danh-sach-hoc-phi.php"><span class="glyphicon glyphicon-menu-right" style="top: 0.5px;margin-right: 5px;font-size: 12px"></span>Danh sách học phí</a>
 						</ul>
 					</div>
 				</div>
