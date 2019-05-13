@@ -81,7 +81,7 @@ if(isset($_GET['danh_sach_hoc_phi'])) {
         while ($row = mysqli_fetch_array($query)){
             $result[] = array (
                 'lop_hoc_id'    => $row['lop_hoc_id'],
-                'ngay_thanh_toan' => ($row['ngay_thanh_toan']) ? date_format(date_create($row['ngay_thanh_toan']),'d/m/Y') : "",
+                'ngay_thanh_toan' => $row['ngay_thanh_toan'],
                 'nien_khoa_id'  => $row['nien_khoa_id'],
                 'hoc_phi'       => number_format((float)$row['hoc_phi']),
                 'ten_nien_khoa' => $row['ten_nien_khoa'],

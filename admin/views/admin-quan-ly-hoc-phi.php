@@ -492,7 +492,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         { targets: 2, className: 'dt-body-left' },
                         { targets: 4, className: 'dt-body-right' },
                         // { targets: 5, className: 'dt-body-right' },
-                        { targets: 6, data: null, defaultContent: '<a style="cursor: pointer"><i class="material-icons action-icon">print</i></a>' },
+                        { targets: 6, data: null, defaultContent: '<a style="cursor: pointer" class="print-old"><i class="material-icons action-icon">print</i></a>' },
                     ],
                     columns: [
                         { width: '30px' },
@@ -515,7 +515,9 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                     ],
                     order: [[ 1, 'asc' ]],
                     rowCallback: function ( row, data ) {
-                        // Set the checked state of the checkbox in the table
+                        if(data.trangthai == 1){
+                            $('input.editor-active', row).attr('disabled', 'disabled');
+                        }
                         $('input.editor-active', row).prop( 'checked', data.trangthai == 1 );
                     }
                 });
@@ -529,14 +531,9 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
             }
         });
 
-        $('#table-hoc-phi tbody').on( 'click', 'a', function () {
-            var data = table_hp.row( $(this).parents('tr') ).data();
-            console.log(data);
-        } );
-
         $('#table-hoc-phi tbody').on( 'change', 'input.editor-active', function () {
             var da = table_hp.row( $(this).parents('tr') ).data();
-            console.log(da)
+            // console.log(da)
             if(confirm('Bạn có chắc chắn muốn cập nhật trạng thái của nhân viên vừa chọn?')) {
                 $.ajax( {
                     type: "POST",
@@ -557,16 +554,44 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         $('.nguoi-thu-tien').html($('#ho_ten_nguoi_dung').val());
                         if(result == "1")
                         {
-                            $('#print-hoc-phi').printThis({
-                                importCSS: false,
-                                loadCSS: [ "../css/bootstrap.min.css", "../admin/css/print-hoa-don.css"],
-                            });
+                            da.ngay_thanh_toan = new Date();
+                            print_hoa_don(2, da)
                         }
                         else alert("That bai")
                     }
                 } );
             }
         } );
+        //print-old
+        $('#table-hoc-phi tbody').on( 'click', 'a.print-old', function () {
+            var da = table_hp.row( $(this).parents('tr') ).data();
+            console.log('aaaaa')
+            print_hoa_don(1, da);
+        });
+        
+        
+        //In hóa đơn
+        function print_hoa_don(type = 1, data) {
+            $('.nguoi-nop').html(data.ten);
+            $('.ten-lop').html(data.mo_ta);
+            $('.dia-chi').html(data.diachi);
+            $('.so-tien').html(data.hoc_phi);
+            $('.nguoi-thu-tien').html($('#ho_ten_nguoi_dung').val());
+
+            var date = new Date(data.ngay_thanh_toan);
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var ngay = 'Ngày ' + day + ' tháng ' + month + ' năm ' + year;
+
+            $('.ngay-thanh-toan').html(ngay);
+
+            $('#print-hoc-phi').printThis({
+                importCSS: false,
+                loadCSS: [ "../css/bootstrap.min.css", "../admin/css/print-hoa-don.css"],
+            });
+        }
+        
     });
 </script>
 
