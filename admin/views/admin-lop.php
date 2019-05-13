@@ -391,7 +391,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <table id="example" class="table table-bordered">
+                    <table id="example" class="table table-bordered" style="width: 100% !important;">
                         <thead>
                         <tr>
                             <th>STT</th>
@@ -472,6 +472,17 @@
                     "next": "Tiếp"
                 }
             },
+            data: null,
+            columns: [
+                { data: null, width: "30px" },
+                { data: 'ten' },
+                { data: 'ngaysinh' },
+                { data: 'gioitinh', width: "100px" },
+                { data: 'chieucao' },
+                { data: 'cannang', width: "130px" },
+                { data: 'sdtcha', width: "130px" },
+                { data: 'sdtcha', width: "130px" },
+            ],
 
         });
         // PHẦN THỨ TỰ TABLE
@@ -574,9 +585,11 @@
                 success: function (result) {
                     var data = JSON.parse(result);
                     console.log(data);
-
-                    $('#example').dataTable().fnClearTable();
-                    $('#example').dataTable().fnAddData(data);
+                    var tb = $('#example').dataTable();
+                    tb.dataTable().fnClearTable();
+                    tb.dataTable().fnAddData(data);
+                    // $('#example').dataTable().fnClearTable();
+                    // $('#example').dataTable().fnAddData(data);
                 }
             });
         }
