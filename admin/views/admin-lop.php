@@ -29,6 +29,8 @@
 
     #example_filter label input{ border: 1px solid #ddd !important; }
     #example_length label select{ border: 1px solid #ddd !important; }
+
+    #example th { text-align: center }
 </style>
 
 <?php
@@ -391,6 +393,51 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
+                    <div class="row" style="margin-bottom: 10px">
+                        <div class="col-md-12">
+                            <button id="btn-chuyen-lop" data-toggle="modal" data-target="#modal-chuyen-lop" class="btn btn-info" style="display: none">Chuyển lớp</button>
+                        </div>
+
+                        <!-- Modal -->
+                        <div id="modal-chuyen-lop" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Chuyển lớp cho bé</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Lớp học hiện tại</label>
+                                                    <select name="lop_hoc_hien_tai" id="" class="form-control">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Lớp học mới</label>
+                                                    <select name="lop_hoc_moi" id="" class="form-control">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button onclick="chuyen_lop_cho_be()" class="btn btn-success">Chuyển lớp</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                     <table id="example" class="table table-bordered" style="width: 100% !important;">
                         <thead>
                         <tr>
@@ -398,10 +445,9 @@
                             <th>Họ và tên</th>
                             <th>Ngày sinh</th>
                             <th>Giới tính</th>
-                            <th>Chiều cao</th>
-                            <th>Cân nặng</th>
                             <th>SĐT cha</th>
                             <th>SĐT mẹ</th>
+                            <th><input name="select_all" value="1" type="checkbox"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -421,7 +467,7 @@
 <!-- End page content-->
 
 <script>
-
+    var rows_selected = [];
     $(document).ready(function () {
         $( '.select-nhannien-add' ).select2( {
             placeholder: {
@@ -470,19 +516,47 @@
                 "paginate": {
                     "previous": "Trở về",
                     "next": "Tiếp"
+                },
+                select: {
+                    rows: {
+                        _: "Bạn đã chọn %d bé",
+                        0: "Click vào dòng để chọn bé",
+                        1: "Có 1 dòng được chọn"
+                    }
                 }
             },
             data: null,
+            columnDefs: [
+                { targets: 0, data: null },
+                { targets: 1, className: 'dt-body-left' },
+                { targets: 2, className: 'dt-body-center' },
+                { targets: 3, className: 'dt-body-center' },
+                { targets: 4, className: 'dt-body-center' },
+                { targets: 5, className: 'dt-body-center' },
+                {
+                    targets: 6,
+                    data:   null,
+                    width: "80px",
+                    "defaultContent": '',
+                    render: function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return '<input type="checkbox" class="editor-active">';
+                        }
+                        return data;
+                    },
+                    className: "dt-body-center"
+                },
+            ],
             columns: [
                 { data: null, width: "30px" },
                 { data: 'ten' },
                 { data: 'ngaysinh' },
                 { data: 'gioitinh', width: "100px" },
-                { data: 'chieucao' },
-                { data: 'cannang', width: "130px" },
                 { data: 'sdtcha', width: "130px" },
                 { data: 'sdtcha', width: "130px" },
+                { data: null, width: "30px" },
             ],
+            order: [[ 0, 'asc' ]]
 
         });
         // PHẦN THỨ TỰ TABLE
@@ -491,6 +565,102 @@
                 cell.innerHTML = i+1;
             } );
         } ).draw();
+
+        $('#example').on('click', 'tbody td, thead th:first-child', function(e){
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+        $('#example tbody').on('click', 'input[type="checkbox"]', function(e){
+            var $row = $(this).closest('tr');
+
+            // Get row data
+            var data = tb.row($row).data();
+
+            var ddd = tb.row( $(this).parents('tr') ).data();
+            console.log(ddd)
+            // Get row ID
+            var rowId = ddd.be_id;
+
+            // Determine whether row ID is in the list of selected row IDs
+            var index = $.inArray(rowId, rows_selected);
+
+            // If checkbox is checked and row ID is not in list of selected row IDs
+            if(this.checked && index === -1){
+                rows_selected.push(rowId);
+
+                // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+            } else if (!this.checked && index !== -1){
+                rows_selected.splice(index, 1);
+            }
+
+            if(this.checked){
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+
+            // Update state of "Select all" control
+            updateDataTableSelectAllCtrl(tb);
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        function updateDataTableSelectAllCtrl(table){
+            var $table             = table.table().node();
+            var $chkbox_all        = $('tbody input[type="checkbox"]', $table);
+            var $chkbox_checked    = $('tbody input[type="checkbox"]:checked', $table);
+            var chkbox_select_all  = $('thead input[name="select_all"]', $table).get(0);
+
+            // If none of the checkboxes are checked
+            if($chkbox_checked.length === 0){
+                chkbox_select_all.checked = false;
+                if('indeterminate' in chkbox_select_all){
+                    chkbox_select_all.indeterminate = false;
+                }
+                $('#btn-chuyen-lop').hide();
+                // If all of the checkboxes are checked
+            } else if ($chkbox_checked.length === $chkbox_all.length){
+                chkbox_select_all.checked = true;
+                if('indeterminate' in chkbox_select_all){
+                    chkbox_select_all.indeterminate = false;
+                }
+                $('#btn-chuyen-lop').show();
+                // If some of the checkboxes are checked
+            } else {
+                chkbox_select_all.checked = true;
+                if('indeterminate' in chkbox_select_all){
+                    chkbox_select_all.indeterminate = true;
+                }
+                $('#btn-chuyen-lop').show();
+            }
+        }
+
+
+        // Handle click on "Select all" control
+        $('#example thead input[name="select_all"]', tb.table().container()).on('click', function(e){
+            if(this.checked){
+                $('#example tbody input[type="checkbox"]:not(:checked)').trigger('click');
+            } else {
+                $('#example tbody input[type="checkbox"]:checked').trigger('click');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        // Handle table draw event
+        tb.on('draw', function(){
+            // Update state of "Select all" control
+            updateDataTableSelectAllCtrl(tb);
+        });
+
+        // click chuyen lop
+        $('#btn-chuyen-lop').click(function () {
+            console.log(rows_selected);
+
+        });
+
 
         $.ajax({
             type: "GET",
@@ -552,6 +722,7 @@
                 table_lop.on( 'click', 'a', function () {
                     var data = table_lop.row( $(this).parents('tr') ).data();
                     console.log(data);
+                    // console.log(data);
                     if($(this).data('action') == 1) {
                         // window.location.href = "admin-lop-sua.php?id=" + data.bang_cap_id;
                         show_form_edit(data.id)
@@ -561,15 +732,16 @@
                         delete_lop_hoc(data.id)
                     }
                     else if ($(this).data('action') == 3){
-                        show_list_be(data.id)
+                        show_list_be(data.id, data.mo_ta, data.nien_khoa_id)
                     }
                 });
             }
         });
 
-        function show_list_be(id_lop) {
-            console.log(id_lop);
+        function show_list_be(id_lop, ten_lop, nien_khoa) {
             get_danh_sach_be_theo_lop(id_lop);
+            $('select[name="lop_hoc_hien_tai"]').html('<option value="'+ id_lop +'" >'+ ten_lop +'</option>');
+            get_data_lop_hoc_theo_nien_khoa(nien_khoa, id_lop);
             $('#Modal_DS_BE').modal('show');
         }
 
@@ -584,7 +756,7 @@
                 url: 'admin-xuly-lop.php?load_list_be=1&id_lop=' + id_lop,
                 success: function (result) {
                     var data = JSON.parse(result);
-                    console.log(data);
+
                     var tb = $('#example').dataTable();
                     tb.dataTable().fnClearTable();
                     tb.dataTable().fnAddData(data);
@@ -767,6 +939,45 @@
             }
         });
 
+    }
+
+
+    function get_data_lop_hoc_theo_nien_khoa(id_nien_khoa, id_lop_old) {
+        $.ajax({
+            type: "POST",
+            url: 'admin-be-xuly.php',
+            data: { 'get_data_lop_hoc' : 1, 'id_nien_khoa': id_nien_khoa },
+            success : function (result){
+                var data = JSON.parse(result);
+                var str = "";
+                if(data.length > 0) {
+                    data.forEach(function (item) {
+                        if(id_lop_old != item.id) {
+                            str += '<option data-khoi="'+ item.khoi_id +'" value="'+ item.id +'">'+ item.mo_ta +'</option>'
+                        }
+                    });
+                    $('select[name="lop_hoc_moi"]').html(str);
+                }
+                else{
+                    $('select[name="lop_hoc_moi"]').html('<option data-khoi="0" value="0">Chưa có lớp</option>');
+                }
+
+            }
+        });
+        $('select[name="loc_lop_hoc"]').removeAttr('disabled');
+    }
+
+    function chuyen_lop_cho_be() {
+        $.ajax({
+            type: "POST",
+            url: 'admin-xuly-lop.php',
+            data: { 'chuyen_lop' : 1, 'lop': $('select[name="lop_hoc_moi"').val(), arr_be: rows_selected },
+            success : function (result){
+                console.log('aaaaa');
+                if (result == "1") alert('Success');
+                else alert('Failed');
+            }
+        });
     }
 </script>
 

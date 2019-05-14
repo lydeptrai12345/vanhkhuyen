@@ -154,6 +154,7 @@ if(isset($_GET['load_list_be'])) {
             while ($row = mysqli_fetch_array($query)){
                 $result[] = array (
                     'index'    =>$index++,
+                    'be_id'      => $row['be_id'],
                     'ten'      => $row['ten'],
                     'ngaysinh' => date_format(date_create($row['ngaysinh']),'d/m/Y'),
                     'gioitinh' => $row['gioitinh'] ? "Nam" : "Nữ",
@@ -172,7 +173,7 @@ if(isset($_GET['load_list_be'])) {
 
 
 if(isset($_GET['load_list_lop'])) {
-    $str = "SELECT l.id,l.mo_ta, n.ten_nien_khoa, 
+    $str = "SELECT l.id,l.mo_ta, n.ten_nien_khoa, l.nien_khoa_id,  
                                     (SELECT COUNT(id) FROM lophoc_be WHERE l.id = lophoc_be.lop_hoc_chi_tiet_id)	AS sl_be,
                                     (SELECT COUNT(id) FROM lophoc_nhanvien WHERE l.id = lophoc_nhanvien.lop_hoc_chi_tiet_id) AS sl_nhan_vien
                                   FROM lophoc_chitiet AS l INNER JOIN nienkhoa AS n ON l.nien_khoa_id = n.id 
@@ -192,8 +193,25 @@ if(isset($_GET['load_list_lop'])) {
                 'ten_nien_khoa'  => $row['ten_nien_khoa'],
                 'sl_be'  => $row['sl_be'],
                 'sl_nhan_vien'   => $row['sl_nhan_vien'],
+                'nien_khoa_id'   => $row['nien_khoa_id'],
             );
         }
     }
     echo json_encode($result);
 }
+
+
+// CHUYỂN LÓP CHO BÉ
+if (isset($_POST['chuyen_lop'])) {
+    $lop = isset($_POST['lop']) ? (int)$_POST['lop'] : 0;
+    $arr_be = isset($_POST['arr_be']) ? (array)$_POST['arr_be'] : [];
+    if ($lop > 0 && count($arr_be) > 0){
+        for ($i=0;$i<count($arr_be);$i++) {
+            $str = "UPDATE lophoc_be SET lop_hoc_chi_tiet_id = {$lop} WHERE be_id = {$arr_be[$i]}";
+            mysqli_query($dbc, $str);
+        }
+        echo 1;
+    }
+    else echo -3;
+}
+

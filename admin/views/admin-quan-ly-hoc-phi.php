@@ -74,6 +74,8 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
         height: 100px;
         width: 50%;tinhtrangsuckhoe
     }
+
+    .DataTables_sort_wrapper {text-align: center;}
 </style>
 
 <div class="main-content-container container-fluid px-4" style="margin-top:10px">
@@ -158,7 +160,6 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                                                             <th>Niên khóa</th>
                                                             <th>Học phí</th>
                                                             <th>Ngày tạo</th>
-                                                            <th></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -330,8 +331,9 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         { targets: 0, data: null },
                         { targets: 1, className: 'dt-body-center' },
                         { targets: 2, className: 'dt-body-left' },
+                        { targets: 3, className: 'dt-body-center' },
                         { targets: 4, className: 'dt-body-right' },
-                        { targets: 6, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
+                        { targets: 5, className: 'dt-body-center' },
                     ],
                     columns: [
                         {
@@ -346,7 +348,6 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         { data: 'ten_nien_khoa', width: '130px' },
                         { data: 'so_tien' },
                         { data: 'ngay_tao' },
-                        { width: '30px' },
                     ],
                     order: [[ 1, 'asc' ]],
                 });
