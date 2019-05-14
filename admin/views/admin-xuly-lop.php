@@ -173,13 +173,17 @@ if(isset($_GET['load_list_be'])) {
 
 
 if(isset($_GET['load_list_lop'])) {
+    $nien_khoa = isset($_GET['loc_nien_khoa']) ? $_GET['loc_nien_khoa'] : "";
+
     $str = "SELECT l.id,l.mo_ta, n.ten_nien_khoa, l.nien_khoa_id,  
                                     (SELECT COUNT(id) FROM lophoc_be WHERE l.id = lophoc_be.lop_hoc_chi_tiet_id)	AS sl_be,
                                     (SELECT COUNT(id) FROM lophoc_nhanvien WHERE l.id = lophoc_nhanvien.lop_hoc_chi_tiet_id) AS sl_nhan_vien
                                   FROM lophoc_chitiet AS l INNER JOIN nienkhoa AS n ON l.nien_khoa_id = n.id 
-                                  ORDER BY id ASC
                                 ";
 
+    if($nien_khoa) $str .= " WHERE n.ten_nien_khoa = '{$nien_khoa}' ";
+    $str .= " ORDER BY id ASC";
+//    echo $str;
     $query = mysqli_query($dbc, $str);
     $result = array();
 
@@ -205,13 +209,12 @@ if(isset($_GET['load_list_lop'])) {
 if (isset($_POST['chuyen_lop'])) {
     $lop = isset($_POST['lop']) ? (int)$_POST['lop'] : 0;
     $arr_be = isset($_POST['arr_be']) ? (array)$_POST['arr_be'] : [];
-    if ($lop > 0 && count($arr_be) > 0){
-        for ($i=0;$i<count($arr_be);$i++) {
+    if ($lop > 0 && count($arr_be) > 0) {
+        for ($i = 0; $i < count($arr_be); $i++) {
             $str = "UPDATE lophoc_be SET lop_hoc_chi_tiet_id = {$lop} WHERE be_id = {$arr_be[$i]}";
             mysqli_query($dbc, $str);
         }
         echo 1;
-    }
-    else echo -3;
+    } else echo -3;
 }
 

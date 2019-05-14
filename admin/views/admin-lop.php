@@ -486,9 +486,7 @@
         } );
 
         $('select[name="loc_nien_khoa"]').change(function () {
-            console.log('aaa');
             $('#btn-bo-loc').click();
-            // $('#form-bo-loc').submit();
         });
 
        $('#btn-show-add').click(function () {
@@ -664,7 +662,7 @@
 
         $.ajax({
             type: "GET",
-            url: 'admin-xuly-lop.php?load_list_lop=1',
+            url: 'admin-xuly-lop.php?load_list_lop=1&loc_nien_khoa=' + $('select[name="loc_nien_khoa"]').val(),
             success: function (result) {
                 var data = JSON.parse(result);
                 table_lop = $('#tripRevenue').DataTable({
