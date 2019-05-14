@@ -49,6 +49,10 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 </script>
 
 <style>
+    .action-icon {
+        font-size: 15px !important;
+        color: #5A6169;
+    }
     .error-message { color: #ff392a; }
 
     #advanced-search {
@@ -89,7 +93,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
                         <!-- Modal -->
                         <div id="myModal" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-lg">
 
                                 <!-- Modal content-->
                                 <div class="modal-content">
@@ -139,10 +143,32 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                                                     <input name="hoc_phi" type="text" class="form-control formatCurrency text-right" value="0">
                                                     <small style="display: none" class="error-message e-4"><i>Học phí phải lớn hơn 1000</i></small>
                                                 </div>
+
+                                                <div class="col-md-12" style="margin-bottom: 10px">
+                                                    <button id="btn-hoc-phi" type="button" class="btn btn-success" style="float: right">Lưu lại</button>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
+                                                        <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>STT</th>
+                                                            <th>Khối</th>
+                                                            <th>Niên khóa</th>
+                                                            <th>Học phí</th>
+                                                            <th>Ngày tạo</th>
+                                                            <th></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button id="btn-hoc-phi" type="button" class="btn btn-success">Lưu lại</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                         </div>
                                     </form>
@@ -179,8 +205,8 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
                             <div class="form-group col-md-3">
                                 <label class="text-left">Lớp</label>
-                                <select name="loc_lop_hoc" id="" class="form-control" disabled>
-                                    <option value="0">Chọn lớp học</option>
+                                <select name="loc_lop_hoc" id="" class="form-control">
+                                    <option value="0">Tất cả lớp học</option>
                                     <?php foreach ($data_lop_hoc as $item):?>
                                         <option data-khoi="<?php echo $item['khoi_id']?>" value="<?php echo $item['id']?>"><?php echo $item['mo_ta']?></option>
                                     <?php endforeach;?>
@@ -190,33 +216,16 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                             <div class="form-group col-md-3">
                                 <label class="text-left">Thanh toán</label>
                                 <select name="thanh_toan" id="" class="form-control">
-                                    <option value="0">Chưa thanh toán</option>
+                                    <option value="0">Tất cả</option>
                                     <option value="1">Đã thanh toán</option>
+                                    <option value="2">Chưa thanh toán</option>
                                 </select>
                             </div>
+
                             <button id="btn-bo-loc" type="submit" class="hidden"></button>
                         </div>
                     </form>
                     <div class="row" style="padding: 5px 20px;">
-                        <div class="col-md-12">
-                            <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>STT</th>
-                                    <th>Khối</th>
-                                    <th>Niên khóa</th>
-                                    <th>Học phí</th>
-                                    <th>Ngày tạo</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-
                         <div class="col-md-12">
                             <table id="table-hoc-phi" class="table display w-100 hover cell-border compact stripe">
                                 <thead>
@@ -337,7 +346,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         { data: 'ten_nien_khoa', width: '130px' },
                         { data: 'so_tien' },
                         { data: 'ngay_tao' },
-                        { width: '50px' },
+                        { width: '30px' },
                     ],
                     order: [[ 1, 'asc' ]],
                 });
@@ -414,10 +423,18 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                     url: 'admin-quan-ly-hoc-phi-xu-ly.php',
                     data: { add: 1, nien_khoa: nien_khoa, khoi: khoi, hoc_phi: hoc_phi },
                     success : function (result){
-                        console.log(result);
                         if (result == "1") {
                             alert("Thêm học phí thành công!");
-                            location.reload();
+                            $.ajax({
+                                type: "GET",
+                                url: 'admin-quan-ly-hoc-phi-xu-ly.php?load_list_hoc_phi=1',
+                                data: { add: 1, nien_khoa: nien_khoa, khoi: khoi, hoc_phi: hoc_phi },
+                                success : function (da){
+                                    var d = JSON.parse(da);
+                                    $('#tripRevenue').dataTable().fnClearTable();
+                                    $('#tripRevenue').dataTable().fnAddData(d);
+                                }
+                            });
                         }
                         else if(result == "-2") alert("Thông tin chưa đúng!");
                         else if(result == "-3") alert("Học phí đã tồn tại niên khóa và khối vừa chọn!");
@@ -438,8 +455,60 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
         }
 
         $('select[name="loc_nien_khoa"]').change(function () {
-            get_data_lop_hoc_theo_nien_khoa($(this).val());
+            get_data_lop_hoc_theo_nien_khoa($('select[name="loc_nien_khoa"]').find('option:selected').data('id'));
+            $.ajax({
+                type: "GET",
+                url: 'admin-quan-ly-hoc-phi-xu-ly.php?danh_sach_hoc_phi=1&loc_nien_khoa=' + $('select[name="loc_nien_khoa"]').find('option:selected').data('id'),
+                success: function (result) {
+                    var data = JSON.parse(result);
+                    if(data.length > 0) {
+                        $('#table-hoc-phi').dataTable().fnClearTable();
+                        $('#table-hoc-phi').dataTable().fnAddData(data);
+                    }
+                    else {
+                        $('#table-hoc-phi').dataTable().fnClearTable();
+                    }
+                }
+            })
         });
+
+        $('select[name="loc_lop_hoc"]').change(function () {
+            var loc_nien_khoa = $('select[name="loc_nien_khoa"]').find('option:selected').data('id');
+            $.ajax({
+                type: "GET",
+                url: 'admin-quan-ly-hoc-phi-xu-ly.php?danh_sach_hoc_phi=1&loc_nien_khoa=' + loc_nien_khoa + '&loc_lop_hoc=' + $(this).val(),
+                success: function (result) {
+                    var data = JSON.parse(result);
+                    if(data.length > 0) {
+                        $('#table-hoc-phi').dataTable().fnClearTable();
+                        $('#table-hoc-phi').dataTable().fnAddData(data);
+                    }
+                    else {
+                        $('#table-hoc-phi').dataTable().fnClearTable();
+                    }
+                }
+            })
+        });
+
+        $('select[name="thanh_toan"]').change(function () {
+            var loc_nien_khoa = $('select[name="loc_nien_khoa"]').find('option:selected').data('id');
+            var lop_hoc = $('select[name="loc_lop_hoc"]').val();
+            $.ajax({
+                type: "GET",
+                url: 'admin-quan-ly-hoc-phi-xu-ly.php?danh_sach_hoc_phi=1&loc_nien_khoa=' + loc_nien_khoa + '&loc_lop_hoc=' + lop_hoc + '&thanh_toan=' + $(this).val(),
+                success: function (result) {
+                    var data = JSON.parse(result);
+                    if(data.length > 0) {
+                        $('#table-hoc-phi').dataTable().fnClearTable();
+                        $('#table-hoc-phi').dataTable().fnAddData(data);
+                    }
+                    else {
+                        $('#table-hoc-phi').dataTable().fnClearTable();
+                    }
+                }
+            })
+        });
+
 
         function get_data_lop_hoc_theo_nien_khoa(id_nien_khoa) {
             $.ajax({
@@ -450,6 +519,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                     var data = JSON.parse(result);
                     var str = "";
                     if(data.length > 0) {
+                        str += '<option value="0">Tất cả lớp học</option>';
                         data.forEach(function (item) {
                             str += '<option data-khoi="'+ item.khoi_id +'" value="'+ item.id +'">'+ item.mo_ta +'</option>'
                         });
@@ -463,7 +533,6 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
             });
             $('select[name="loc_lop_hoc"]').removeAttr('disabled');
         }
-
 
 
         var table_hp;

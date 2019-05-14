@@ -49,7 +49,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
     $( document ).ready( function () {
         $( '#heading5 .panel-heading' ).attr( 'aria-expanded', 'true' );
         $( '#collapse5' ).addClass( 'show' );
-        $( '#collapse5 .list-group a:nth-child(3)' ).addClass( 'cus-active' );
+        $( '#collapse5 .list-group a:nth-child(4)' ).addClass( 'cus-active' );
     } );
 </script>
 
@@ -118,7 +118,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                             <div class="form-group col-md-3">
                                 <label class="text-left">Lớp</label>
                                 <select name="loc_lop_hoc" id="" class="form-control">
-                                    <option value="0">Chọn lớp học</option>
+                                    <option value="0">Tất cả lớp học</option>
                                     <?php foreach ($data_lop_hoc as $item):?>
                                         <option data-khoi="<?php echo $item['khoi_id']?>" value="<?php echo $item['id']?>"><?php echo $item['mo_ta']?></option>
                                     <?php endforeach;?>

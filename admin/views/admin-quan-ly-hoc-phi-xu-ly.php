@@ -89,7 +89,33 @@ if(isset($_GET['danh_sach_hoc_phi'])) {
         while ($row = mysqli_fetch_array($query)){
 //            echo empty($row['ngay_thanh_toan']) ? "true" : "false";
             if($thanh_toan == 1 && !empty($row['ngay_thanh_toan'])) {
-                echo 1;
+//                echo 1;
+                $result[] = array (
+                    'lop_hoc_id'      => $row['lop_hoc_id'],
+                    'ngay_thanh_toan' => $row['ngay_thanh_toan'],
+                    'nien_khoa_id'    => $row['nien_khoa_id'],
+                    'hoc_phi'         => number_format((float)$row['hoc_phi']),
+                    'ten_nien_khoa'   => $row['ten_nien_khoa'],
+                    'be_id'           => $row['be_id'],
+                    'ten'             => $row['ten'],
+                    'ngaysinh'        => ($row['ngaysinh']) ? date_format(date_create($row['ngaysinh']),'d/m/Y') : 0,
+                    'gioitinh'        => ($row['gioitinh'] == 1) ? "Nam" : "Nữ",
+                    'tencha'  => $row['tencha'],
+                    'sdtcha'   => $row['sdtcha'],
+                    'tenme'   => $row['tenme'],
+                    'sdtme'    => $row['sdtme'],
+                    'diachi'   => $row['diachi'],
+                    'chieucao' => $row['chieucao'],
+                    'mo_ta'    => $row['mo_ta'],
+                    'diachi'    => $row['diachi'],
+                    'matracuu'    => $row['matracuu'],
+                    'lop_hoc_chi_tiet_id'    => $row['lop_hoc_chi_tiet_id'],
+                    'trangthai'    => ($row['ngay_thanh_toan']) ? 1 : 0,
+                );
+            }
+
+            if($thanh_toan == 2 && empty($row['ngay_thanh_toan'])) {
+//                echo 2;
                 $result[] = array (
                     'lop_hoc_id'    => $row['lop_hoc_id'],
                     'ngay_thanh_toan' => $row['ngay_thanh_toan'],
@@ -113,33 +139,7 @@ if(isset($_GET['danh_sach_hoc_phi'])) {
                     'trangthai'    => ($row['ngay_thanh_toan']) ? 1 : 0,
                 );
             }
-            else if($thanh_toan == 2 && empty($row['ngay_thanh_toan'])) {
-                echo 2;
-                $result[] = array (
-                    'lop_hoc_id'    => $row['lop_hoc_id'],
-                    'ngay_thanh_toan' => $row['ngay_thanh_toan'],
-                    'nien_khoa_id'  => $row['nien_khoa_id'],
-                    'hoc_phi'       => number_format((float)$row['hoc_phi']),
-                    'ten_nien_khoa' => $row['ten_nien_khoa'],
-                    'be_id'    => $row['be_id'],
-                    'ten'      => $row['ten'],
-                    'ngaysinh' => ($row['ngaysinh']) ? date_format(date_create($row['ngaysinh']),'d/m/Y') : 0,
-                    'gioitinh' => ($row['gioitinh'] == 1) ? "Nam" : "Nữ",
-                    'tencha'  => $row['tencha'],
-                    'sdtcha'   => $row['sdtcha'],
-                    'tenme'   => $row['tenme'],
-                    'sdtme'    => $row['sdtme'],
-                    'diachi'   => $row['diachi'],
-                    'chieucao' => $row['chieucao'],
-                    'mo_ta'    => $row['mo_ta'],
-                    'diachi'    => $row['diachi'],
-                    'matracuu'    => $row['matracuu'],
-                    'lop_hoc_chi_tiet_id'    => $row['lop_hoc_chi_tiet_id'],
-                    'trangthai'    => ($row['ngay_thanh_toan']) ? 1 : 0,
-                );
-            }
-            else {
-                echo 3;
+            if ($thanh_toan == 0) {
                 $result[] = array (
                     'lop_hoc_id'    => $row['lop_hoc_id'],
                     'ngay_thanh_toan' => $row['ngay_thanh_toan'],
