@@ -157,7 +157,7 @@ if(isset($_GET['load_list_be'])) {
                     'be_id'      => $row['be_id'],
                     'ten'      => $row['ten'],
                     'ngaysinh' => date_format(date_create($row['ngaysinh']),'d/m/Y'),
-                    'gioitinh' => $row['gioitinh'] ? "Nam" : "Nữ",
+                    'gioitinh' => ($row['gioitinh'] == 1) ? "Nam" : "Nữ",
                     'cannang'  => $row['cannang'],
                     'sdtcha'   => $row['sdtcha'],
                     'sdtme'    => $row['sdtme'],
@@ -176,9 +176,9 @@ if(isset($_GET['load_list_lop'])) {
     $nien_khoa = isset($_GET['loc_nien_khoa']) ? $_GET['loc_nien_khoa'] : "";
 
     $str = "SELECT l.id,l.mo_ta, n.ten_nien_khoa, l.nien_khoa_id,  
-                                    (SELECT COUNT(id) FROM lophoc_be WHERE l.id = lophoc_be.lop_hoc_chi_tiet_id)	AS sl_be,
-                                    (SELECT COUNT(id) FROM lophoc_nhanvien WHERE l.id = lophoc_nhanvien.lop_hoc_chi_tiet_id) AS sl_nhan_vien
-                                  FROM lophoc_chitiet AS l INNER JOIN nienkhoa AS n ON l.nien_khoa_id = n.id 
+            (SELECT COUNT(id) FROM lophoc_be WHERE l.id = lophoc_be.lop_hoc_chi_tiet_id)	AS sl_be,
+            (SELECT COUNT(id) FROM lophoc_nhanvien WHERE l.id = lophoc_nhanvien.lop_hoc_chi_tiet_id) AS sl_nhan_vien
+            FROM lophoc_chitiet AS l INNER JOIN nienkhoa AS n ON l.nien_khoa_id = n.id 
                                 ";
 
     if($nien_khoa) $str .= " WHERE n.ten_nien_khoa = '{$nien_khoa}' ";
@@ -192,10 +192,10 @@ if(isset($_GET['load_list_lop'])) {
         $index = 1;
         while ($row = mysqli_fetch_array($query)){
             $result[] = array (
-                'id'    => $row['id'],
-                'mo_ta'      => $row['mo_ta'],
+                'id'             => $row['id'],
+                'mo_ta'          => $row['mo_ta'],
                 'ten_nien_khoa'  => $row['ten_nien_khoa'],
-                'sl_be'  => $row['sl_be'],
+                'sl_be'          => $row['sl_be'],
                 'sl_nhan_vien'   => $row['sl_nhan_vien'],
                 'nien_khoa_id'   => $row['nien_khoa_id'],
             );

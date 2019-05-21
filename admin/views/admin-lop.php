@@ -388,12 +388,13 @@
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color: #ddd;">
                     <h4 class="modal-title">Danh sách bé trong lớp</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="modal-body">
-                    <div class="row" style="margin-bottom: 10px">
+                <div class="modal-body" style="padding: 0 !important;">
+                    <div class="tien-ich"></div>
+                    <div class="row">
                         <div class="col-md-12">
                             <button id="btn-chuyen-lop" data-toggle="modal" data-target="#modal-chuyen-lop" class="btn btn-info" style="display: none">Chuyển lớp</button>
                         </div>
@@ -454,8 +455,8 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <div class="modal-footer" style="background-color: #ddd;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
 
@@ -525,14 +526,15 @@
             },
             data: null,
             columnDefs: [
-                { targets: 0, data: null },
+                { targets: 0, data: null, orderable: false, width: '30px' },
                 { targets: 1, className: 'dt-body-left' },
-                { targets: 2, className: 'dt-body-center' },
-                { targets: 3, className: 'dt-body-center' },
-                { targets: 4, className: 'dt-body-center' },
-                { targets: 5, className: 'dt-body-center' },
+                { targets: 2, className: 'dt-body-center', orderable: false },
+                { targets: 3, className: 'dt-body-center', orderable: false },
+                { targets: 4, className: 'dt-body-center', orderable: false },
+                { targets: 5, className: 'dt-body-center', orderable: false},
                 {
                     targets: 6,
+                    orderable: false,
                     data:   null,
                     width: "80px",
                     "defaultContent": '',
@@ -575,7 +577,7 @@
             var data = tb.row($row).data();
 
             var ddd = tb.row( $(this).parents('tr') ).data();
-            console.log(ddd)
+
             // Get row ID
             var rowId = ddd.be_id;
 
@@ -681,8 +683,9 @@
                     data: data,
                     columnDefs: [
                         { targets: 0, data: null },
-                        { targets: 1, className: 'dt-body-center' },
+                        { targets: 1, className: 'dt-body-left' },
                         { targets: 2, className: 'dt-body-center' },
+                        { targets: 3, className: 'dt-body-center' },
                         {
                             targets: 4,
                             data: null,
@@ -701,7 +704,7 @@
                         { data: 'ten_nien_khoa',},
                         { data: 'sl_nhan_vien',},
                         { data: 'null',},
-                        { width: "60px" }
+                        { width: "80px" }
                     ],
                     rowCallback: function ( row, data ) {
                         // Set the checked state of the checkbox in the table
@@ -719,8 +722,7 @@
 
                 table_lop.on( 'click', 'a', function () {
                     var data = table_lop.row( $(this).parents('tr') ).data();
-                    console.log(data);
-                    // console.log(data);
+
                     if($(this).data('action') == 1) {
                         // window.location.href = "admin-lop-sua.php?id=" + data.bang_cap_id;
                         show_form_edit(data.id)
@@ -738,9 +740,9 @@
 
         function show_list_be(id_lop, ten_lop, nien_khoa) {
             get_danh_sach_be_theo_lop(id_lop);
+
             $('select[name="lop_hoc_hien_tai"]').html('<option value="'+ id_lop +'" >'+ ten_lop +'</option>');
             get_data_lop_hoc_theo_nien_khoa(nien_khoa, id_lop);
-            $('#Modal_DS_BE').modal('show');
         }
 
         $('.btn-list-be').click(function () {
@@ -754,12 +756,14 @@
                 url: 'admin-xuly-lop.php?load_list_be=1&id_lop=' + id_lop,
                 success: function (result) {
                     var data = JSON.parse(result);
-
-                    var tb = $('#example').dataTable();
-                    tb.dataTable().fnClearTable();
-                    tb.dataTable().fnAddData(data);
-                    // $('#example').dataTable().fnClearTable();
-                    // $('#example').dataTable().fnAddData(data);
+                    if (data.length > 0)
+                    {
+                        var tb = $('#example').dataTable();
+                        tb.dataTable().fnClearTable();
+                        tb.dataTable().fnAddData(data);
+                        $('#Modal_DS_BE').modal('show');
+                    }
+                    else alert('Lớp học này chưa có bé!');
                 }
             });
         }
