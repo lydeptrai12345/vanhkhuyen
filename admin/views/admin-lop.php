@@ -14,6 +14,11 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
 
+<link rel="stylesheet" href="../../library/jsTree/themes/default/style.min.css" />
+<script src="../../library/jsTree/jstree.min.js"></script>
+
+<!--<link rel="stylesheet" href="../../library/collapse/collapse.css" />-->
+<script src="../../library/collapse/jquery.collapse.js"></script>
 <!-- End header-->
 <script>
     $('#heading5 .panel-heading').attr('aria-expanded','true');
@@ -87,35 +92,35 @@
                     {
                         $name = $_POST['txtTenTheLoai'];
                     }
-                if(empty($errors))
-                {
-                    if($_POST['theloaicha']==0)
+                    if(empty($errors))
                     {
-                        $theloaicha = 0;
+                        if($_POST['theloaicha']==0)
+                        {
+                            $theloaicha = 0;
+                        }
+                        else
+                        {
+                            $theloaicha = $_POST['theloaicha'];
+                        }
+                        $query = "INSERT INTO loaitin(ten,the_loai_cha) VALUES('{$name}',$theloaicha)";
+                        $results = mysqli_query($dbc, $query);
+                        //Kiem tra them moi thanh cong hay chua
+                        if(mysqli_affected_rows($dbc)==1)
+                        {
+                            ?>
+                            <script>
+                                alert("thêm thành công");
+                                window.location="admin-loaitin.php";
+                            </script>
+                        <?php
+                        }
+                        else
+                        {
+                            echo "<script>";
+                            echo 'alert("Thêm không thành công")';
+                            echo "</script>";
+                        }
                     }
-                    else
-                    {
-                        $theloaicha = $_POST['theloaicha'];
-                    }
-                    $query = "INSERT INTO loaitin(ten,the_loai_cha) VALUES('{$name}',$theloaicha)";
-                    $results = mysqli_query($dbc, $query);
-                    //Kiem tra them moi thanh cong hay chua
-                if(mysqli_affected_rows($dbc)==1)
-                {
-                    ?>
-                    <script>
-                        alert("thêm thành công");
-                        window.location="admin-loaitin.php";
-                    </script>
-                <?php
-                }
-                else
-                {
-                    echo "<script>";
-                    echo 'alert("Thêm không thành công")';
-                    echo "</script>";
-                }
-                }
                 }
                 ?>
                 <?php
@@ -413,9 +418,37 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
+                                                    <label for="">Niên khóa hiện tại</label>
+                                                    <select name="lop_hoc_hien_tai" id="" class="form-control"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
                                                     <label for="">Lớp học hiện tại</label>
                                                     <select name="lop_hoc_hien_tai" id="" class="form-control">
+                                                    </select>
+                                                </div>
+                                            </div>
 
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Niên khóa mới</label>
+                                                    <select name="nien_khoa_chuyen_lop" id="" class="form-control">
+                                                    <?php foreach ($results_nien_khoa as $item):?>
+                                                        <?php if($nien_khoa != 0) :?>
+                                                            <option <?php if($nien_khoa == $item['ten_nien_khoa']) echo "selected";?>
+                                                                    data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                                    value="<?php echo $item['id']?>"><?php echo $item['ten_nien_khoa']?>
+                                                            </option>
+                                                        <?php else:?>
+                                                            <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
+                                                                    data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                                    value="<?php echo $item['id']?>"><?php echo $item['ten_nien_khoa']?>
+                                                            </option>
+                                                        <?php endif;?>
+
+                                                    <?php endforeach;?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -424,15 +457,29 @@
                                                 <div class="form-group">
                                                     <label for="">Lớp học mới</label>
                                                     <select name="lop_hoc_moi" id="" class="form-control">
-
                                                     </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" data-toggle="collapse" data-target="#demo1">Panel Heading</div>
+                                                    <div class="panel-body collapse" id="demo1">
+                                                        <ul>
+                                                            <li>aaaaa</li>
+                                                            <li>aaaaa</li>
+                                                            <li>aaaaa</li>
+                                                            <li>aaaaa</li>
+                                                            <li>aaaaa</li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button onclick="chuyen_lop_cho_be()" class="btn btn-success">Chuyển lớp</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                     </div>
                                 </div>
 
@@ -981,6 +1028,20 @@
             }
         });
     }
+    
+    function getDataNienKhoa() {
+        $.ajax({
+            type: "POST",
+            url: 'admin-xuly-lop.php',
+            data: { 'nien_khoa_lop_hoc' : 1 },
+            success : function (result){
+                var data = JSON.parse(result);
+                console.log(data);
+            }
+        });
+    }
+
+    getDataNienKhoa();
 </script>
 
 <!-- Footer-->
