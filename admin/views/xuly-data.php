@@ -1,147 +1,89 @@
 <?php
 
 interface xulyData {
-    function getTable($tableName, $select, $where);
-    function insertTable($tableName, $arrayInsertTable);
-    function updateTable($tableName, $arrayDataUpdateTable, $where);
-    function deleteTable($tableName, $where);
+    function getTable($select, $where);
+    function insertTable($arrayInsertTable);
+    function updateTable($arrayDataUpdateTable, $where);
+    function deleteTable($where);
 }
 
 
-class xuly implements xulyData {
+class xuly {
     protected $dbc;
+    protected $_table = "";
+    protected $_select = "";
+    protected $_where = [];
+    protected $_from = " FROM ";
+    protected $_join = [];
+
     function __construct() {
-        $this->dbc = mysqli_connect('localhost','root','','qlmamnon')
-        or die(mysqli_error());
+        $this->dbc = mysqli_connect('localhost','root','','qlmamnon') or die(mysqli_error());
         mysqli_set_charset($this->dbc,"utf8");
     }
 
-    /**
-     * @param $tableName
-     * @param $select
-     * @param $where
-     * @return array
-     */
-    public function getTable($tableName, $select, $where)
+    public function select($select = "*")
     {
-        if (empty($tableName)) return [];
+        $this->_select .= $select;
+        return $this;
 
-        $query = "SELECT ";
+    }
 
-        (is_array($select) && count($select)) ? $query .= implode(",", $select) : $query .= " *";
+    public function from($from)
+    {
+        $this->_from .= $from;
+        return $this;
+    }
 
-        $query .= " FROM " . $tableName;
+    public function where($where)
+    {
+        $this->_where[] = $where;
+        return $this;
+    }
 
-        (empty($where)) ? $query .= "" : $query .= " " . $where;
-//        return $query;
+    public function join($table_join, $foreign_key, $condition, $foreign)
+    {
+        $this->_join[] = $table_join . " ON " . $foreign_key . " " . $condition . " " .$foreign;
+        return $this;
+    }
+
+    public function get()
+    {
+        $query_select = "SELECT " . (empty($this->_select) ? "*" : $this->_select);
+
+        $query_from   = $this->_from;
+
+        $query_join   = !empty($this->_join) ? " INNER JOIN " . implode(" INNER JOIN ", $this->_join) : "";
+
+        $query_where  = !empty($this->_where) ? " WHERE " . implode(" AND ", $this->_where) : "";
+
+        $query = $query_select . $query_from . $query_join . $query_where;
+
         $query = mysqli_query($this->dbc, $query);
         $result = array();
 
-        if (is_array($select) && count($select) <= 0) {
+        if ($this->_select == "*") {
             while ($row = mysqli_fetch_object($query)) {
                 $result[] = $row;
             }
         } else {
+            $arr_select = $this->get_name_column_select($this->_select);
             while ($row = mysqli_fetch_row($query)) {
-                $result[] = array_combine($select, $row);
+                $result[] = array_combine($arr_select, $row);
             }
         }
 
         return $result;
     }
 
-    /**
-     * @param $tableName
-     * @param $arrayInsertTable ex array(array("color" => "aaaa", "id" => "bbbb"))
-     * @return int
-     */
-    public function insertTable($tableName, $arrayInsertTable)
+    private function get_name_column_select($select)
     {
-        if (empty($tableName)) return -1;
-        $query = "INSERT INTO " . $tableName . " ";
-        $arrNameColumn = "";
-        $arrQuery = [];
-        if (is_array($arrayInsertTable)) {
-            foreach ($arrayInsertTable as $item) {
-                $item = (array)$item;
-
-                $arrNameColumn = array_keys($item);
-                $arrValues = array_values($item);
-
-                $strUpdate = null;
-                for ($i = 0; $i < count($arrValues); $i++) {
-                    if ($i < count($arrValues) - 1)
-                        $strUpdate .= "('" . $arrValues[$i] . "', ";
-                    else
-                        $strUpdate .= "'" . $arrValues[$i] . "')";
-                }
-                $arrQuery[] = $strUpdate;
-            }
-
-            $query .= "(" . implode(",", $arrNameColumn) . ") VALUES ";
-            $query .= implode(",", $arrQuery);
+        $arr_select = explode(",", $select);
+        $arr_result = [];
+        foreach ($arr_select as $item) {
+            $arr_name = explode(" ", $item);
+            $arr_result[] = end($arr_name);
         }
-        return $query;
-        mysqli_query($this->dbc, $query);
-
-        if (mysqli_affected_rows($this->dbc) > 0) return 1;
-
-        return -1;
-    }
-
-    /**
-     * @param $tableName name of table
-     * @param $arrayDataUpdateTable ex array("color" => "aaaa", "id" => "bbbb")
-     * @param $where
-     * @return int
-     */
-    public function updateTable($tableName, $arrayDataUpdateTable, $where)
-    {
-        if (empty($tableName)) return -1;
-
-        $query = "UPDATE {$tableName} SET ";
-
-        if ($arrayDataUpdateTable) {
-            $arrayDataUpdateTable = (array)$arrayDataUpdateTable;
-            $arrKeys = array_keys($arrayDataUpdateTable);
-            $arrValues = array_values($arrayDataUpdateTable);
-
-            $strUpdate = null;
-            for ($i = 0; $i < count($arrKeys); $i++) {
-                if ($i < count($arrKeys) - 1)
-                    $strUpdate .= $arrKeys[$i] . " = '" . $arrValues[$i] . "', ";
-                else
-                    $strUpdate .= $arrKeys[$i] . " = '" . $arrValues[$i] . "'";
-            }
-
-            $query .= $strUpdate;
-        }
-
-        if (!empty($where)) $query .= " " . $where;
-
-        mysqli_query($this->dbc, $query);
-
-        if (mysqli_affected_rows($this->dbc) > 0) return 1;
-
-        return -1;
-    }
-
-    /**
-     * @param $tableName
-     * @param $where
-     * @return int
-     */
-    public function deleteTable($tableName, $where)
-    {
-        if (empty($tableName)) return -1;
-
-        $query = "DELETE $tableName WHERE ";
-        if (!empty($where)) $query .= $where;
-        mysqli_query($this->dbc, $query);
-
-        if (mysqli_affected_rows($this->dbc) > 0) return 1;
-
-        return -1;
+        return $arr_result;
     }
 }
 

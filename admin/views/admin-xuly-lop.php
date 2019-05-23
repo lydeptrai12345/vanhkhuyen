@@ -223,21 +223,23 @@ if (isset($_POST['chuyen_lop'])) {
 // DANH SACH NIEN KHOA LOP HOC
 if (isset($_POST['nien_khoa_lop_hoc'])) {
     $nk = new QuanLyLop();
-    $nien_khoa = $nk->getDataNienKhoa();
+//    $nien_khoa = $nk->getDataNienKhoa();
 
 //    $lop = $nk->getLopHocTheoNienKhoa(1);
 //    echo json_encode($lop);return;
 
-    $arrData = [];
-    if(($nien_khoa) && count($nien_khoa) > 0){
-        foreach ($nien_khoa as $item) {
-            $arrData[] = array(
-                'id' => $item->id,
-                'ten_nien_khoa' => $item->ten_nien_khoa,
-                'data_lop' => $nk->getLopHocTheoNienKhoa($item->id)
-            );
-        }
-    }
-    echo json_encode($arrData);
+//    $arrData = [];
+//    if(($nien_khoa) && count($nien_khoa) > 0){
+//        foreach ($nien_khoa as $item) {
+//            $arrData[] = array(
+//                'id' => $item->id,
+//                'ten_nien_khoa' => $item->ten_nien_khoa,
+//                'data_lop' => $nk->getLopHocTheoNienKhoa($item->id)
+//            );
+//        }
+//    }
+//    echo json_encode($arrData);
+
+    echo json_encode($nk->test());
 }
 

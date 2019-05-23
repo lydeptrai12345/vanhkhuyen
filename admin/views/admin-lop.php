@@ -461,9 +461,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-12">
+                                            <div class="col-md-3">
                                                 <div class="panel panel-default">
-                                                    <div class="panel-heading" data-toggle="collapse" data-target="#demo1">Panel Heading</div>
+                                                    <div class="panel-heading" data-toggle="collapse" data-target="#demo1">Khối 1</div>
                                                     <div class="panel-body collapse" id="demo1">
                                                         <ul>
                                                             <li>aaaaa</li>
@@ -474,6 +474,14 @@
                                                         </ul>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select name="lop_hoc_moi" id="" class="form-control">
+                                                    <optgroup label="German Cars">
+                                                        <option value="mercedes">Mercedes</option>
+                                                        <option value="audi">Audi</option>
+                                                    </optgroup>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -1001,9 +1009,14 @@
                 var str = "";
                 if(data.length > 0) {
                     data.forEach(function (item) {
-                        if(id_lop_old != item.id) {
-                            str += '<option data-khoi="'+ item.khoi_id +'" value="'+ item.id +'">'+ item.mo_ta +'</option>'
+                        str += '<optgroup label="'+ item.ten_nien_khoa +'">';
+                        if(item.data_lop.length > 0){
+                            item.data_lop.foreach(function (lop) {
+                                str += '<option data-khoi="'+ lop.lop_hoc_id +'" value="'+ lop.id +'">'+ lop.mo_ta +'</option>'
+                            });
                         }
+
+                        str += '</optgroup>';
                     });
                     $('select[name="lop_hoc_moi"]').html(str);
                 }
@@ -1035,13 +1048,34 @@
             url: 'admin-xuly-lop.php',
             data: { 'nien_khoa_lop_hoc' : 1 },
             success : function (result){
-                var data = JSON.parse(result);
-                console.log(data);
+                // var data = JSON.parse(result);
+                var str = null;
+                console.log(result);
+                // if(data.length > 0) {
+                //     data.forEach(function (item) {
+                //         str += '<optgroup label="'+ item.ten_khoi +'">';
+                //         console.log(item.data_lop);
+                //         var data_lop = item.data_lop;
+                //         if(data_lop.length > 0){
+                //             data_lop.forEach(function (lop) {
+                //                 str += '<option data-khoi="'+ lop.khoi_id +'" value="'+ lop.id +'">'+ lop.ten_lop +'</option>'
+                //             });
+                //         }
+                //
+                //         str += '</optgroup>';
+                //     });
+                //     $('select[name="lop_hoc_moi"]').html(str);
+                // }
+                // else{
+                //     $('select[name="lop_hoc_moi"]').html('<option data-khoi="0" value="0">Chưa có lớp</option>');
+                // }
             }
         });
     }
 
-    getDataNienKhoa();
+    $(document).ready(function () {
+        getDataNienKhoa();
+    });
 </script>
 
 <!-- Footer-->
