@@ -178,7 +178,7 @@
                         },
                         data: data,
                         columnDefs: [
-                            { targets: 0, searchable: false, "orderable": false, data: null },
+                            { targets: 0, orderable: false, data: null },
                             { targets: 1, className: 'dt-body-center' },
                             { targets: 2, className: 'dt-body-center' },
                             {
@@ -194,7 +194,8 @@
                             { data: 'ten_bang_cap' },
                             { data: 'heso', width: "100px" },
                             { width: "60px" }
-                        ]
+                        ],
+                        order: [[ 1, 'asc' ]]
                     });
 
                     // PHẦN THỨ TỰ TABLE

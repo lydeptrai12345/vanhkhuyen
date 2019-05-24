@@ -160,7 +160,6 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                                                             <th>Niên khóa</th>
                                                             <th>Học phí</th>
                                                             <th>Ngày tạo</th>
-                                                            <th></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -238,7 +237,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                                     <th>Lớp</th>
                                     <th>Niên khóa</th>
                                     <th>Trạng thái</th>
-                                    <th></th>
+                                    <th>In</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -329,12 +328,12 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0, data: null },
+                        { targets: 0, orderable: false, data: null },
                         { targets: 1, className: 'dt-body-center' },
                         { targets: 2, className: 'dt-body-left' },
-                        { targets: 3, className: 'dt-body-center' },
-                        { targets: 4, className: 'dt-body-right' },
-                        { targets: 5, className: 'dt-body-center' },
+                        { targets: 3, orderable: false,className: 'dt-body-center' },
+                        { targets: 4, orderable: false,className: 'dt-body-right' },
+                        { targets: 5, orderable: false, className: 'dt-body-center' },
                     ],
                     columns: [
                         {
@@ -559,12 +558,13 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0, data: null },
+                        { targets: 0, orderable: false,data: null },
                         { targets: 1, className: 'dt-body-center' },
                         { targets: 2, className: 'dt-body-left' },
-                        { targets: 4, className: 'dt-body-right' },
-                        // { targets: 5, className: 'dt-body-right' },
-                        { targets: 6, data: null, defaultContent: '<a style="cursor: pointer" class="print-old"><i class="material-icons action-icon">print</i></a>' },
+                        { targets: 3,orderable: false, className: 'dt-body-right' },
+                        { targets: 4,orderable: false, className: 'dt-body-right' },
+                        { targets: 5, orderable: false,className: 'dt-body-right' },
+                        { targets: 6, orderable: false, data: null, defaultContent: '<a style="cursor: pointer" class="print-old"><i class="material-icons action-icon">print</i></a>' },
                     ],
                     columns: [
                         { width: '30px' },

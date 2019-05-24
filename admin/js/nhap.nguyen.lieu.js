@@ -1,8 +1,3 @@
-Number.prototype.format = function(n, x) {
-    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
-    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
-};
-
 
 $(document).ready(function () {
 
@@ -41,11 +36,11 @@ $(document).ready(function () {
                 // console.log(data);
                 table_lop = $('#tripRevenue').DataTable({
                     language: {
-                        "lengthMenu": "Hiển thị _MENU_ lớp/ trang",
+                        "lengthMenu": "Hiển thị _MENU_ nguyên liệu/ trang",
                         "zeroRecords": "Không tìm thấy kết quả",
                         "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
                         "infoEmpty": "Không có dữ liệu",
-                        "infoFiltered": "(Được lọc từ _MAX_ lớp)",
+                        "infoFiltered": "(Được lọc từ _MAX_ nguyên liệu)",
                         "search": "Tìm kiếm",
                         "paginate": {
                             "previous": "Trở về",
@@ -54,12 +49,12 @@ $(document).ready(function () {
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0, data: null },
+                        { targets: 0,orderable: false, data: null },
                         { targets: 1, className: 'dt-body-left' },
-                        { targets: 2, className: 'dt-body-center' },
-                        { targets: 3, className: 'dt-body-right' },
-                        { targets: 4, className: 'dt-body-right' },
-                        { targets: 5, className: 'dt-body-right' },
+                        { targets: 2, orderable: false,className: 'dt-body-center' },
+                        { targets: 3, orderable: false,className: 'dt-body-right' },
+                        { targets: 4, orderable: false,className: 'dt-body-right' },
+                        { targets: 5, orderable: false,className: 'dt-body-right' },
                         {
                             targets: 7,
                             orderable: false,

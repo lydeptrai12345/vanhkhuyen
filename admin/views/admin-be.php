@@ -255,10 +255,13 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 1, className: 'dt-body-left', orderable: false },
-                        { targets: 4, className: 'dt-body-left' },
-                        { targets: 5, className: 'dt-body-left' },
-                        { targets: 7, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật bé"><i class="material-icons action-icon">edit</i></a>' },
+                        { targets: 1, className: 'dt-body-left'},
+                        { targets: 2, orderable: false,className: 'dt-body-left' },
+                        { targets: 3, orderable: false,className: 'dt-body-left' },
+                        { targets: 4, orderable: false,className: 'dt-body-left' },
+                        { targets: 5, orderable: false,className: 'dt-body-left' },
+                        { targets: 6, orderable: false,className: 'dt-body-left' },
+                        { targets: 7,orderable: false, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật bé"><i class="material-icons action-icon">edit</i></a>' },
                     ],
                     columns: [
                         {

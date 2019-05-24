@@ -188,7 +188,8 @@
                         { data: 'ten_cong_viec' },
                         { data: 'phucap' , width: "100px"},
                         { "width": "60px" },
-                    ]
+                    ],
+                    order: [[ 1, 'asc' ]]
                 });
 
                 // PHẦN THỨ TỰ TABLE
@@ -207,7 +208,7 @@
                     }
                     else{
                         if(confirm("Bạn có chắc chắn muốn xóa chức vụ vừa chọn")) {
-                            window.location.href = "admin-congviec -xoa.php?id=" + data.congviec_id;
+                            window.location.href = "admin-congviec-xoa.php?id=" + data.congviec_id;
                         }
                     }
                 });

@@ -74,9 +74,6 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
             <div class="card card-small mb-4">
                 <div class="card-header border-bottom">
                     <form action="" method="get" class="row">
-                        <div class="col-md-12">
-                            <h5 class="text-info">Danh sách nguyên liệu</h5>
-                        </div>
                         <div class="col-md-2">
                             <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm nguyên liệu</button>
                         </div>

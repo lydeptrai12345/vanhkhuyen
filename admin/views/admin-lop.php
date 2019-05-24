@@ -582,7 +582,7 @@
                 { data: 'sdtcha', width: "130px" },
                 { data: null, width: "30px" },
             ],
-            order: [[ 0, 'asc' ]]
+            order: [[ 1, 'asc' ]]
 
         });
         // PHẦN THỨ TỰ TABLE

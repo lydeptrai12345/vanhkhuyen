@@ -163,7 +163,8 @@
                         { width: "30px" },
                         { data: 'ten_phong_ban' },
                         { "width": "60px" },
-                    ]
+                    ],
+                    order: [[ 1, 'asc' ]]
                 });
 
                 // PHẦN THỨ TỰ TABLE
