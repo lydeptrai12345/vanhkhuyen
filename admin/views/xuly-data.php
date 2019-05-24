@@ -15,6 +15,9 @@ class xuly {
     protected $_where = [];
     protected $_from = " FROM ";
     protected $_join = [];
+    protected $_insert = "";
+    protected $_update = "";
+    protected $_delete = "";
 
     function __construct() {
         $this->dbc = mysqli_connect('localhost','root','','qlmamnon') or die(mysqli_error());
@@ -90,6 +93,25 @@ class xuly {
         }
         return $arr_result;
     }
+
+    public function insert($name_table, $data_insert = [])
+    {
+        if (!is_array($data_insert) || count($data_insert) <= 0) return -1;
+        $arr_column = array_keys($data_insert);
+        $arr_value = array_values($data_insert);
+        $query_insert = "INSERT INTO " . $name_table . " (" . implode(",", $arr_column) . ") VALUE";
+        $array_value = [];
+        foreach ($arr_value as $item) {
+            $array_value[] = "'" . $item . "'";
+        }
+        $query_insert .= " (" . implode(",", $array_value) . ")";
+
+        mysqli_query($this->dbc, $query_insert);
+        if(mysqli_affected_rows($this->dbc) > 0)
+            return 1;
+        return -1;
+    }
+
 }
 
 ?>
