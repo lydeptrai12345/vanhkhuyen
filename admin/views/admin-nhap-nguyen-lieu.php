@@ -152,6 +152,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                             </div>
                             <div class="modal-body">
                                 <div class="row">
+                                    <input type="hidden" id="nguyen_lieu_id">
                                     <div class="form-group col-md-12">
                                         <label for="">Tên nguyên liệu <span class="dot-required">*</span></label>
                                         <input name="ten_nguyen_lieu" maxlength="255" type="text" class="form-control">

@@ -107,9 +107,34 @@ class xuly {
         $query_insert .= " (" . implode(",", $array_value) . ")";
 
         mysqli_query($this->dbc, $query_insert);
-        if(mysqli_affected_rows($this->dbc) > 0)
+        if (mysqli_affected_rows($this->dbc) > 0)
             return 1;
         return -1;
+    }
+
+    public function update($name_table, $data_update) {
+        if (!is_array($data_update) || count($data_update) <= 0) return -1;
+
+        $query_update = "UPDATE " . $name_table . " SET ";
+
+        $str_update = [];
+        foreach ($data_update as $key => $item) {
+            $str_update[] = $key . "=" . "'" . $item . "'";
+        }
+
+        $query_where  = !empty($this->_where) ? " WHERE " . implode(" AND ", $this->_where) : "";
+
+        $query_update .= implode(",", $str_update) . $query_where;
+//        return $query_update;
+
+        mysqli_query($this->dbc, $query_update);
+        if (mysqli_affected_rows($this->dbc) > 0){
+            mysqli_close($this->dbc);
+            return 1;
+        }else{
+            mysqli_close($this->dbc);
+            return -1;
+        }
     }
 
 }
