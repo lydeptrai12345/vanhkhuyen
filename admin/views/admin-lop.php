@@ -416,14 +416,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="">Niên khóa hiện tại</label>
-                                                    <select name="lop_hoc_hien_tai" id="" class="form-control"></select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="">Lớp học hiện tại</label>
                                                     <select name="lop_hoc_hien_tai" id="" class="form-control">
@@ -444,7 +437,9 @@
                                                         <?php else:?>
                                                             <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
                                                                     data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
-                                                                    value="<?php echo $item['id']?>"><?php echo $item['ten_nien_khoa']?>
+                                                                    value="<?php echo $item['id']?>"
+                                                            >
+                                                                <?php echo $item['ten_nien_khoa']?>
                                                             </option>
                                                         <?php endif;?>
 
@@ -456,19 +451,14 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Lớp học mới</label>
-                                                    <select name="lop_hoc_moi" id="" class="form-control">
-                                                        <optgroup label="German Cars">
-                                                            <option value="mercedes">Mercedes</option>
-                                                            <option value="audi">Audi</option>
-                                                        </optgroup>
-                                                    </select>
+                                                    <select name="lop_hoc_moi" id="" class="form-control"></select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button onclick="chuyen_lop_cho_be()" class="btn btn-success">Chuyển lớp</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                        <button id="btn-close-chuyen-lop" type="button" class="btn btn-default">Đóng</button>
                                     </div>
                                 </div>
 
@@ -693,8 +683,8 @@
 
         // click chuyen lop
         $('#btn-chuyen-lop').click(function () {
-            console.log(rows_selected);
-
+            $('#modal-chuyen-lop').modal().show();
+            getDataNienKhoa();
         });
 
 
@@ -807,6 +797,12 @@
 
         $('select[name="nien_khoa_chuyen_lop"]').change(function () {
             getDataNienKhoa();
+        });
+
+        // close modal chuyen lop
+        $('#btn-close-chuyen-lop').click(function () {
+            $('#modal-chuyen-lop').modal().hide();
+            $('.modal-backdrop').hide();
         });
     });
     // END DOCUMENT READY
@@ -1022,9 +1018,11 @@
             url: 'admin-xuly-lop.php',
             data: { 'chuyen_lop' : 1, 'lop': $('select[name="lop_hoc_moi"').val(), arr_be: rows_selected },
             success : function (result){
-                console.log('aaaaa');
-                if (result == "1") alert('Success');
-                else alert('Failed');
+                if (result == "1") {
+                    alert('Chuyển lớp thành công');
+                    location.reload();
+                }
+                else alert('Lỗi không chuyển được lớp');
             }
         });
     }
@@ -1037,15 +1035,18 @@
             success : function (result){
                 var data = JSON.parse(result);
                 var str = null;
-                // console.log(result); return;
+
                 if(data.length > 0) {
                     data.forEach(function (item) {
                         str += '<optgroup label="'+ item.ten_khoi +'">';
-                        console.log(item.data_lop);
                         var data_lop = item.data_lop;
                         if(data_lop.length > 0){
                             data_lop.forEach(function (lop) {
-                                str += '<option data-khoi="'+ lop.lop_hoc_id +'" value="'+ lop.id +'">'+ lop.mo_ta +'</option>'
+                                var lop_hien_tai = $('select[name="lop_hoc_hien_tai"]').val();
+                                if(lop_hien_tai == lop.id){
+                                    str += '<option disabled data-khoi="'+ lop.lop_hoc_id +'" value="'+ lop.id +'">'+ lop.mo_ta +'</option>'
+                                }
+                                else str += '<option data-khoi="'+ lop.lop_hoc_id +'" value="'+ lop.id +'">'+ lop.mo_ta +'</option>'
                             });
                         }
 
@@ -1059,10 +1060,6 @@
             }
         });
     }
-
-    $(document).ready(function () {
-        getDataNienKhoa();
-    });
 </script>
 
 <!-- Footer-->
