@@ -160,6 +160,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                                                             <th>Niên khóa</th>
                                                             <th>Học phí</th>
                                                             <th>Ngày tạo</th>
+                                                            <th></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>

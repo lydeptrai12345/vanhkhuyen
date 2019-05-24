@@ -241,7 +241,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                         { targets: 0, data: null },
                         { targets: 1, className: 'dt-body-center' },
                         { targets: 2, className: 'dt-body-left' },
-                        { targets: 4, className: 'dt-body-right' },
+                        { targets: 4, orderable:      false, className: 'dt-body-right' },
                         { targets: 6, data: null, defaultContent: '<a><i class="material-icons action-icon">edit</i></a>' },
                     ],
                     columns: [

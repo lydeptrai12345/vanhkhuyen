@@ -108,7 +108,7 @@
                                 <tr>
                                     <th>STT</th>
                                     <th>Tên phòng ban</th>
-                                    <th></th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -148,10 +148,11 @@
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0, data: null },
+                        { targets: 0,orderable: false, data: null },
                         { targets: 1, className: 'dt-body-center' },
                         {
                             targets: 2,
+                            orderable: false,
                             data: null,
                             defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật bằng cấp"><i class="material-icons action-icon">edit</i></a> ' +
                                 '<a data-action="2" style="cursor: pointer" title="Xóa bằng cấp"><i class="material-icons action-icon">delete_outline</i></a>'

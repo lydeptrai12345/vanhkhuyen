@@ -130,7 +130,7 @@
                                     <th>STT</th>
                                     <th>Tên chức vụ</th>
                                     <th>Phụ cấp</th>
-                                    <th></th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -159,11 +159,11 @@
                 var data = JSON.parse(result);
                 table = $('#tripRevenue').DataTable({
                     language: {
-                        "lengthMenu": "Hiển thị _MENU_ công việc/ trang",
+                        "lengthMenu": "Hiển thị _MENU_ chức vụ/ trang",
                         "zeroRecords": "Không tìm thấy kết quả",
                         "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
                         "infoEmpty": "Không có dữ liệu",
-                        "infoFiltered": "(Được lọc từ _MAX_ công việc)",
+                        "infoFiltered": "(Được lọc từ _MAX_ chức vụ)",
                         "search": "Tìm kiếm",
                         "paginate": {
                             "previous": "Trở về",
@@ -172,11 +172,12 @@
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0, data: null },
+                        { targets: 0, searchable: false, "orderable": false, data: null },
                         { targets: 1, className: 'dt-body-center' },
                         { targets: 2, className: 'dt-body-center' },
                         {
                             targets: 3,
+                            orderable: false,
                             data: null,
                             defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật chức vụ"><i class="material-icons action-icon">edit</i></a> ' +
                                 '<a data-action="2" style="cursor: pointer" title="Xóa chức vụ"><i class="material-icons action-icon">delete_outline</i></a>'

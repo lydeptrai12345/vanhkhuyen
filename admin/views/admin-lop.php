@@ -708,20 +708,22 @@
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0, data: null },
+                        { targets: 0,  "orderable": false, data: null },
                         { targets: 1, className: 'dt-body-left' },
-                        { targets: 2, className: 'dt-body-center' },
-                        { targets: 3, className: 'dt-body-center' },
+                        { targets: 2, orderable: false,className: 'dt-body-center' },
+                        { targets: 3, orderable: false, className: 'dt-body-center' },
                         {
                             targets: 4,
+                            orderable: false,
                             data: null,
                             defaultContent: '<a class="show" data-action="3" style="cursor: pointer" title="Xem danh sách lớp"><span></span> <i class="glyphicon glyphicon-list-alt"></i></a> '
                         },
                         {
                             targets: 5,
+                            orderable: false,
                             data: null,
-                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật bằng cấp"><i class="material-icons action-icon">edit</i></a> ' +
-                                '<a data-action="2" style="cursor: pointer" title="Xóa bằng cấp"><i class="material-icons action-icon">delete_outline</i></a>'
+                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật lớp"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" style="cursor: pointer" title="Xóa lớp"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
                     ],
                     columns: [
