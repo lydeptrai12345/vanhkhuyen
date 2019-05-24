@@ -21,11 +21,11 @@ class xuly {
         mysqli_set_charset($this->dbc,"utf8");
     }
 
+
     public function select($select = "*")
     {
         $this->_select .= $select;
         return $this;
-
     }
 
     public function from($from)
@@ -57,20 +57,25 @@ class xuly {
         $query_where  = !empty($this->_where) ? " WHERE " . implode(" AND ", $this->_where) : "";
 
         $query = $query_select . $query_from . $query_join . $query_where;
-
+//        return $query;
         $query = mysqli_query($this->dbc, $query);
         $result = array();
 
-        if ($this->_select == "*") {
-            while ($row = mysqli_fetch_object($query)) {
-                $result[] = $row;
-            }
-        } else {
-            $arr_select = $this->get_name_column_select($this->_select);
-            while ($row = mysqli_fetch_row($query)) {
-                $result[] = array_combine($arr_select, $row);
+        if (mysqli_num_rows($query) > 0){
+            if ($this->_select == "*") {
+                while ($row = mysqli_fetch_object($query)) {
+                    $result[] = $row;
+                }
+            } else {
+                $arr_select = $this->get_name_column_select($this->_select);
+                while ($row = mysqli_fetch_row($query)) {
+                    $result[] = array_combine($arr_select, $row);
+                }
             }
         }
+        else return [];
+
+        mysqli_close($this->dbc);
 
         return $result;
     }

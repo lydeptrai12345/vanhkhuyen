@@ -8,10 +8,22 @@
             parent::__contructor();
         }
 
-        public function getDataNienKhoa()
+        public function get_danh_sach_khoi()
         {
-//            return ($this->getTable("nienkhoa", $select, $where));
-            return $this->from("nienkhoa")->get();
+            return $this->select('id, ten_lop as ten_khoi')->from('lophoc')->get();
+        }
+
+        public function get_danh_sach_lop_hoc_theo_nien_khoa_khoi($nien_khoa_id)
+        {
+//            $result = $this->select("l.id as lop_hoc_id, mo_ta, ten_nien_khoa, ten_lop as ten_khoi")
+//                ->from("lophoc_chitiet as l")
+//                ->join('lophoc', 'l.lop_hoc_id', '=', 'lophoc.id')
+//                ->join('nienkhoa', 'l.nien_khoa_id', '=', 'nienkhoa.id')
+//                ->where('nien_khoa_id = ' . $nien_khoa_id)
+//                ->where('lophoc.id = ' . $khoi_id)
+//                ->get();
+            $result = $this->select('*')->from('lophoc_chitiet')->where('nien_khoa_id = ' . $nien_khoa_id)->get();
+            return $result;
         }
 
         public function getLopHocTheoNienKhoa($idNienKhoa)
