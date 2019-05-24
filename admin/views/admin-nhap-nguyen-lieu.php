@@ -2,22 +2,14 @@
 <?php include "../../inc/myconnect.php";?>
 <?php include "../../inc/myfunction.php";?>
 
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>-->
-<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>-->
-
-<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">-->
-<!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
 
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
 
-<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>-->
+<link rel="stylesheet" href="../../library/datepicker/bootstrap-datepicker.css">
+<script src="../../library/datepicker/bootstrap-datepicker.js"></script>
 
-<link rel="stylesheet" href="../../library/jsTree/themes/default/style.min.css" />
-<script src="../../library/jsTree/jstree.min.js"></script>
 
-<!--<link rel="stylesheet" href="../../library/collapse/collapse.css" />-->
 <script src="../../library/collapse/jquery.collapse.js"></script>
 <!-- End header-->
 <script>
@@ -83,33 +75,15 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                 <div class="card-header border-bottom">
                     <form action="" method="get" class="row">
                         <div class="col-md-12">
-                            <h5 class="text-info">Danh sách lớp học</h5>
+                            <h5 class="text-info">Danh sách nguyên liệu</h5>
                         </div>
                         <div class="col-md-2">
                             <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm mới niên khóa</button>
                         </div>
-                        <div class="col-md-4"></div>
+                        <div class="col-md-6"></div>
                         <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Niên khóa</div>
                         <div class="col-md-2">
-                            <form id="form-bo-loc" action="admin-lop.php" method="get">
-                                <select name="loc_nien_khoa" id="" class="form-control">
-                                    <?php foreach ($results_nien_khoa as $item):?>
-                                        <?php if($nien_khoa != 0) :?>
-                                            <option <?php if($nien_khoa == $item['ten_nien_khoa']) echo "selected";?>
-                                                data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
-                                                value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
-                                            </option>
-                                        <?php else:?>
-                                            <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
-                                                data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
-                                                value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
-                                            </option>
-                                        <?php endif;?>
-
-                                    <?php endforeach;?>
-                                </select>
-                                <button id="btn-bo-loc" type="submit" class="hidden"></button>
-                            </form>
+                            <input class="date_nguyen_lieu form-control" type="text">
                         </div>
                     </form>
                 </div>
@@ -127,7 +101,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                     <th>Giá tiền</th>
                                     <th>Thanh tiền</th>
                                     <th>Ngày nhập</th>
-                                    <th></th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>

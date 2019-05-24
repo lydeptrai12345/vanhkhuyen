@@ -1,10 +1,36 @@
 
 $(document).ready(function () {
 
+    $('.date_nguyen_lieu').datepicker({
+        format: "mm-yyyy",
+        viewMode: "months",
+        minViewMode: "months",
+        autoclose: true
+    });
+
+    $('.date_nguyen_lieu').datepicker("update", new Date());
+
+    $('.date_nguyen_lieu').change(function () {
+        fill_lai_data();
+    });
+
+    function fill_lai_data() {
+        $.ajax({
+            type: "GET",
+            url: 'admin-nguyen-lieu-xu-ly.php?danh_sach_nguyen_lieu=1&date=01-' + $('.date_nguyen_lieu').val(),
+            success : function (result){
+                var data = JSON.parse(result);
+                var tb = $('#tripRevenue').dataTable();
+                tb.dataTable().fnClearTable();
+                if(data.length > 0) tb.dataTable().fnAddData(data);
+            }
+        });
+    }
+
     function get_danh_sach_nguyen_lieu() {
         $.ajax({
             type: "GET",
-            url: 'admin-nguyen-lieu-xu-ly.php?danh_sach_nguyen_lieu=1',
+            url: 'admin-nguyen-lieu-xu-ly.php?danh_sach_nguyen_lieu=1&date=01-' + $('.date_nguyen_lieu').val(),
             success: function (result) {
                 var data = JSON.parse(result);
                 // console.log(data);
@@ -26,7 +52,9 @@ $(document).ready(function () {
                         { targets: 0, data: null },
                         { targets: 1, className: 'dt-body-left' },
                         { targets: 2, className: 'dt-body-center' },
-                        { targets: 3, className: 'dt-body-center' },
+                        { targets: 3, className: 'dt-body-right' },
+                        { targets: 4, className: 'dt-body-right' },
+                        { targets: 5, className: 'dt-body-right' },
                         {
                             targets: 7,
                             data: null,
@@ -36,11 +64,11 @@ $(document).ready(function () {
                     ],
                     columns: [
                         { width: "30px" },
-                        { data: 'ten_nguyen_lieu', width: '100px' },
+                        { data: 'ten_nguyen_lieu', width: '180px' },
                         { data: 'dvt'},
-                        { data: 'so_luong',},
-                        { data: 'gia_tien'},
-                        { data: 'thanh_tien'},
+                        { data: 'so_luong', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                        { data: 'gia_tien', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                        { data: 'thanh_tien', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                         { data: "ngay_nhap" },
                         { width: "50px" },
                     ]

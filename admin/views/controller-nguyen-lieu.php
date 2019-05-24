@@ -10,10 +10,18 @@ class NguyenLieu extends xuly
         parent::__contructor();
     }
 
-    public function get_danh_sach_nguyen_lieu()
+    public function get_danh_sach_nguyen_lieu($date)
     {
+        $date = date($date);
+        $month = date("m", strtotime($date));
+
+        $year = date("Y", strtotime($date));
+        $date_start = $year . '-' . $month . '-01';
+
         $result = $this->from('nguyen_lieu')
             ->select("id, ten_nguyen_lieu, so_luong, gia_tien, dvt, (DATE_FORMAT(ngay_nhap,'%d-%m-%Y')) as ngay_nhap, nhan_vien_id, (so_luong*gia_tien) as thanh_tien")
+            ->where("DATE(ngay_nhap) >= DATE('". $date_start ."')")
+            ->where("DATE(ngay_nhap) <= LAST_DAY('". $date_start ."')")
             ->order_by('ngay_nhap DESC')
             ->get();
         return $result;

@@ -70,7 +70,6 @@ class xuly {
 
         $query = $query_select . $query_from . $query_join . $query_where . $query_oder_by;
 
-
         $query = mysqli_query($this->dbc, $query);
         $result = array();
 

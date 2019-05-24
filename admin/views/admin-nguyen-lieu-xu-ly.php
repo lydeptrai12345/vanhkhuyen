@@ -3,8 +3,9 @@ include "controller-nguyen-lieu.php";
 
 // Lay danh nguyen lieu
 if (isset($_GET['danh_sach_nguyen_lieu'])) {
+    $date = $_GET['date'];
     $nguyen_lieu = new NguyenLieu();
-    echo json_encode($nguyen_lieu->get_danh_sach_nguyen_lieu());
+    echo json_encode($nguyen_lieu->get_danh_sach_nguyen_lieu($date));
 }
 
 // Insert nguyen lieu
