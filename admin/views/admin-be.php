@@ -209,7 +209,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                             <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
                                 <thead>
                                 <tr>
-                                    <th></th>
+                                    <th>STT</th>
                                     <th>Họ và tên</th>
                                     <th>Giới tính</th>
                                     <th>Ngày sinh</th>
@@ -255,7 +255,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 1, className: 'dt-body-left' },
+                        { targets: 1, className: 'dt-body-left', orderable: false },
                         { targets: 4, className: 'dt-body-left' },
                         { targets: 5, className: 'dt-body-left' },
                         { targets: 7, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật bé"><i class="material-icons action-icon">edit</i></a>' },

@@ -708,7 +708,7 @@
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0,  "orderable": false, data: null },
+                        { targets: 0,  orderable: false, data: null },
                         { targets: 1, className: 'dt-body-left' },
                         { targets: 2, orderable: false,className: 'dt-body-center' },
                         { targets: 3, orderable: false, className: 'dt-body-center' },
@@ -734,6 +734,7 @@
                         { data: 'null',},
                         { width: "80px" }
                     ],
+                    order: [[ 1, 'asc' ]],
                     rowCallback: function ( row, data ) {
                         // Set the checked state of the checkbox in the table
                         $('span', row).html(data.sl_be);
