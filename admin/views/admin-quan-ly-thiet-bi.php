@@ -31,6 +31,28 @@
     .d-none-mam-non { display: none; }
 </style>
 
+<?php
+// lấy danh sách niên khóa
+$results_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY nam_ket_thuc DESC");
+
+// Lấy danh sách nhân viên
+$results_nhan_vien_them_moi = mysqli_query($dbc,"SELECT id, ho_ten FROM nhanvien WHERE id NOT IN (SELECT nhan_vien_id FROM lophoc_nhanvien)");
+$results_nhan_vien_cap_nhat = mysqli_query($dbc,"SELECT id, ho_ten FROM nhanvien");
+
+$nien_khoa = isset($_GET['loc_nien_khoa']) ? $_GET['loc_nien_khoa'] : 0;
+
+// tinhs nieen khoa hien tai month > 6 && month
+$year = date("Y");
+if(date("m") > 6)
+    $nien_khoa_hien_tai = $year . "-" . $year + 1;
+else
+    $nien_khoa_hien_tai = ($year - 1) . "-" . $year;
+
+if(!$nien_khoa) $nien_khoa = $nien_khoa_hien_tai;
+// lấy danh sách khối
+$results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
+?>
+
 <!-- Page content-->
 <div class="main-content-container container-fluid px-4">
 
@@ -113,13 +135,13 @@
 
                                     <div class="form-group col-md-8">
                                         <label for="">Giá tiền <span class="dot-required">*</span></label>
-                                        <input name="gia_tien" type="text" class="form-control text-right">
+                                        <input name="gia_tien" type="text" class="form-control text-right formatCurrency">
                                         <small id="err_gia_tien" class="dot-required d-none-mam-non">Vui lòng nhập gia tiền</small>
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label for="">Số lượng <span class="dot-required">*</span></label>
-                                        <input name="so_luong" type="number" class="form-control text-right" value="0">
+                                        <input name="so_luong" type="number" min="1" max="1000" class="form-control text-right" value="0">
                                         <small id="err_so_luong" class="dot-required d-none-mam-non">Vui lòng nhập số lượng</small>
                                     </div>
 
@@ -131,25 +153,40 @@
 
                                     <div class="form-group col-md-6">
                                         <label for="">Ngày sản xuất <span class="dot-required">*</span></label>
-                                        <input name="ngay_san_san_xuat" type="text" maxlength="255" class="form-control">
+                                        <input name="ngay_san_san_xuat" type="text" maxlength="255" class="ngay_san_san_xuat form-control">
                                         <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="">Ngày hết hạn <span class="dot-required">*</span></label>
-                                        <input name="ngay_het_han" type="text" maxlength="255" class="form-control">
+                                        <input name="ngay_het_han" type="text" maxlength="255" class="ngay_het_han form-control">
                                         <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="">Thanh lý <span class="dot-required">*</span></label>
-                                        <input name="ngay_het_han" type="text" maxlength="255" class="form-control">
+                                        <input name="thanh_ly" type="text" maxlength="255" class="form-control">
                                         <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="">Niên khóa <span class="dot-required">*</span></label>
-                                        <input name="ngay_het_han" type="text" maxlength="255" class="form-control">
+                                        <select name="nien_khoa" id="" class="form-control">
+                                            <?php foreach ($results_nien_khoa as $item):?>
+                                                <?php if($nien_khoa != 0) :?>
+                                                    <option <?php if($nien_khoa == $item['ten_nien_khoa']) echo "selected";?>
+                                                            data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                            value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                                    </option>
+                                                <?php else:?>
+                                                    <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
+                                                            data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
+                                                            value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                                    </option>
+                                                <?php endif;?>
+
+                                            <?php endforeach;?>
+                                        </select>
                                         <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
                                     </div>
 

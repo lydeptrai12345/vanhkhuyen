@@ -42,16 +42,31 @@ class QuanLyThietBi extends xuly {
         $dvt = $data_insert->dvt;
         if(empty($dvt)) return 'dvt';
 
+        $ngay_san_san_xuat = $data_insert->ngay_san_san_xuat;
+        if(empty($ngay_san_san_xuat)) return 'ngay_san_san_xuat';
+
+        $ngay_het_han = $data_insert->ngay_het_han;
+        if(empty($ngay_het_han)) return 'ngay_het_han';
+
+        $ngay_het_han = $data_insert->thanh_ly;
+        if(empty($ngay_het_han)) return 'thanh_ly';
+
         $nhan_vien_id = (int)$data_insert->nhan_vien_id;
         if($nhan_vien_id < 0) return 'nhan_vien_id';
 
         $data_insert = array(
             'ten_thiet_bi' => $ten_thiet_bi,
             'so_luong' => $so_luong,
+            'ngay_san_san_xuat' => $ngay_san_san_xuat,
+            'ngay_het_han' => $ngay_het_han,
+            'bao_hanh' => $so_luong,
+            'thanh_ly' => $so_luong,
+            'nien_khoa_id' => $so_luong,
             'gia_tien' => $gia_tien,
             'dvt' => $dvt,
             'ngay_nhap' => date("Y-m-d"),
             'nhan_vien_id' => $nhan_vien_id,
+            'ghi_chu' => $nhan_vien_id,
         );
         return $this->insert('thiet_bi', $data_insert);
     }

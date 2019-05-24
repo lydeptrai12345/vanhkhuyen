@@ -17,6 +17,16 @@ $(document).ready(function () {
         fill_lai_data();
     });
 
+    $('.ngay_san_san_xuat').datepicker({
+        format: "dd-mm-yyyy",
+        autoclose: true
+    });
+
+    $('.ngay_het_han').datepicker({
+        format: "dd-mm-yyyy",
+        autoclose: true
+    });
+
     function fill_lai_data() {
         $.ajax({
             type: "GET",
@@ -142,6 +152,10 @@ $(document).ready(function () {
         var gia_tien = $('input[name="gia_tien"]').val();
         var so_luong = $('input[name="so_luong"]').val();
         var dvt = $('input[name="dvt"]').val();
+        var ngay_san_san_xuat = $('input[name="ngay_san_san_xuat"]').val();
+        var ngay_het_han = $('input[name="ngay_het_han"]').val();
+        var thanh_ly = $('input[name="thanh_ly"]').val();
+        var nien_khoa_id = $('select[name="nien_khoa"]').val();
         var nhan_vien_id = $('#nguoi_dung').val();
         $('#thiet_bi_id').val(0);
 
@@ -150,11 +164,15 @@ $(document).ready(function () {
             gia_tien: gia_tien,
             so_luong: so_luong,
             dvt: dvt,
+            ngay_san_san_xuat: ngay_san_san_xuat,
+            ngay_het_han: ngay_het_han,
+            thanh_ly: thanh_ly,
+            nien_khoa_id: nien_khoa_id,
             nhan_vien_id: nhan_vien_id,
         };
         $.ajax({
             type: "POST",
-            url: 'admin-nguyen-lieu-xu-ly.php',
+            url: 'admin-quan-ly-thiet-bi-xu-ly.php',
             data: { 'add_thiet_bi' : 1, data: data },
             success : function (result){
                 if(result == "1"){
