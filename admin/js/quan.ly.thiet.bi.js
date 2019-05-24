@@ -17,7 +17,7 @@ $(document).ready(function () {
         fill_lai_data();
     });
 
-    $('.ngay_san_san_xuat').datepicker({
+    $('.ngay_san_xuat').datepicker({
         format: "dd-mm-yyyy",
         autoclose: true
     });
@@ -157,7 +157,7 @@ $(document).ready(function () {
         var gia_tien = $('input[name="gia_tien"]').val();
         var so_luong = $('input[name="so_luong"]').val();
         var dvt = $('input[name="dvt"]').val();
-        var ngay_san_san_xuat = $('input[name="ngay_san_san_xuat"]').val();
+        var ngay_san_xuat = $('input[name="ngay_san_xuat"]').val();
         var ngay_het_han = $('input[name="ngay_het_han"]').val();
         var thanh_ly = $('input[name="thanh_ly"]').val();
         var nien_khoa_id = $('select[name="nien_khoa"]').val();
@@ -169,7 +169,7 @@ $(document).ready(function () {
             gia_tien: gia_tien,
             so_luong: so_luong,
             dvt: dvt,
-            ngay_san_san_xuat: ngay_san_san_xuat,
+            ngay_san_xuat: ngay_san_xuat,
             ngay_het_han: ngay_het_han,
             thanh_ly: thanh_ly,
             nien_khoa_id: nien_khoa_id,
@@ -180,6 +180,7 @@ $(document).ready(function () {
             url: 'admin-quan-ly-thiet-bi-xu-ly.php',
             data: { 'add_thiet_bi' : 1, data: data },
             success : function (result){
+                console.log(result);
                 if(result == "1"){
                     alert('Thêm nguyên liệu thành công!');
                     location.reload();

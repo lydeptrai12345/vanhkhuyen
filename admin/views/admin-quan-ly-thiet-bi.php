@@ -154,7 +154,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 
                                     <div class="form-group col-md-6">
                                         <label for="">Ngày sản xuất <span class="dot-required">*</span></label>
-                                        <input name="ngay_san_san_xuat" type="text" maxlength="255" class="ngay_san_san_xuat form-control">
+                                        <input name="ngay_san_xuat" type="text" maxlength="255" class="ngay_san_xuat form-control">
                                         <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
                                     </div>
 

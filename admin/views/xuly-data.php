@@ -114,7 +114,7 @@ class xuly {
             $array_value[] = "'" . $item . "'";
         }
         $query_insert .= " (" . implode(",", $array_value) . ")";
-
+//        return $query_insert;
         mysqli_query($this->dbc, $query_insert);
 
         mysqli_affected_rows($this->dbc) > 0 ? $result = 1 : $result = -1;
