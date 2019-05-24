@@ -2,8 +2,8 @@
 <?php include "../../inc/myconnect.php";?>
 <?php include "../../inc/myfunction.php";?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>-->
+<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>-->
 
 <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">-->
 <!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>-->
 
 <link rel="stylesheet" href="../../library/jsTree/themes/default/style.min.css" />
 <script src="../../library/jsTree/jstree.min.js"></script>
@@ -167,7 +167,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 
                                     <div class="form-group col-md-4">
                                         <label for="">Số lượng <span class="dot-required">*</span></label>
-                                        <input name="so_luong" type="number" class="form-control text-right">
+                                        <input name="so_luong" type="number" class="form-control text-right" value="0">
                                         <small id="err_so_luong" class="dot-required d-none-mam-non">Vui lòng nhập số lượng</small>
                                     </div>
 

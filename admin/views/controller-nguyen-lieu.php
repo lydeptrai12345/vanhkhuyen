@@ -12,7 +12,10 @@ class NguyenLieu extends xuly
 
     public function get_danh_sach_nguyen_lieu()
     {
-        $result = $this->from('nguyen_lieu')->select('id, ten_nguyen_lieu, so_luong, gia_tien, dvt, ngay_nhap, nhan_vien_id, (so_luong*gia_tien) as thanh_tien')->get();
+        $result = $this->from('nguyen_lieu')
+            ->select("id, ten_nguyen_lieu, so_luong, gia_tien, dvt, (DATE_FORMAT(ngay_nhap,'%d-%m-%Y')) as ngay_nhap, nhan_vien_id, (so_luong*gia_tien) as thanh_tien")
+            ->order_by('ngay_nhap DESC')
+            ->get();
         return $result;
     }
 
@@ -57,7 +60,7 @@ class NguyenLieu extends xuly
         $id = (isset($data_update->id) && $data_update->id > 0) ? $data_update->id :0;
         if($id <= 0) return 'id';
 
-        if(empty($this->get_nguyen_lieu($id))) return 'data_null';
+//        if(empty($this->get_nguyen_lieu($id))) return 'data_null';
 
         $ten_nguyen_lieu = $data_update->ten_nguyen_lieu;
         if(empty($data_update->ten_nguyen_lieu)) return 'ten_nguyen_lieu';
@@ -82,7 +85,7 @@ class NguyenLieu extends xuly
             'ngay_nhap' => date("Y-m-d"),
             'nhan_vien_id' => $nhan_vien_id,
         );
-        return $this->where('id = ' . 1)->update('nguyen_lieu', $data_update);
+        return $this->where('id = ' . $id)->update('nguyen_lieu', $data_update);
     }
 
     public function get_nguyen_lieu($nguyen_lieu_id)
@@ -94,5 +97,11 @@ class NguyenLieu extends xuly
         $result = $this->select('*')->from('nguyen_lieu')->where('id = ' . $nguyen_lieu_id)->get();
         return $result;
 
+    }
+
+    public function delete_nguyen_lieu($id)
+    {
+        if($id <= 0) return null;
+        return $this->where('id = ' . $id)->delete('nguyen_lieu');
     }
 }

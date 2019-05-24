@@ -61,7 +61,7 @@ $(document).ready(function () {
                         get_nguyen_lieu(data.id);
                     }
                     else if ($(this).data('action') == 2){
-                        delete_lop_hoc(data.id)
+                        delete_nguyen_lieu(data.id);
                     }
                     else if ($(this).data('action') == 3){
                         show_list_be(data.id, data.mo_ta, data.nien_khoa_id)
@@ -156,6 +156,25 @@ $(document).ready(function () {
                 }
             }
         });
+    }
+
+    function delete_nguyen_lieu(id) {
+        if(confirm('Bạn có chắc chắn muốn xóa nguyên liệu vừa chọn?')) {
+            $.ajax({
+                type: "POST",
+                url: 'admin-nguyen-lieu-xu-ly.php',
+                data: { 'delete_nguyen_lieu' : 1, id: id },
+                success : function (result){
+                    if(result == "1"){
+                        alert('Nguyên liệu vừa chọn đã được xóa!');
+                        location.reload();
+                    }
+                    else {
+                        alert('Lỗi không xóa được nguyên liệu vừa chọn!!!');
+                    }
+                }
+            });
+        }
     }
 
     get_danh_sach_nguyen_lieu();

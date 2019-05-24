@@ -43,3 +43,13 @@ if (isset($_POST['edit_nguyen_lieu'])) {
     }
     else echo -1;
 }
+
+// Delete nguyen lieu
+if (isset($_POST['delete_nguyen_lieu'])) {
+    $id = isset($_POST['id']) ? $_POST['id'] : 0;
+    if($id){
+        $nguyen_lieu = new NguyenLieu();
+        echo $nguyen_lieu->delete_nguyen_lieu($id);
+    }
+    else echo -1;
+}

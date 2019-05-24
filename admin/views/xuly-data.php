@@ -18,6 +18,7 @@ class xuly {
     protected $_insert = "";
     protected $_update = "";
     protected $_delete = "";
+    protected $_order_by = "";
 
     function __construct() {
         $this->dbc = mysqli_connect('localhost','root','','qlmamnon') or die(mysqli_error());
@@ -49,6 +50,12 @@ class xuly {
         return $this;
     }
 
+    public function order_by($order_by)
+    {
+        $this->_order_by .= $order_by . " ";
+        return $this;
+    }
+
     public function get()
     {
         $query_select = "SELECT " . (empty($this->_select) ? "*" : $this->_select);
@@ -59,8 +66,11 @@ class xuly {
 
         $query_where  = !empty($this->_where) ? " WHERE " . implode(" AND ", $this->_where) : "";
 
-        $query = $query_select . $query_from . $query_join . $query_where;
-//        return $query;
+        $query_oder_by = !empty($this->_order_by) ? " ORDER BY " . $this->_order_by : "";
+
+        $query = $query_select . $query_from . $query_join . $query_where . $query_oder_by;
+
+
         $query = mysqli_query($this->dbc, $query);
         $result = array();
 
@@ -85,7 +95,7 @@ class xuly {
 
     private function get_name_column_select($select)
     {
-        $arr_select = explode(",", $select);
+        $arr_select = explode(", ", $select);
         $arr_result = [];
         foreach ($arr_select as $item) {
             $arr_name = explode(" ", $item);
@@ -107,9 +117,11 @@ class xuly {
         $query_insert .= " (" . implode(",", $array_value) . ")";
 
         mysqli_query($this->dbc, $query_insert);
-        if (mysqli_affected_rows($this->dbc) > 0)
-            return 1;
-        return -1;
+
+        mysqli_affected_rows($this->dbc) > 0 ? $result = 1 : $result = -1;
+
+        mysqli_close($this->dbc);
+        return $result;
     }
 
     public function update($name_table, $data_update) {
@@ -125,16 +137,27 @@ class xuly {
         $query_where  = !empty($this->_where) ? " WHERE " . implode(" AND ", $this->_where) : "";
 
         $query_update .= implode(",", $str_update) . $query_where;
-//        return $query_update;
 
         mysqli_query($this->dbc, $query_update);
-        if (mysqli_affected_rows($this->dbc) > 0){
-            mysqli_close($this->dbc);
-            return 1;
-        }else{
-            mysqli_close($this->dbc);
-            return -1;
-        }
+
+        mysqli_affected_rows($this->dbc) > 0 ? $result = 1 : $result = -1;
+
+        mysqli_close($this->dbc);
+        return $result;
+    }
+
+    public function delete($name_table)
+    {
+        $query = "DELETE FROM " .$name_table;
+        $query_where = !empty($this->_where) ? " WHERE " . implode(" AND ", $this->_where) : "";
+        $query_delete = $query . $query_where;
+
+        mysqli_query($this->dbc, $query_delete);
+
+        mysqli_affected_rows($this->dbc) > 0 ? $result = 1 : $result = -1;
+
+        mysqli_close($this->dbc);
+        return $result;
     }
 
 }
