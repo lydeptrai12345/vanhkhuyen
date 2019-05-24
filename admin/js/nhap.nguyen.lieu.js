@@ -57,9 +57,10 @@ $(document).ready(function () {
                         { targets: 5, className: 'dt-body-right' },
                         {
                             targets: 7,
+                            orderable: false,
                             data: null,
-                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật bằng cấp"><i class="material-icons action-icon">edit</i></a> ' +
-                                '<a data-action="2" style="cursor: pointer" title="Xóa bằng cấp"><i class="material-icons action-icon">delete_outline</i></a>'
+                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật nguyên liệu"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" style="cursor: pointer" title="Xóa nguyên liệu"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
                     ],
                     columns: [

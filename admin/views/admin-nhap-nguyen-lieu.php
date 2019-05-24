@@ -78,7 +78,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                             <h5 class="text-info">Danh sách nguyên liệu</h5>
                         </div>
                         <div class="col-md-2">
-                            <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm mới niên khóa</button>
+                            <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm nguyên liệu</button>
                         </div>
                         <div class="col-md-6"></div>
                         <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Niên khóa</div>

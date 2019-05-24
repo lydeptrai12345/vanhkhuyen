@@ -54,14 +54,14 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                             <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
                                 <thead>
                                 <tr>
-                                    <th></th>
+                                    <th>STT</th>
                                     <th>Họ và tên</th>
                                     <th>Giới tính</th>
                                     <th>Chức vụ</th>
                                     <th>Phòng ban</th>
                                     <th>Email</th>
                                     <th>Trạng thái</th>
-                                    <th></th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -103,10 +103,12 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                     columnDefs: [
                         { targets: 0, searchable: false, "orderable": false, data: null },
                         { targets: 1, className: 'dt-body-left' },
-                        { targets: 3, className: 'dt-body-left' },
-                        { targets: 4, className: 'dt-body-left' },
-                        { targets: 5, className: 'dt-body-left' },
-                        { targets: 7, data: null, defaultContent: '<a class="btn-edit" style="cursor: pointer" title="Cập nhật nhân viên"><i class="material-icons action-icon">edit</i></a>' },
+                        { targets: 2, orderable: false, className: 'dt-body-left' },
+                        { targets: 3, orderable: false, className: 'dt-body-left' },
+                        { targets: 4, orderable: false, className: 'dt-body-left' },
+                        { targets: 5, orderable: false,className: 'dt-body-left' },
+                        { targets: 6, orderable: false, className: 'dt-body-left' },
+                        { targets: 7, orderable: false, data: null, defaultContent: '<a class="btn-edit" style="cursor: pointer" title="Cập nhật nhân viên"><i class="material-icons action-icon">edit</i></a>' },
                     ],
                     columns: [
                         { width: "30px" },
