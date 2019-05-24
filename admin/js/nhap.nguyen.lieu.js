@@ -67,7 +67,7 @@ $(document).ready(function () {
                         { width: "30px" },
                         { data: 'ten_nguyen_lieu', width: '180px' },
                         { data: 'dvt'},
-                        { data: 'so_luong', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                        { data: 'so_luong', render: $.fn.dataTable.render.number( ',', '.', 1, '' )},
                         { data: 'gia_tien', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                         { data: 'thanh_tien', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                         { data: "ngay_nhap" },
