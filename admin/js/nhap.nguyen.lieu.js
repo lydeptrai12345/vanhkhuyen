@@ -1,3 +1,8 @@
+Number.prototype.format = function(n, x) {
+    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+};
+
 
 $(document).ready(function () {
 
@@ -72,7 +77,41 @@ $(document).ready(function () {
                         { data: 'thanh_tien', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                         { data: "ngay_nhap" },
                         { width: "50px" },
-                    ]
+                    ],
+                    "footerCallback": function ( row, data, start, end, display ) {
+                        var api = this.api(), data;
+
+                        // Remove the formatting to get integer data for summation
+                        var intVal = function ( i ) {
+                            return typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '')*1 :
+                                typeof i === 'number' ?
+                                    i : 0;
+                        };
+
+                        // Total over all pages
+                        total = api
+                            .column( 5 )
+                            .data()
+                            .reduce( function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0 );
+
+                        // Total over this page
+                        pageTotal = api
+                            .column( 5, { page: 'current'} )
+                            .data()
+                            .reduce( function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0 );
+
+                        // $sum = pageTotal.format();
+
+                        // Update footer
+                        $( api.column( 5 ).footer() ).html(
+                            'Tổng: ' + pageTotal.format() +' ('+ total.format() +' tổng cộng)'
+                        );
+                    }
                 });
 
                 // PHẦN THỨ TỰ TABLE

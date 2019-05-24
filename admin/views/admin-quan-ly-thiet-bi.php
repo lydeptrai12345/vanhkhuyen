@@ -105,14 +105,8 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                 </tr>
                                 </thead>
                                 <tbody>
+
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th colspan="6" style="text-align:right">Total:</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
