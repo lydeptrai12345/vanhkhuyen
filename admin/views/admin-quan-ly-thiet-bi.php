@@ -74,11 +74,8 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
             <div class="card card-small mb-4">
                 <div class="card-header border-bottom">
                     <form action="" method="get" class="row">
-                        <div class="col-md-12">
-                            <h5 class="text-info">Danh sách nguyên liệu</h5>
-                        </div>
                         <div class="col-md-2">
-                            <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm nguyên liệu</button>
+                            <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm thiết bị</button>
                         </div>
                         <div class="col-md-6"></div>
                         <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Niên khóa</div>
@@ -95,13 +92,17 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                 <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Thiết bị</th>
+                                    <th>Tên thiết bị</th>
+                                    <th>Ngày nhập</th>
                                     <th>Ngày SX</th>
-                                    <th>Ngày HH</th>
+                                    <th>Hạn sử dụng</th>
                                     <th>Bảo hành</th>
-                                    <th>SL</th>
+                                    <th>Số lượng</th>
                                     <th>Giá tiền</th>
-                                    <th></th>
+                                    <th>Thành tiền nhập</th>
+                                    <th>Thanh lý</th>
+                                    <th>Ghi chú</th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>

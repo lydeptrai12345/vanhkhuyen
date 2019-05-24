@@ -69,7 +69,7 @@ $(document).ready(function () {
                         { targets: 4, orderable: false,className: 'dt-body-right' },
                         { targets: 5, orderable: false,className: 'dt-body-right' },
                         {
-                            targets: 7,
+                            targets: 11,
                             orderable: false,
                             data: null,
                             defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật nguyên liệu"><i class="material-icons action-icon">edit</i></a> ' +
@@ -79,13 +79,18 @@ $(document).ready(function () {
                     columns: [
                         { width: "30px" },
                         { data: 'ten_thiet_bi', width: '180px' },
-                        { data: 'ngay_san_san_xuat'},
+                        { data: 'ngay_san_xuat'},
                         { data: 'so_luong', render: $.fn.dataTable.render.number( ',', '.', 1, '' )},
                         { data: 'gia_tien', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
-                        { data: 'thanh_tien', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                        { data: 'so_luong', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+                        { data: "ngay_nhap" },
+                        { data: "ngay_nhap" },
+                        { data: "ngay_nhap" },
+                        { data: "ngay_nhap" },
                         { data: "ngay_nhap" },
                         { width: "50px" },
                     ],
+                    order: [[ 1, 'asc' ]],
                     "footerCallback": function ( row, data, start, end, display ) {
                         var api = this.api(), data;
 
