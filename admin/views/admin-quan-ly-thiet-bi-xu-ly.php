@@ -1,19 +1,19 @@
 <?php
-include "controller-nguyen-lieu.php";
+include "controller-quan-ly-thiet-bi.php";
 
 // Lay danh nguyen lieu
-if (isset($_GET['danh_sach_nguyen_lieu'])) {
+if (isset($_GET['danh_sach_thiet_bi'])) {
     $date = $_GET['date'];
-    $nguyen_lieu = new NguyenLieu();
-    echo json_encode($nguyen_lieu->get_danh_sach_nguyen_lieu($date));
+    $thiet_bi = new QuanLyThietBi();
+    echo json_encode($thiet_bi->get_danh_sach_thiet_bi($date));
 }
 
 // Insert nguyen lieu
-if (isset($_POST['add_nguyen_lieu'])) {
+if (isset($_POST['add_thiet_bi'])) {
     $data = isset($_POST['data']) ? $_POST['data'] : [];
     if($data){
-        $nguyen_lieu = new NguyenLieu();
-        $result = $nguyen_lieu->insert_nguyen_lieu($data);
+        $thiet_bi = new QuanLyThietBi();
+        $result = $thiet_bi->insert_thiet_bi($data);
         echo $result;
     }
     else echo -1;
@@ -21,11 +21,11 @@ if (isset($_POST['add_nguyen_lieu'])) {
 
 
 // Get nguyen lieu
-if(isset($_GET['get_nguyen_lieu'])) {
+if(isset($_GET['get_thiet_bi'])) {
     $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
     if($id > 0){
-        $nguyen_lieu = new NguyenLieu();
-        $result = $nguyen_lieu->get_nguyen_lieu($id);
+        $thiet_bi = new QuanLyThietBi();
+        $result = $thiet_bi->get_thiet_bi($id);
         foreach ($result as $item){
             $result = $item;
         }
@@ -35,22 +35,22 @@ if(isset($_GET['get_nguyen_lieu'])) {
 }
 
 // Update nguyen lieu
-if (isset($_POST['edit_nguyen_lieu'])) {
+if (isset($_POST['edit_thiet_bi'])) {
     $data = isset($_POST['data']) ? $_POST['data'] : [];
     if($data){
-        $nguyen_lieu = new NguyenLieu();
-        $result = $nguyen_lieu->update_nguyen_lieu($data);
+        $thiet_bi = new QuanLyThietBi();
+        $result = $thiet_bi->update_thiet_bi($data);
         echo $result;
     }
     else echo -1;
 }
 
 // Delete nguyen lieu
-if (isset($_POST['delete_nguyen_lieu'])) {
+if (isset($_POST['delete_thiet_bi'])) {
     $id = isset($_POST['id']) ? $_POST['id'] : 0;
     if($id){
-        $nguyen_lieu = new NguyenLieu();
-        echo $nguyen_lieu->delete_nguyen_lieu($id);
+        $thiet_bi = new QuanLyThietBi();
+        echo $thiet_bi->delete_thiet_bi($id);
     }
     else echo -1;
 }
