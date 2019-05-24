@@ -13,9 +13,9 @@
 <script src="../../library/collapse/jquery.collapse.js"></script>
 <!-- End header-->
 <script>
-    $('#heading4 .panel-heading').attr('aria-expanded','true');
-    $('#collapse4').addClass('show');
-    $('#collapse4 .list-group a:nth-child(2)').addClass('cus-active');
+    $('#heading2 .panel-heading').attr('aria-expanded','true');
+    // $('#collapse2').addClass('show');
+    // $('#collapse4 .list-group a:nth-child(2)').addClass('cus-active');
 </script>
 
 <style>
@@ -30,28 +30,6 @@
     #example th { text-align: center }
     .d-none-mam-non { display: none; }
 </style>
-
-<?php
-// lấy danh sách niên khóa
-$results_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY nam_ket_thuc DESC");
-
-// Lấy danh sách nhân viên
-$results_nhan_vien_them_moi = mysqli_query($dbc,"SELECT id, ho_ten FROM nhanvien WHERE id NOT IN (SELECT nhan_vien_id FROM lophoc_nhanvien)");
-$results_nhan_vien_cap_nhat = mysqli_query($dbc,"SELECT id, ho_ten FROM nhanvien");
-
-$nien_khoa = isset($_GET['loc_nien_khoa']) ? $_GET['loc_nien_khoa'] : 0;
-
-// tinhs nieen khoa hien tai month > 6 && month
-$year = date("Y");
-if(date("m") > 6)
-    $nien_khoa_hien_tai = $year . "-" . $year + 1;
-else
-    $nien_khoa_hien_tai = ($year - 1) . "-" . $year;
-
-if(!$nien_khoa) $nien_khoa = $nien_khoa_hien_tai;
-// lấy danh sách khối
-$results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
-?>
 
 <!-- Page content-->
 <div class="main-content-container container-fluid px-4">
@@ -83,7 +61,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                         <div class="col-md-6"></div>
                         <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Niên khóa</div>
                         <div class="col-md-2">
-                            <input class="date_nguyen_lieu form-control" type="text">
+                            <input class="date_thiet_bi form-control" type="text">
                         </div>
                     </form>
                 </div>
@@ -95,13 +73,13 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                 <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Nguyên liệu</th>
-                                    <th>Đơn vị tính</th>
-                                    <th>Số lượng</th>
+                                    <th>Thiết bị</th>
+                                    <th>Ngày SX</th>
+                                    <th>Ngày HH</th>
+                                    <th>Bảo hành</th>
+                                    <th>SL</th>
                                     <th>Giá tiền</th>
-                                    <th>Thanh tiền</th>
-                                    <th>Ngày nhập</th>
-                                    <th>Thao tác</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -121,16 +99,16 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Thông tin nguyên liệu</h4>
+                                <h4 class="modal-title">Thông tin thiết bị</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
-                                    <input type="hidden" id="nguyen_lieu_id">
+                                    <input type="hidden" id="thiet_bi_id">
                                     <div class="form-group col-md-12">
-                                        <label for="">Tên nguyên liệu <span class="dot-required">*</span></label>
-                                        <input name="ten_nguyen_lieu" maxlength="255" type="text" class="form-control">
-                                        <small id="err_ten_nguyen_lieu" class="dot-required d-none-mam-non">Vui lòng nhập tên nguyên liệu</small>
+                                        <label for="">Tên thiết bị <span class="dot-required">*</span></label>
+                                        <input name="ten_thiet_bi" maxlength="255" type="text" class="form-control">
+                                        <small id="err_ten_thiet_bi" class="dot-required d-none-mam-non">Vui lòng nhập tên nguyên liệu</small>
                                     </div>
 
                                     <div class="form-group col-md-8">
@@ -150,6 +128,31 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         <input name="dvt" type="text" maxlength="255" class="form-control">
                                         <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
                                     </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Ngày sản xuất <span class="dot-required">*</span></label>
+                                        <input name="ngay_san_san_xuat" type="text" maxlength="255" class="form-control">
+                                        <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Ngày hết hạn <span class="dot-required">*</span></label>
+                                        <input name="ngay_het_han" type="text" maxlength="255" class="form-control">
+                                        <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Thanh lý <span class="dot-required">*</span></label>
+                                        <input name="ngay_het_han" type="text" maxlength="255" class="form-control">
+                                        <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">Niên khóa <span class="dot-required">*</span></label>
+                                        <input name="ngay_het_han" type="text" maxlength="255" class="form-control">
+                                        <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -173,7 +176,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 </div>
 <!-- End page content-->
 
-<script src="../js/nhap.nguyen.lieu.js"></script>
+<script src="../js/quan.ly.thiet.bi.js"></script>
 
 
 <!-- Footer-->

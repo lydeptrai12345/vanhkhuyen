@@ -238,7 +238,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default" id="heading2">
-                    <a href="#" class="parent-active"
+                    <a href="admin-quan-ly-thiet-bi.php" class="parent-active"
                        style="text-decoration: none; display: block;line-height: 2;color:black;background:#f5f5f5">
                         <div class="panel-heading" data-toggle="collapse" data-target="#collapse2"
                              aria-controls="collapse2">
