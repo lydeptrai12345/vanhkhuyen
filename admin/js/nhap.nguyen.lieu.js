@@ -74,8 +74,9 @@ $(document).ready(function () {
                         { data: 'gia_tien', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                         { data: 'thanh_tien', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                         { data: "ngay_nhap" },
-                        { width: "50px" },
+                        { width: "60px" },
                     ],
+                    order: [[ 1, 'asc' ]],
                     "footerCallback": function ( row, data, start, end, display ) {
                         var api = this.api(), data;
 
@@ -110,6 +111,7 @@ $(document).ready(function () {
                             'Tổng: ' + pageTotal.format() +' ('+ total.format() +' tổng cộng)'
                         );
                     }
+
                 });
 
                 // PHẦN THỨ TỰ TABLE

@@ -36,7 +36,8 @@
 				<div class="card-header border-bottom">
 					<h5 class="text-info">Danh sách tin tức</h5>
 					<!-- <a class="btn btn-light" data-toggle="tooltip" title="Thêm tin tức" href="admin-tintuc-them.php"><i class="material-icons action-icon">add</i></a> -->
-					<a class="btn btn-light" data-toggle="tooltip" title="Thêm tin tức" href="admin-tintuc-them.php"><i class="material-icons action-icon">add</i></a>
+                    <a id="btn-show-add-nien-khoa" name="them" class="btn btn-success" href="admin-tintuc-them.php">Thêm tin tức</a>
+
 				</div>
 				<div class="card-body p-0 pb-3 text-center">
                     <div class="row" style="padding: 5px 20px;">
@@ -92,12 +93,14 @@
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0, data: null },
+                        { targets: 0, orderable: false,data: null },
+                        { targets: 1,orderable: false, className: 'dt-body-left' },
                         { targets: 2, className: 'dt-body-left' },
                         { targets: 3, className: 'dt-body-left' },
-                        { targets: 4, className: 'dt-body-left' },
+                        { targets: 4,orderable: false, className: 'dt-body-left' },
                         {
                             targets: 5,
+                            orderable: false,
                             data: null,
                             defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật tin tức"><i class="material-icons action-icon">edit</i></a> ' +
                                 '<a data-action="2" style="cursor: pointer" title="Xóa tin tức"><i class="material-icons action-icon">delete_outline</i></a>'
@@ -121,6 +124,7 @@
                         { data: 'ten_nguoi_dung',},
                         { width: "60px" }
                     ],
+                    order: [[ 2, 'asc' ]],
                     rowCallback: function ( row, data ) {
                         // Set the checked state of the checkbox in the table
                         $('img.img-tintuc', row).prop( 'src', '../images/tintuc/' + data.hinh );

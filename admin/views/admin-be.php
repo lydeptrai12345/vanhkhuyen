@@ -216,7 +216,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                                     <th>Lớp</th>
                                     <th>Địa chỉ</th>
                                     <th>Trạng thái</th>
-                                    <th></th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>

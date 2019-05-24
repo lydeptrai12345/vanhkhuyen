@@ -125,7 +125,7 @@
                     <div class="card-header border-bottom">
                         <form action="admin-bangcap.php" method="get">
                             <h5 class="text-info">Danh sách bằng cấp</h5>
-                            <button type="submit" name="them" class="btn btn-light"><i class="material-icons action-icon">add</i></button>
+                            <button id="btn-show-add-nien-khoa" type="submit" name="them" class="btn btn-success">Thêm bằng cấp</button>
                         </form>
                     </div>
                     <div class="card-body p-0 pb-3 text-center">

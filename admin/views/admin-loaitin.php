@@ -111,7 +111,7 @@
                 <div class="card-header border-bottom">
                     <form action="admin-loaitin.php" method="get">
                         <h5 class="text-info">Danh sách loại tin</h5>
-                        <button type="submit" name="them" class="btn btn-defaut"><i class="material-icons action-icon">add</i></button>
+                        <button id="btn-show-add-nien-khoa" type="submit" name="them" class="btn btn-success">Thêm loại tin</button>
                     </form>
                 </div>
                 <div class="card-body p-0 pb-3 text-center">
@@ -123,7 +123,7 @@
                                     <th>STT</th>
                                     <th>Tên thể loại</th>
                                     <th>Thể loại cha</th>
-                                    <th></th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -163,11 +163,12 @@
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0, data: null },
+                        { targets: 0,orderable: false, data: null },
                         { targets: 1, className: 'dt-body-center' },
                         { targets: 2, className: 'dt-body-center' },
                         {
                             targets: 3,
+                            orderable: false,
                             data: null,
                             defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật thể loại"><i class="material-icons action-icon">edit</i></a> ' +
                                 '<a data-action="2" style="cursor: pointer" title="Xóa thể loại"><i class="material-icons action-icon">delete_outline</i></a>'
@@ -178,7 +179,8 @@
                         { data: 'ten' },
                         { data: 'ten_cha', },
                         { width: "60px" }
-                    ]
+                    ],
+                    order: [[ 1, 'asc' ]]
                 });
 
                 // PHẦN THỨ TỰ TABLE

@@ -29,8 +29,8 @@
 			<!-- Danh sach loại tin -->
 				<div class="card-header border-bottom">
 					<h5 class="text-info">Danh sách hoạt động</h5>
-					<!-- <a class="btn btn-light" data-toggle="tooltip" title="Thêm tin tức" href="admin-tintuc-them.php"><i class="material-icons action-icon">add</i></a> -->
-					<a class="btn btn-light" data-toggle="tooltip" title="Thêm tin tức" href="admin-hoatdong-them.php"><i class="material-icons action-icon">add</i></a>
+                    <a id="btn-show-add-nien-khoa" name="them" class="btn btn-success" href="admin-hoatdong-them.php">Thêm hoạt động</a>
+					<!--<a class="btn btn-light" data-toggle="tooltip" title="Thêm tin tức" href="admin-hoatdong-them.php"><i class="material-icons action-icon">add</i></a>-->
 				</div>
 				<div class="card-body p-0 pb-3 text-center">
                     <div class="row" style="padding: 5px 20px;">
@@ -42,7 +42,7 @@
                                     <th>Tiêu đề</th>
                                     <th>Mô tả</th>
                                     <th>Người đăng</th>
-                                    <th></th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -83,12 +83,13 @@
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0, data: null },
+                        { targets: 0,orderable: false, data: null },
                         { targets: 1, className: 'dt-body-center' },
-                        { targets: 2, className: 'dt-body-center' },
-                        { targets: 3, className: 'dt-body-center' },
+                        { targets: 2, orderable: false,className: 'dt-body-center' },
+                        { targets: 3,orderable: false, className: 'dt-body-center' },
                         {
                             targets: 4,
+                            orderable: false,
                             data: null,
                             defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật hoạt động"><i class="material-icons action-icon">edit</i></a> ' +
                                 '<a data-action="2" style="cursor: pointer" title="Xóa hoạt động"><i class="material-icons action-icon">delete_outline</i></a>'
@@ -100,7 +101,8 @@
                         { data: 'tieu_de'},
                         { data: 'ten_nguoi_dung' },
                         { width: "60px" }
-                    ]
+                    ],
+                    order: [[ 1, 'asc' ]]
                 });
 
                 // PHẦN THỨ TỰ TABLE

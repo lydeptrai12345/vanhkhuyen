@@ -154,7 +154,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                                                     <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
                                                         <thead>
                                                         <tr>
-                                                            <th></th>
+
                                                             <th>STT</th>
                                                             <th>Khối</th>
                                                             <th>Niên khóa</th>
@@ -328,51 +328,32 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                     },
                     data: data,
                     columnDefs: [
-                        { targets: 0, orderable: false, data: null },
-                        { targets: 1, className: 'dt-body-center' },
-                        { targets: 2, className: 'dt-body-left' },
-                        { targets: 3, orderable: false,className: 'dt-body-center' },
-                        { targets: 4, orderable: false,className: 'dt-body-right' },
-                        { targets: 5, orderable: false, className: 'dt-body-center' },
+
+                        { targets: 0, orderable: false, className: 'dt-body-center' },
+                        { targets: 1, orderable: false,className: 'dt-body-left' },
+                        { targets: 2, className: 'dt-body-center' },
+                        { targets: 3, orderable: false,className: 'dt-body-right' },
+                        { targets: 4, orderable: false, className: 'dt-body-center' },
                     ],
                     columns: [
-                        {
-                            className:      'details-control',
-                            orderable:      false,
-                            data:           null,
-                            defaultContent: '',
-                            width: "30px"
-                        },
                         { data: null, width: '30px' },
                         { data: 'ten_lop' },
                         { data: 'ten_nien_khoa', width: '130px' },
                         { data: 'so_tien' },
                         { data: 'ngay_tao' },
                     ],
-                    order: [[ 1, 'asc' ]],
+                    order: [[ 2, 'asc' ]],
                 });
 
                 // PHẦN THỨ TỰ TABLE
                 table.on( 'order.dt search.dt', function () {
-                    table.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                    table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                         cell.innerHTML = i+1;
                     } );
                 } ).draw();
             }
         });
 
-        function format ( d ) {
-            var str = '<div class="row">\n' +
-                '    <div class="col-md-3">\n' +
-                '        <img class="img-be" src="../images/hinhbe/'+ d.hinhbe +'" alt="">\n' +
-                '    </div>\n' +
-                '    <div class="col-md-9">\n' +
-                '        <h6>asdsaddsd</h6>\n' +
-                '        <p>dasdsadsadsad adasdasdasd asdsa dsa das dsa</p>\n' +
-                '    </div>\n' +
-                '</div>';
-            return str;
-        }
 
 
         $('#tripRevenue tbody').on('click', 'td.details-control', function () {

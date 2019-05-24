@@ -97,7 +97,7 @@
 				<div class="card-header border-bottom">
 					<form action="admin-phongban.php" method="get">
 						<h5 class="text-info">Danh sách phòng ban</h5>
-						<button type="submit" name="them" class="btn btn-light"><i class="material-icons action-icon">add</i></button>
+                        <button id="btn-show-add-nien-khoa" type="submit" name="them" class="btn btn-success">Thêm phòng ban</button>
 					</form>
 				</div>
 				<div class="card-body p-0 pb-3 text-center">

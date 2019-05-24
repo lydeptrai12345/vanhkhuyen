@@ -45,7 +45,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
 				<div class="card-header border-bottom">
 					<h5 class="text-info">Danh sách Nhân viên</h5>
 					<!-- <a class="btn btn-light" data-toggle="tooltip" title="Thêm Nhân viên" href="admin-nhanvien-them.php"><i class="material-icons action-icon">add</i></a> -->
-					<a class="btn btn-light" data-toggle="tooltip" title="Thêm Nhân viên" href="admin-nhanvien-them.php"><i class="material-icons action-icon">add</i></a>
+                    <a id="btn-show-add-nien-khoa" name="them" class="btn btn-success" href="admin-nhanvien-them.php">Thêm nhân viên</a>
 				</div>
 				<div class="card-body p-0 pb-3 text-center table-data">
                     <!--                    copy cai nay -->

@@ -301,7 +301,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
 									<?php $temp =  $tong;
 							if(strlen($temp)>3){
 							for($i = strlen($temp)-3; $i>0 ;$i-=3){
-								$temp = substr($temp,0,$i).".".substr($temp,$i);
+								$temp = substr($temp,0,$i).",".substr($temp,$i);
 							}} echo $temp; ?>
 								</td>
 								<td>
@@ -317,7 +317,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
 							$temp =  $yte;
 							if(strlen($temp)>3){
 							for($i = strlen($temp)-3; $i>0 ;$i-=3){
-								$temp = substr($temp,0,$i).".".substr($temp,$i);
+								$temp = substr($temp,0,$i).",".substr($temp,$i);
 							}} echo $temp;?>
 								</td>
 								<td class="numberStr">
@@ -325,14 +325,14 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
 							$temp =  $xahoi;
 							if(strlen($temp)>3){
 							for($i = strlen($temp)-3; $i>0 ;$i-=3){
-								$temp = substr($temp,0,$i).".".substr($temp,$i);
+								$temp = substr($temp,0,$i).",".substr($temp,$i);
 							}} echo $temp ?>
 								</td>
 								<td class="numberStr">
 									<?php $temp =  $tainan;
 							if(strlen($temp)>3){
 							for($i = strlen($temp)-3; $i>0 ;$i-=3){
-								$temp = substr($temp,0,$i).".".substr($temp,$i);
+								$temp = substr($temp,0,$i).",".substr($temp,$i);
 							}} echo $temp; ?>
 								</td>
 								<?php $thuclanh = round(($tong -$yte -$xahoi -$tainan + ($cv2['phucap'] * $luongcoso)),-2); ?>
@@ -340,7 +340,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
 									<?php $temp =  $thuclanh;
 							if(strlen($temp)>3){
 							for($i = strlen($temp)-3; $i>0 ;$i-=3){
-								$temp = substr($temp,0,$i).".".substr($temp,$i);
+								$temp = substr($temp,0,$i).",".substr($temp,$i);
 							}} echo $temp; ?>
 								</td>
 							</tr>
