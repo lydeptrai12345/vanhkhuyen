@@ -6,14 +6,8 @@
 
 
 <!-- Page content-->
-<div class="main-content-container container-fluid px-4">
+<div class="main-content-container container-fluid px-4"style="margin-top:10px">
     <!-- Page Header -->
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Dashboard</span>
-            <h3 class="page-title">Hợp Đồng</h3>
-        </div>
-    </div>
     <!-- End Page Header -->
 
     <!-- Default Light Table -->
@@ -132,7 +126,7 @@
                                 list($id,$name)=mysqli_fetch_array($result_id,MYSQLI_NUM);
                             }                                       
                         ?>
-                            <label>Tên nhân viên *</label>
+                            <label>Tên nhân viên <span class="dot-required">*</span></label>
                             <input class="form-control" name="txtTenNhanVien" value = "<?php echo $name ?>" disabled>
                         </div>
                         <div class="form-group">
@@ -140,7 +134,7 @@
                             <input type="date" class="form-control" name="txtNgayKy" placeholder="Vui lòng nhập ngày ký" value = "<?php if(isset($ngay_ky)) {echo $ngay_ky;} ?>">
                         </div>
                         <div class="form-group">
-                            <label>Ngày bắt đầu *</label>
+                            <label>Ngày bắt đầu<span class="dot-required">*</span></label>
                             <input type="date" class="form-control" name="txtTuNgay" placeholder="Vui lòng nhập ngày bắt đầu" value = "<?php if(isset($tu_ngay)) {echo $tu_ngay;} ?>">
                             <?php 
                                 if(isset($errors) && in_array('txtTuNgay',$errors))
@@ -150,7 +144,7 @@
                             ?>
                         </div>
                         <div class="form-group">
-                            <label>Ngày kết thúc *</label>
+                            <label>Ngày kết thúc <span class="dot-required">*</span></label>
                             <input type="date" class="form-control" name="txtDenNgay" placeholder="Vui lòng nhập ngày kết thúc" value = "<?php if(isset($den_ngay)) {echo $den_ngay;} ?>">
                             <?php 
                                 if(isset($errors) && in_array('txtDenNgay',$errors))
@@ -160,7 +154,7 @@
                             ?>
                         </div>
                         <div class="form-group">
-                            <label>Loại hợp động *</label>
+                            <label>Loại hợp động <span class="dot-required">*</span></label>
                             <input class="form-control" name="txtLoaiHopDong" placeholder="Vui lòng nhập loại hợp đồng" value = "<?php if(isset($loai_hop_dong)) {echo $loai_hop_dong;} ?>">
                             <?php 
                                 if(isset($errors) && in_array('txtLoaiHopDong',$errors))

@@ -6,14 +6,9 @@
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
 <!-- Page content-->
-<div class="main-content-container container-fluid px-4">
+<div class="main-content-container container-fluid px-4"style="margin-top:10px">
 	<!-- Page Header -->
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Dashboard</span>
-            <h3 class="page-title">Loại tin</h3>
-        </div>
-    </div>
+
     <!-- End Page Header -->
 
 	<!-- Default Light Table -->
@@ -118,7 +113,7 @@
 				</div>
 			<!-- End sua loại tin -->
 			<!-- Danh sach loại tin -->
-				<div class="card-header border-bottom">
+				<!--<div class="card-header border-bottom">
 					<form action="admin-loaitin.php" method="get">
 						<h5 class="text-info">Danh sách loại tin</h5>
                         <button type="submit" name="them" class="btn btn-defaut"><i class="material-icons action-icon">add</i></button>
@@ -139,7 +134,7 @@
                                 </thead>
                             </table>
                         </div>
-                    </div>
+                    </div>-->
                     <!-- End danh sách loại tin -->
                 </div>
             </div>

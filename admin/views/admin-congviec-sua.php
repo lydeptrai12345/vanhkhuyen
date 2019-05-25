@@ -13,14 +13,9 @@
 </script>
 
 <!-- Page content-->
-<div class="main-content-container container-fluid px-4">
+<div class="main-content-container container-fluid px-4"style="margin-top:10px">
 	<!-- Page Header -->
-	<div class="page-header row no-gutters py-4">
-		<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-			<span class="text-uppercase page-subtitle">Dashboard</span>
-			<h3 class="page-title">Chức vụ</h3>
-		</div>
-	</div>
+
 	<!-- End Page Header -->
 
 	<!-- Default Light Table -->
@@ -120,28 +115,7 @@
 				</div>
 				<!-- End sua phòng ban -->
 				<!-- Danh sach phòng ban -->
-				<div class="card-header border-bottom">
-					<form action="admin-phongban.php" method="get">
-						<h5 class="text-info">Danh sách chức vụ</h5>
-                        <button type="submit" name="them" class="btn btn-light"><i class="material-icons action-icon">add</i></button>
-					</form>
-				</div>
 
-                    <div class="card-body p-0 pb-3 text-center">
-                        <div class="row" style="padding: 5px 20px;">
-                            <div class="col-md-12">
-                                <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">
-                                    <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Tên chức vụ</th>
-                                        <th>Phụ cấp</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
 
 
 

@@ -54,18 +54,13 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 ?>
 
 <!-- Page content-->
-<div class="main-content-container container-fluid px-4">
+<div class="main-content-container container-fluid px-4"style="margin-top:10px">
 
     <input id="nguoi_dung" type="hidden" value="<?php echo $_SESSION['uid']?>">
     <input id="ho_ten_nguoi_dung" type="hidden" value="<?php echo $_SESSION['ho_ten']?>">
 
     <!-- Page Header -->
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Dashboard</span>
-            <h3 class="page-title">Quản Lý Nguyên Liệu</h3>
-        </div>
-    </div>
+
     <!-- End Page Headers -->
 
     <!-- Default Light Table -->
@@ -73,6 +68,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
         <div class="col">
             <div class="card card-small mb-4">
                 <div class="card-header border-bottom">
+                    <h5 class="text-info">Danh sách thiết bị</h5>
                     <form action="" method="get" class="row">
                         <div class="col-md-2">
                             <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm thiết bị</button>

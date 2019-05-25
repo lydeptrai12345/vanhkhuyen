@@ -12,14 +12,9 @@
 		});
 	</script>
 <!-- Page content-->
-<div class="main-content-container container-fluid px-4">
+<div class="main-content-container container-fluid px-4"style="margin-top:10px">
 	<!-- Page Header -->
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Dashboard</span>
-            <h3 class="page-title">Bằng cấp</h3>
-        </div>
-    </div>
+
     <!-- End Page Header -->
 
 	<!-- Default Light Table -->
@@ -135,7 +130,7 @@
 			<!-- Danh sach bằng cấp -->
 
                     <!-- Danh sach loại tin -->
-                    <div class="card-header border-bottom">
+                    <!--<div class="card-header border-bottom">
                         <form action="admin-bangcap.php" method="get">
                             <h5 class="text-info">Danh sách bằng cấp</h5>
                             <button type="submit" name="them" class="btn btn-light"><i class="material-icons action-icon">add</i></button>
@@ -156,7 +151,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div>-->
 				<!-- End danh sách bằng cấp -->
 			</div>
 		</div>

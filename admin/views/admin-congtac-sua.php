@@ -6,14 +6,9 @@
 
 
 <!-- Page content-->
-<div class="main-content-container container-fluid px-4">
+<div class="main-content-container container-fluid px-4"style="margin-top:10px">
     <!-- Page Header -->
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Dashboard</span>
-            <h3 class="page-title">Công Tác</h3>
-        </div>
-    </div>
+
     <!-- End Page Header -->
 
     <!-- Default Light Table -->
@@ -130,11 +125,11 @@
                                 list($id,$name)=mysqli_fetch_array($result_id,MYSQLI_NUM);
                             }                                       
                         ?>
-                            <label>Tên nhân viên *</label>
+                            <label style="display:block">Tên nhân viên <span class="dot-required">*</span></label>
                             <input class="form-control" name="txtTenNhanVien" value = "<?php echo $name ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Ngày bắt đầu *</label>
+                            <label>Ngày bắt đầu <span class="dot-required">*</span></label>
                             <input type="date" class="form-control" name="txtngaybatdau" placeholder="Vui lòng nhập ngày bắt đầu" value = "<?php if(isset($ngay_bat_dau)) {echo $ngay_bat_dau;} ?>">
                             <?php 
                                 if(isset($errors) && in_array('txtngaybatdau',$errors))
@@ -144,7 +139,7 @@
                             ?>
                         </div>
                         <div class="form-group">
-                            <label>Ngày kết thúc *</label>
+                            <label>Ngày kết thúc <span class="dot-required">*</span></label>
                             <input type="date" class="form-control" name="txtngayketthuc" placeholder="Vui lòng nhập ngày kết thúc" value = "<?php if(isset($ngay_ket_thuc)) {echo $ngay_ket_thuc;} ?>">
                             <?php 
                                 if(isset($errors) && in_array('txtngayketthuc',$errors))
@@ -154,7 +149,7 @@
                             ?>
                         </div>
                         <div class="form-group">
-                            <label>Công việc *</label>
+                            <label>Công việc <span class="dot-required">*</span></label>
                             <input class="form-control" name="txtcongviec" placeholder="Vui lòng nhập công việc" value = "<?php if(isset($cong_viec)) {echo $cong_viec;} ?>">
                             <?php 
                                 if(isset($errors) && in_array('txtcongviec',$errors))

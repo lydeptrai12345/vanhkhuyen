@@ -5,14 +5,9 @@
 
 
 <!-- Page content-->
-<div class="main-content-container container-fluid px-4">
+<div class="main-content-container container-fluid px-4"style="margin-top:10px">
 	<!-- Page Header -->
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Dashboard</span>
-            <h3 class="page-title">Hợp đồng</h3>
-        </div>
-    </div>
+
     <!-- End Page Header -->
 
 	<!-- Default Light Table -->
@@ -46,7 +41,8 @@
 				<div class="card-header border-bottom">
 					<h5 class="text-info">Danh sách hợp đồng</h5>
 					<!-- <a class="btn btn-light" data-toggle="tooltip" title="Thêm tin tức" href="admin-tintuc-them.php"><i class="material-icons action-icon">add</i></a> -->
-					<a class="btn btn-light" data-toggle="tooltip" title="Thêm hợp đồng" href="admin-hopdong-them.php?id=<?php echo $id; ?>"><i class="material-icons action-icon">add</i></a>
+                    <a id="btn-show-add-nien-khoa" name="them" class="btn btn-success" href="admin-hopdong-them.php?id=<?php echo $id; ?>">Thêm hợp đồng</a>
+                    <!--<a class="btn btn-light" data-toggle="tooltip" title="Thêm hợp đồng" href="admin-hopdong-them.php?id=<?php echo $id; ?>"><i class="material-icons action-icon">add</i></a>-->
 				</div>
 				<div class="card-body p-0 pb-3 text-center">
 					<table class="table mb-0">

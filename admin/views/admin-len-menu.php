@@ -49,14 +49,9 @@ $results_nhan_vien_cap_nhat = mysqli_query($dbc,"SELECT id, ho_ten FROM nhanvien
 ?>
 
 <!-- Page content-->
-<div class="main-content-container container-fluid px-4">
+<div class="main-content-container container-fluid px-4"style="margin-top:10px">
     <!-- Page Header -->
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Dashboard</span>
-            <h3 class="page-title">Quản lý Menu</h3>
-        </div>
-    </div>
+
     <!-- End Page Header -->
 
     <!-- Default Light Table -->
@@ -146,11 +141,13 @@ $results_nhan_vien_cap_nhat = mysqli_query($dbc,"SELECT id, ho_ten FROM nhanvien
                 <!-- End thêm loại tin -->
                 <!-- Danh sach loại tin -->
                 <div class="card-header border-bottom">
-                    <form action="admin-loaitin.php" method="get" class="row">
+                    <form action="" method="get" class="row">
                         <div class="col-md-12">
                             <h5 class="text-info">Danh sách Menu</h5>
                         </div>
-                        <div class="col-md-2"><button id="btn-show-add" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-info w-100">Thêm mới Menu</button></div>
+                        <div class="col-md-2">
+                            <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm mới Menu</button>
+                        </div>
 <!--                        <div class="col-md-1"><button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#Modal_NIEN_KHOA" class="btn btn-success">Thêm mới niên khóa</button></div>-->
                         <div class="col-md-6"></div>
                         <div class="form-group col-md-2">

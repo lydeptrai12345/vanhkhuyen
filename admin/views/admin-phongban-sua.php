@@ -110,7 +110,7 @@
 			<!-- Danh sach phòng ban -->
 
                     <!-- Danh sach loại tin -->
-                    <div class="card-header border-bottom">
+                    <!--<div class="card-header border-bottom">
                         <form action="admin-phongban.php" method="get">
                             <h5 class="text-info">Danh sách phòng ban</h5>
                             <button type="submit" name="them" class="btn btn-light"><i class="material-icons action-icon">add</i></button>
@@ -130,7 +130,7 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <!-- End danh sách loại tin -->
                 </div>
             </div>
