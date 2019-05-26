@@ -36,6 +36,16 @@ if(!isset($_SESSION['uid']))
 <style>
     table tbody td a.btn-edit:hover { color: #106dff; }
     .main-sidebar { z-index: 1000 !important; }
+    td.details-control {
+        background: url('../images/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+    tr.shown td.details-control {
+        background: url('../images/details_close.png') no-repeat center center;
+    }
+
+    td a.edit-btn:hover i.material-icons { color: #0f814a; }
+    td a.delete-btn:hover i.material-icons { color: #ff360c; }
 </style>
 
 <div class="container-fluid">

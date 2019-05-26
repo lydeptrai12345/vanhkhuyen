@@ -34,6 +34,7 @@ $data_be = mysqli_query( $dbc, $str );
     label {
         font-weight: normal;
     }
+
     td.details-control {
         background: url('../images/details_open.png') no-repeat center center;
         cursor: pointer;

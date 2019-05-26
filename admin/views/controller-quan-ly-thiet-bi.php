@@ -43,13 +43,16 @@ class QuanLyThietBi extends xuly {
         if(empty($dvt)) return 'dvt';
 
         $ngay_san_xuat = $data_insert->ngay_san_xuat;
-        if(empty($ngay_san_xuat)) return 'ngay_san_san_xuat';
+        if(empty($ngay_san_xuat)) return 'ngay_san_xuat';
 
         $ngay_het_han = $data_insert->ngay_het_han;
         if(empty($ngay_het_han)) return 'ngay_het_han';
 
-        $thanh_ly = $data_insert->thanh_ly;
-        if(empty($thanh_ly)) return 'thanh_ly';
+//        $thanh_ly = $data_insert->thanh_ly;
+//        if(empty($thanh_ly)) return 'thanh_ly';
+
+        $nien_khoa_id = $data_insert->nien_khoa_id;
+        if(empty($nien_khoa_id)) return 'nien_khoa';
 
         $nhan_vien_id = (int)$data_insert->nhan_vien_id;
         if($nhan_vien_id < 0) return 'nhan_vien_id';
@@ -57,17 +60,18 @@ class QuanLyThietBi extends xuly {
         $data_insert = array(
             'ten_thiet_bi' => $ten_thiet_bi,
             'so_luong' => $so_luong,
-            'ngay_san_xuat' => $ngay_san_xuat,
-            'ngay_het_han' => $ngay_het_han,
+            'ngay_san_xuat' => date_create($ngay_san_xuat)->format('Y-m-d'),
+            'ngay_het_han' => date_create($ngay_het_han)->format('Y-m-d'),
             'bao_hanh' => $so_luong,
-            'thanh_ly' => $thanh_ly,
-            'nien_khoa_id' => $so_luong,
+            'thanh_ly' => 0,
+            'nien_khoa_id' => $nien_khoa_id,
             'gia_tien' => str_replace(".", "", $gia_tien),
             'dvt' => $dvt,
             'ngay_nhap' => date("Y-m-d"),
             'nhan_vien_id' => $nhan_vien_id,
             'ghi_chu' => $nhan_vien_id,
         );
+
         return $this->insert('thiet_bi', $data_insert);
     }
 
@@ -94,16 +98,34 @@ class QuanLyThietBi extends xuly {
         $dvt = $data_update->dvt;
         if(empty($dvt)) return 'dvt';
 
+        $ngay_san_xuat = $data_update->ngay_san_xuat;
+        if(empty($ngay_san_xuat)) return 'ngay_san_xuat';
+
+        $ngay_het_han = $data_update->ngay_het_han;
+        if(empty($ngay_het_han)) return 'ngay_het_han';
+
+        $thanh_ly = $data_update->thanh_ly;
+        if(empty($thanh_ly)) return 'thanh_ly';
+
+        $nien_khoa_id = $data_update->nien_khoa_id;
+        if(empty($nien_khoa_id)) return 'nien_khoa';
+
         $nhan_vien_id = (int)$data_update->nhan_vien_id;
         if($nhan_vien_id < 0) return 'nhan_vien_id';
 
         $data_update = array(
             'ten_thiet_bi' => $ten_thiet_bi,
             'so_luong' => $so_luong,
-            'gia_tien' => $gia_tien,
+            'ngay_san_xuat' => date_create($ngay_san_xuat)->format('Y-m-d'),
+            'ngay_het_han' => date_create($ngay_het_han)->format('Y-m-d'),
+            'bao_hanh' => $so_luong,
+            'thanh_ly' => $thanh_ly,
+            'nien_khoa_id' => $nien_khoa_id,
+            'gia_tien' => str_replace(".", "", $gia_tien),
             'dvt' => $dvt,
             'ngay_nhap' => date("Y-m-d"),
             'nhan_vien_id' => $nhan_vien_id,
+            'ghi_chu' => $nhan_vien_id,
         );
         return $this->where('id = ' . $id)->update('thiet_bi', $data_update);
     }

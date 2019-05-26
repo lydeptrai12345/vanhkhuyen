@@ -139,7 +139,7 @@ class xuly {
 
         mysqli_query($this->dbc, $query_update);
 
-        mysqli_affected_rows($this->dbc) > 0 ? $result = 1 : $result = -1;
+        mysqli_affected_rows($this->dbc) >= 0 ? $result = 1 : $result = -1;
 
         mysqli_close($this->dbc);
         return $result;

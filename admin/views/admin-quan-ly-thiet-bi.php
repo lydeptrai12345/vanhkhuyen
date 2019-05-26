@@ -29,6 +29,10 @@
 
     #example th { text-align: center }
     .d-none-mam-non { display: none; }
+    .trang_thai_thanh_ly {
+        font-size: 15px;
+        font-weight: 500;
+    }
 </style>
 
 <?php
@@ -74,7 +78,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                             <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm thiết bị</button>
                         </div>
                         <div class="col-md-6"></div>
-                        <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Niên khóa</div>
+                        <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Năm</div>
                         <div class="col-md-2">
                             <input class="date_thiet_bi form-control" type="text">
                         </div>
@@ -90,20 +94,23 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                     <th>STT</th>
                                     <th>Tên thiết bị</th>
                                     <th>Ngày nhập</th>
-                                    <th>Ngày SX</th>
-                                    <th>Hạn sử dụng</th>
-                                    <th>Bảo hành</th>
                                     <th>Số lượng</th>
                                     <th>Giá tiền</th>
-                                    <th>Thành tiền nhập</th>
+                                    <th>Thành tiền</th>
                                     <th>Thanh lý</th>
-                                    <th>Ghi chú</th>
                                     <th>Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
                                 </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th colspan="6" style="text-align:right">Tổng:</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -132,7 +139,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 
                                     <div class="form-group col-md-8">
                                         <label for="">Giá tiền <span class="dot-required">*</span></label>
-                                        <input name="gia_tien" type="text" class="form-control text-right formatCurrency">
+                                        <input name="gia_tien" type="text" class="form-control text-right" data-type="currency">
                                         <small id="err_gia_tien" class="dot-required d-none-mam-non">Vui lòng nhập gia tiền</small>
                                     </div>
 
@@ -151,19 +158,22 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                     <div class="form-group col-md-6">
                                         <label for="">Ngày sản xuất <span class="dot-required">*</span></label>
                                         <input name="ngay_san_xuat" type="text" maxlength="255" class="ngay_san_xuat form-control">
-                                        <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                        <small id="err_ngay_san_xuat" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="">Ngày hết hạn <span class="dot-required">*</span></label>
                                         <input name="ngay_het_han" type="text" maxlength="255" class="ngay_het_han form-control">
-                                        <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                        <small id="err_ngay_het_han" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
                                     </div>
 
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-6 group-thanh-ly" style="display: none">
                                         <label for="">Thanh lý <span class="dot-required">*</span></label>
-                                        <input name="thanh_ly" type="text" maxlength="255" class="form-control">
-                                        <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                        <select name="thanh_ly" id="" class="form-control">
+                                            <option value="0">Chưa thanh lý</option>
+                                            <option value="1">Đã thanh lý</option>
+                                        </select>
+                                        <small id="err_thanh_ly" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -173,18 +183,18 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                                 <?php if($nien_khoa != 0) :?>
                                                     <option <?php if($nien_khoa == $item['ten_nien_khoa']) echo "selected";?>
                                                             data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
-                                                            value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                                            value="<?php echo $item['id']?>"><?php echo $item['ten_nien_khoa']?>
                                                     </option>
                                                 <?php else:?>
                                                     <option <?php if($nien_khoa_hien_tai == $item['ten_nien_khoa']) echo "selected"?>
                                                             data-nam-ket-thuc="<?php echo $item['nam_ket_thuc'];?>"
-                                                            value="<?php echo $item['ten_nien_khoa']?>"><?php echo $item['ten_nien_khoa']?>
+                                                            value="<?php echo $item['id']?>"><?php echo $item['ten_nien_khoa']?>
                                                     </option>
                                                 <?php endif;?>
 
                                             <?php endforeach;?>
                                         </select>
-                                        <small id="err_dvt" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                        <small id="err_nien_khoa" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
                                     </div>
 
                                 </div>
