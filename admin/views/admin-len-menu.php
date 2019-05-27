@@ -50,6 +50,8 @@
     textarea{
         border-radius: 0 !important;
     }
+
+    .btn-toggle-table { padding: 5px; }
 </style>
 
 <?php
@@ -152,10 +154,12 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         <div class="row">
                                             <div class="col-md-6"><label for="">Tuần 1</label></div>
                                             <div class="col-md-6">
-                                                <button class="btn btn-sm btn-success" style="float: right;">Cuộn lại</button>
+                                                <button id="aaaa" data-table="1" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-1" style="float: right;">
+                                                    Ẩn bớt
+                                                </button>
                                             </div>
                                         </div>
-                                        <table class="table table-bordered table-menu week-1">
+                                        <table class="table table-bordered table-menu week-1" id="week-1">
                                             <thead>
                                             <tr>
                                                 <th>Thứ</th>
@@ -164,45 +168,74 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td rowspan="3" class="center-cell">Thứ 2</td>
-                                                    <td class="center-cell">Sáng</td>
-                                                    <td>
-                                                        <textarea name="" id="" rows="1" class="form-control form-control-sm content-menu"></textarea>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="center-cell">Trưa</td>
-                                                    <td>
-                                                        <textarea name="" id="" rows="1" class="form-control form-control-sm content-menu"></textarea>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="center-cell">Tối</td>
-                                                    <td>
-                                                        <textarea name="" id="" rows="1" class="form-control form-control-sm content-menu"></textarea>
-                                                    </td>
-                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                                                <tr>
-                                                    <td rowspan="3" class="center-cell">Thứ 3</td>
-                                                    <td class="center-cell">Sáng</td>
-                                                    <td>
-                                                        <textarea name="" id="" rows="1" class="form-control form-control-sm content-menu"></textarea>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="center-cell">Trưa</td>
-                                                    <td>
-                                                        <textarea name="" id="" rows="1" class="form-control form-control-sm content-menu"></textarea>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="center-cell">Tối</td>
-                                                    <td>
-                                                        <textarea name="" id="" rows="1" class="form-control form-control-sm content-menu"></textarea>
-                                                    </td>
-                                                </tr>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-6"><label for="">Tuần 2</label></div>
+                                            <div class="col-md-6">
+                                                <button id="aaaa" data-table="1" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-2" style="float: right;">
+                                                    Ẩn bớt
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered table-menu week-1" id="week-2">
+                                            <thead>
+                                            <tr>
+                                                <th>Thứ</th>
+                                                <th style="width: 60px">Buổi</th>
+                                                <th>Món ăn</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-6"><label for="">Tuần 3</label></div>
+                                            <div class="col-md-6">
+                                                <button id="aaaa" data-table="1" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-3" style="float: right;">
+                                                    Ẩn bớt
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered table-menu week-3" id="week-3">
+                                            <thead>
+                                            <tr>
+                                                <th>Thứ</th>
+                                                <th style="width: 60px">Buổi</th>
+                                                <th>Món ăn</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-6"><label for="">Tuần 4</label></div>
+                                            <div class="col-md-6">
+                                                <button id="aaaa" data-table="1" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-4" style="float: right;">
+                                                    Ẩn bớt
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered table-menu week-1" id="week-4">
+                                            <thead>
+                                            <tr>
+                                                <th>Thứ</th>
+                                                <th style="width: 60px">Buổi</th>
+                                                <th>Món ăn</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
                                             </tbody>
                                         </table>

@@ -3,6 +3,7 @@ Number.prototype.format = function(n, x) {
     return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
 };
 $(document).ready(function () {
+    var arr_day_of_week = ["Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu"];
 
     $('.date_thiet_bi').datepicker({
         format: "yyyy",
@@ -26,6 +27,27 @@ $(document).ready(function () {
         format: "dd-mm-yyyy",
         autoclose: true
     });
+
+    $('.btn-toggle-table').click(function () {
+        $('#week-' + $(this).data('table')).toggle('slow', function () {
+            $('.btn-' + $(this).data('table')).text('aaa');
+            // $(this).attr('data-btntext','aaaaa');
+            // $('.btn-' + $(this).data('table')).text('Hiển thị')
+            // console.log($(this).data('text', 'aaaa'));
+        });
+        $('.btn-' + $(this).data('table')).text('aaa');
+        $('#aaaa').data('text','aaa');
+        // $('.btn-' + $(this).data('table')).html()
+        //
+        if($(this).text() == 'Ẩn bớt') {
+            $(this).html('Hiển thị');
+        }
+        else {
+            $(this).html('Ẩn bớt');
+        }
+    });
+
+
 
     function fill_lai_data() {
         $.ajax({
@@ -157,45 +179,16 @@ $(document).ready(function () {
         });
     }
 
-    function insert_thiet_bi() {
-        var ten_thiet_bi = $('input[name="ten_thiet_bi"]').val();
-        var gia_tien = $('input[name="gia_tien"]').val();
-        var so_luong = $('input[name="so_luong"]').val();
-        var dvt = $('input[name="dvt"]').val();
-        var ngay_san_xuat = $('input[name="ngay_san_xuat"]').val();
-        var ngay_het_han = $('input[name="ngay_het_han"]').val();
-        var thanh_ly = $('input[name="thanh_ly"]').val();
-        var nien_khoa_id = $('select[name="nien_khoa"]').val();
-        var nhan_vien_id = $('#nguoi_dung').val();
-        $('#thiet_bi_id').val(0);
-
-        var data = {
-            ten_thiet_bi: ten_thiet_bi,
-            gia_tien: gia_tien,
-            so_luong: so_luong,
-            dvt: dvt,
-            ngay_san_xuat: ngay_san_xuat,
-            ngay_het_han: ngay_het_han,
-            thanh_ly: thanh_ly,
-            nien_khoa_id: nien_khoa_id,
-            nhan_vien_id: nhan_vien_id,
-        };
+    function insert_menu(data_month) {
+        console.log(data_month);
+        var data = { 'data': (data_month), 'add_menu' : 1 };
         $.ajax({
             type: "POST",
-            url: 'admin-quan-ly-thiet-bi-xu-ly.php',
-            data: { 'add_thiet_bi' : 1, data: data },
+            url: 'admin-len-menu-xuly.php',
+            data: data,
+            dataType: 'jsonp',
             success : function (result){
-                if(result == "1"){
-                    alert('Thêm nguyên liệu thành công!');
-                    fill_lai_data();
-                    $('#myModal').modal('hide');
-                }
-                else if( result == "-1"){
-                    alert('Lỗi không thêm được nguyên liệu');
-                }
-                else{
-                    $('#err_' + result).show();
-                }
+                console.log(result);
             }
         });
     }
@@ -296,12 +289,9 @@ $(document).ready(function () {
         $('group-thanh-ly').hide();
     });
 
-    $('#btn-save').click(function () {
-        if($('#thiet_bi_id').val() == 0)
-            insert_thiet_bi();
-        else
-            update_thiet_bi();
-
+    $('#btn-save').click(async function () {
+        var data = await get_info_menu();
+         insert_menu(data);
     });
 
 
@@ -398,4 +388,52 @@ $(document).ready(function () {
         },0);
     });
 
+    function render_table() {
+        for (var i = 1; i <= 4; i++) {
+            var str = null;
+            for (var j = 0; j < arr_day_of_week.length; j++) {
+                str += '<tr class="thu-'+ (j+2) +'">\n' +
+                    '                                                    <td rowspan="3" class="center-cell">'+ arr_day_of_week[j] +'</td>\n' +
+                    '                                                    <td class="center-cell">Sáng</td>\n' +
+                    '                                                    <td>\n' +
+                    '                                                        <textarea name="" id="" rows="1" class="form-control form-control-sm content-menu"></textarea>\n' +
+                    '                                                    </td>\n' +
+                    '                                                </tr>\n' +
+                    '                                                <tr class="thu-'+ (j+2) +'">\n' +
+                    '                                                    <td class="center-cell">Trưa</td>\n' +
+                    '                                                    <td>\n' +
+                    '                                                        <textarea name="" id="" rows="1" class="form-control form-control-sm content-menu"></textarea>\n' +
+                    '                                                    </td>\n' +
+                    '                                                </tr>\n' +
+                    '                                                <tr class="thu-'+ (j+2) +'">\n' +
+                    '                                                    <td class="center-cell">Tối</td>\n' +
+                    '                                                    <td>\n' +
+                    '                                                        <textarea name="" id="" rows="1" class="form-control form-control-sm content-menu"></textarea>\n' +
+                    '                                                    </td>\n' +
+                    '                                                </tr>';
+            }
+            $('#week-' + i + ' tbody').html(str);
+        }
+    }
+    
+    function get_info_menu() {
+        var week_of_month = {};
+        for (var i = 1; i <= 4; i++) {
+            $('#week-' + i + ' tbody tr').each(function () {
+                var day_of_week = {};
+                for (var j = 0; j < arr_day_of_week.length; j++) {
+                    var buoi = [];
+                    $('#week-' + i + ' tbody tr.thu-' + (j+2)).each(function () {
+                        buoi.push($(this).find('textarea').val());
+                    });
+                    day_of_week['thu_' + (j+2)] = JSON.stringify(buoi);
+                    buoi = [];
+                }
+                week_of_month['week_' + i] = (day_of_week);
+            });
+        }
+        return week_of_month;
+    }
+
+    render_table();
 });

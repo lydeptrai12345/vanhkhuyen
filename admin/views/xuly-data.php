@@ -159,6 +159,23 @@ class xuly {
         return $result;
     }
 
+    public function insert_multiple($name_table, $array_data)
+    {
+        $arr_column = array_keys($array_data);
+        $arr_value = array_values($array_data);
+        $arr_str = [];
+
+        for ($i = 0; $i < count($array_data); $i++) {
+            $array_value = [];
+            foreach ($arr_value as $item) {
+                $array_value[] = "'" . $item . "'";
+            }
+            $str[] = "(" . implode(",", $arr_value[$i]) . ")";
+        }
+        $query_insert = "INSERT INTO " . $name_table . " (" . implode(",", $arr_column) . ") VALUE " .$arr_str;
+        return $query_insert;
+    }
+
 }
 
 ?>
