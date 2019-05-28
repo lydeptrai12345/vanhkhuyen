@@ -13,7 +13,6 @@ class LenMenu extends xuly {
 
     public function insert_menu($data_insert)
     {
-
-        $this->insert_multiple('menu', $data_insert);
+        return $this->insert_multiple('menu', $data_insert);
     }
 }
