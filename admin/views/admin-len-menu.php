@@ -29,7 +29,7 @@
 
     #example th { text-align: center }
     .d-none-mam-non { display: none; }
-    .trang_thai_thanh_ly {
+    .trang_thai_thanh_ly, .thang_menu {
         font-size: 15px;
         font-weight: 500;
     }
@@ -99,7 +99,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                         <div class="col-md-6"></div>
                         <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Năm</div>
                         <div class="col-md-2">
-                            <input class="date_thiet_bi form-control" type="text">
+                            <input class="date_menu form-control" type="text">
                         </div>
                     </form>
                 </div>
@@ -111,25 +111,13 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                 <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Tên thiết bị</th>
-                                    <th>Ngày nhập</th>
-                                    <th>Số lượng</th>
-                                    <th>Giá tiền</th>
-                                    <th>Thành tiền</th>
-                                    <th>Thanh lý</th>
+                                    <th>Menu</th>
+                                    <th>Tháng</th>
                                     <th>Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
-
-                                <tfoot>
-                                <tr>
-                                    <th colspan="6" style="text-align:right">Tổng:</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -149,7 +137,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                             </div>
                             <div class="modal-body">
                                 <div class="row">
-                                    <input type="hidden" id="thiet_bi_id">
+                                    <input type="hidden" id="menu_id">
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-6"><label for="">Tuần 1</label></div>

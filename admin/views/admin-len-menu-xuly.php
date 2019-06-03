@@ -1,6 +1,18 @@
 <?php
 include "controller-len-menu.php";
 
+if(isset($_GET['get_menu_theo_thang'])) {
+    $date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
+    $menu = new LenMenu();
+    echo json_encode($menu->get_data_menu_theo_thang($date));
+}
+
+if(isset($_GET['get_all_menu'])) {
+    $date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
+    $menu = new LenMenu();
+    echo json_encode($menu->get_danh_sach_menu_theo_nam($date));
+}
+
 if(isset($_POST['add_menu'])) {
     $data = ($_POST['data']);
 
@@ -56,24 +68,4 @@ if(isset($_POST['add_menu'])) {
         $menu = new LenMenu();
         echo json_encode($menu->insert_menu($arr));
     }
-}
-
-
-function create_menu ($item, $week, $dbc) {
-
-    $query = "INSERT INTO menu ( buoi, t2, t3, t4, t5, t6, t7, chua_nhat, ngay_tao, tuan_trong_thang )
-              VALUES ( 
-              $item->buoi, 
-              $item->thu2, 
-              $item->thu3, 
-              $item->thu4, 
-              $item->thu5, 
-              $item->thu6, 
-              $item->thu7, 
-              $item->thu7, 
-              NOW( ), 
-              $week 
-              )";
-    mysqli_query($dbc, $query);
-    return 1;
 }

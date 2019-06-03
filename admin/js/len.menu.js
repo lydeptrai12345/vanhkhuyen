@@ -5,16 +5,16 @@ Number.prototype.format = function(n, x) {
 $(document).ready(function () {
     var arr_day_of_week = ["Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu"];
 
-    $('.date_thiet_bi').datepicker({
-        format: "yyyy",
-        viewMode: "years",
-        minViewMode: "years",
+    $('.date_menu').datepicker({
+        format: "mm-yyyy",
+        viewMode: "months",
+        minViewMode: "months",
         autoclose: true
     });
 
-    $('.date_thiet_bi').datepicker("update", new Date());
+    $('.date_menu').datepicker("update", new Date());
 
-    $('.date_thiet_bi').change(function () {
+    $('.date_menu').change(function () {
         fill_lai_data();
     });
 
@@ -52,7 +52,7 @@ $(document).ready(function () {
     function fill_lai_data() {
         $.ajax({
             type: "GET",
-            url: 'admin-quan-ly-thiet-bi-xu-ly.php?danh_sach_thiet_bi=1&date=01-01-' + $('.date_thiet_bi').val(),
+            url: 'admin-quan-ly-thiet-bi-xu-ly.php?danh_sach_menu=1&date=01-01-' + $('.date_menu').val(),
             success : function (result){
                 var data = JSON.parse(result);
                 var tb = $('#tripRevenue').dataTable();
@@ -62,13 +62,13 @@ $(document).ready(function () {
         });
     }
 
-    function get_danh_sach_thiet_bi() {
+    function get_danh_sach_menu() {
         $.ajax({
             type: "GET",
-            url: 'admin-quan-ly-thiet-bi-xu-ly.php?danh_sach_thiet_bi=1&date=01-01-' + $('.date_thiet_bi').val(),
+            url: 'admin-len-menu-xuly.php?get_all_menu=1&date=01-' + $('.date_menu').val(),
             success: function (result) {
                 var data = JSON.parse(result);
-                // console.log(data);
+                console.log(data);
                 table_lop = $('#tripRevenue').DataTable({
                     language: {
                         "lengthMenu": "Hiển thị _MENU_ nguyên liệu/ trang",
@@ -85,16 +85,20 @@ $(document).ready(function () {
                     data: data,
                     columnDefs: [
                         { targets: 0, orderable: false, className: 'dt-body-center', data: null },
-                        { targets: 1, orderable: true, className: 'dt-body-left' },
-                        { targets: 2, orderable: true, className: 'dt-body-center' },
-                        { targets: 3, orderable: true, className: 'dt-body-right' },
-                        { targets: 4, orderable: true, className: 'dt-body-right' },
-                        { targets: 5, orderable: true, className: 'dt-body-right' },
-                        { targets: 6, orderable: false, data: null,
+                        {
+                            targets: 1,
+                            orderable: true,
+                            className: 'dt-body-left',
                             defaultContent: '<label class="trang_thai_thanh_ly"></label>'
                         },
                         {
-                            targets: 7,
+                            targets: 2,
+                            orderable: false,
+                            className: 'dt-body-center',
+                            defaultContent: '<label class="thang_menu"></label>'
+                        },
+                        {
+                            targets: 3,
                             orderable: false,
                             data: null,
                             defaultContent: '<a class="edit-btn" data-action="1" style="cursor: pointer" title="Cập nhật thiết bị"><i class="material-icons action-icon">edit</i></a> ' +
@@ -103,55 +107,23 @@ $(document).ready(function () {
                     ],
                     columns: [
                         { data: null, width: "30px" },
-                        { data: 'ten_thiet_bi', width: '180px' },
-                        { data: 'ngay_nhap'},
-                        { data: 'so_luong', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
-                        { data: 'gia_tien', render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
-                        { data: "thanh_tien", render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
                         { data: null },
+                        { data: null, width: '120px'},
                         { width: "70px" },
                     ],
-                    order: [[ 2, 'desc' ]],
+                    order: [[ 1, 'asc' ]],
                     rowCallback: function ( row, data ) {
-                        if(data.thanh_ly == 1)
-                            $('label.trang_thai_thanh_ly', row).html('Đã thanh lý');
-                        else
-                            $('label.trang_thai_thanh_ly', row).html('Chưa thanh lý');
+                        var str = [];
+                        if(data.t2) str.push(data.t2);
+                        if(data.t3) str.push(data.t3);
+                        if(data.t4) str.push(data.t4);
+                        if(data.t5) str.push(data.t5);
+                        if(data.t6) str.push(data.t6);
+                        if(data.t7) str.push(data.t7);
+                        $('label.trang_thai_thanh_ly', row).html(str.join(", "));
+                        var date = data.ngay_tao.slice(3);
+                        $('label.thang_menu', row).html(date);
                     },
-                    "footerCallback": function ( row, data, start, end, display ) {
-                        var api = this.api(), data;
-
-                        // Remove the formatting to get integer data for summation
-                        var intVal = function ( i ) {
-                            return typeof i === 'string' ?
-                                i.replace(/[\$,]/g, '')*1 :
-                                typeof i === 'number' ?
-                                    i : 0;
-                        };
-
-                        // Total over all pages
-                        total = api
-                            .column( 5 )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
-
-                        // Total over this page
-                        pageTotal = api
-                            .column( 5, { page: 'current'} )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
-
-                        // $sum = pageTotal.format();
-
-                        // Update footer
-                        $( api.column( 5 ).footer() ).html(
-                            'Tổng: ' + pageTotal.format() +' ('+ total.format() +' tổng cộng)'
-                        );
-                    }
                 });
 
                 // PHẦN THỨ TỰ TABLE
@@ -166,10 +138,10 @@ $(document).ready(function () {
                     var data = table_lop.row( $(this).parents('tr') ).data();
                     if($(this).data('action') == 1) {
                         $('#myModal').modal('show');
-                        get_thiet_bi(data.id);
+                        get_menu_theo_thang(data.ngay_tao);
                     }
                     else if ($(this).data('action') == 2){
-                        delete_thiet_bi(data.id);
+                        delete_menu(data.id);
                     }
                     else if ($(this).data('action') == 3){
                         show_list_be(data.id, data.mo_ta, data.nien_khoa_id)
@@ -180,7 +152,6 @@ $(document).ready(function () {
     }
 
     function insert_menu(data_month) {
-        console.log(data_month);
         var data = { 'data': (data_month), 'add_menu' : 1 };
         $.ajax({
             type: "POST",
@@ -189,36 +160,30 @@ $(document).ready(function () {
             dataType: 'jsonp',
             success : function (result){
                 console.log(result);
+                if(result == "1") {
+                    alert('Thêm menu thành công');
+                }
+                else{
+                    alert('Lỗi không thêm được');
+                }
             }
         });
     }
 
-    function get_thiet_bi(id) {
+    function get_menu_theo_thang(date) {
         $.ajax({
             type: "GET",
-            url: 'admin-quan-ly-thiet-bi-xu-ly.php?get_thiet_bi=1&id=' + id,
+            url: 'admin-len-menu-xuly.php?get_menu_theo_thang=1&date=' + date,
             success : function (result){
                 var data = JSON.parse(result);
-                $('input[name="ten_thiet_bi"]').val(data.ten_thiet_bi);
-
-                var gia_tien = Number(data.gia_tien)
-                $('input[name="gia_tien"]').val(gia_tien.format());
-                $('input[name="so_luong"]').val(data.so_luong);
-                $('input[name="dvt"]').val(data.dvt);
-
-                $('.ngay_san_xuat').datepicker('setDate', new Date(data.ngay_san_xuat));
-                $('.ngay_het_han').datepicker('setDate', new Date(data.ngay_het_han));
-                $('.group-thanh-ly').show();
-                $('select[name="thanh_ly"]').val(data.thanh_ly);
-                $('select[name="nien_khoa"]').val(data.nien_khoa_id);
-
-                $('#thiet_bi_id').val(data.id);
+                console.log(data);
+                render_data_table(data);
             }
         });
     }
 
-    function update_thiet_bi() {
-        var ten_thiet_bi = $('input[name="ten_thiet_bi"]').val();
+    function update_menu() {
+        var ten_menu = $('input[name="ten_menu"]').val();
         var gia_tien = $('input[name="gia_tien"]').val();
         var so_luong = $('input[name="so_luong"]').val();
         var dvt = $('input[name="dvt"]').val();
@@ -227,11 +192,11 @@ $(document).ready(function () {
         var thanh_ly = $('select[name="thanh_ly"]').val();
         var nien_khoa_id = $('select[name="nien_khoa"]').val();
         var nhan_vien_id = $('#nguoi_dung').val();
-        var id = $('#thiet_bi_id').val();
+        var id = $('#menu_id').val();
 
         var data = {
             id: id,
-            ten_thiet_bi: ten_thiet_bi,
+            ten_menu: ten_menu,
             gia_tien: gia_tien,
             so_luong: so_luong,
             dvt: dvt,
@@ -245,7 +210,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: 'admin-quan-ly-thiet-bi-xu-ly.php',
-            data: { 'edit_thiet_bi' : 1, data: data },
+            data: { 'edit_menu' : 1, data: data },
             success : function (result){
                 console.log(result);
 
@@ -264,12 +229,12 @@ $(document).ready(function () {
         });
     }
 
-    function delete_thiet_bi(id) {
+    function delete_menu(id) {
         if(confirm('Bạn có chắc chắn muốn xóa nguyên liệu vừa chọn?')) {
             $.ajax({
                 type: "POST",
                 url: 'admin-quan-ly-thiet-bi-xu-ly.php',
-                data: { 'delete_thiet_bi' : 1, id: id },
+                data: { 'delete_menu' : 1, id: id },
                 success : function (result){
                     if(result == "1"){
                         alert('Nguyên liệu vừa chọn đã được xóa!');
@@ -283,7 +248,7 @@ $(document).ready(function () {
         }
     }
 
-    get_danh_sach_thiet_bi();
+    get_danh_sach_menu();
 
     $('btn-show-add-nien-khoa').click(function () {
         $('group-thanh-ly').hide();
@@ -414,6 +379,17 @@ $(document).ready(function () {
             }
             $('#week-' + i + ' tbody').html(str);
         }
+    }
+
+    function render_data_table(data) {
+        var i = 1;
+        $.each(data, function (key, item) {
+            $('#week-' + i + ' tbody tr').each(function (idx, value) {
+                $(this).find('textarea').val(item[idx])
+            });
+
+            i++;
+        })
     }
     
     function get_info_menu() {
