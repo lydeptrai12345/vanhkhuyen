@@ -114,7 +114,7 @@ class xuly {
             $array_value[] = "'" . $item . "'";
         }
         $query_insert .= " (" . implode(",", $array_value) . ")";
-//        return $query_insert;
+
         mysqli_query($this->dbc, $query_insert);
 
         mysqli_affected_rows($this->dbc) > 0 ? $result = 1 : $result = -1;
@@ -160,6 +160,30 @@ class xuly {
     }
 
     public function insert_multiple($name_table, $array_data)
+    {
+        $arr_column = array_keys($array_data[0]);
+        $array_value = [];
+        $arr_str = [];
+
+        for ($i = 0; $i < count($array_data); $i++) {
+            $arr_value = array_values($array_data[$i]);
+            foreach ($arr_value as $item) {
+                $array_value[] = "'" . $item . "'";
+            }
+            $arr_str[] = "(" . implode(",", $array_value) . ")";
+            $array_value = [];
+        }
+        $query_insert = "INSERT INTO " . $name_table . " (" . implode(",", $arr_column) . ") VALUE " .implode(",", $arr_str);
+
+        mysqli_query($this->dbc, $query_insert);
+
+        mysqli_affected_rows($this->dbc) > 0 ? $result = 1 : $result = -1;
+
+        mysqli_close($this->dbc);
+        return $result;
+    }
+
+    public function update_multiple($name_table, $array_data)
     {
         $arr_column = array_keys($array_data[0]);
         $array_value = [];

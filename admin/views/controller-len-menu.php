@@ -18,6 +18,11 @@ class LenMenu extends xuly {
         return $this->insert_multiple('menu', $data_insert);
     }
 
+    public function update_menu($data_update)
+    {
+        return $this->update_multiple('menu', $data_update);
+    }
+
     public function get_data_menu_theo_thang($date)
     {
         $date = date($date);
@@ -36,102 +41,127 @@ class LenMenu extends xuly {
         foreach ($data_menu as $item) {
             if($item->tuan_trong_thang == 'week_1'){
                 if($item->buoi == 'sang'){
-                    $result['week_1'][] = $item->t2;
-                    $result['week_1'][] = $item->t3;
-                    $result['week_1'][] = $item->t4;
-                    $result['week_1'][] = $item->t5;
-                    $result['week_1'][] = $item->t6;
+                    $result['week_1']['t2'][] = $item->t2;
+                    $result['week_1']['t3'][] = $item->t3;
+                    $result['week_1']['t4'][] = $item->t4;
+                    $result['week_1']['t5'][] = $item->t5;
+                    $result['week_1']['t6'][] = $item->t6;
                 }
                 else if($item->buoi == 'trua'){
-                    $result['week_1'][] = $item->t2;
-                    $result['week_1'][] = $item->t3;
-                    $result['week_1'][] = $item->t4;
-                    $result['week_1'][] = $item->t5;
-                    $result['week_1'][] = $item->t6;
+                    $result['week_1']['t2'][] = $item->t2;
+                    $result['week_1']['t3'][] = $item->t3;
+                    $result['week_1']['t4'][] = $item->t4;
+                    $result['week_1']['t5'][] = $item->t5;
+                    $result['week_1']['t6'][] = $item->t6;
 
                 }
                 else if($item->buoi == 'toi'){
-                    $result['week_1'][] = $item->t2;
-                    $result['week_1'][] = $item->t3;
-                    $result['week_1'][] = $item->t4;
-                    $result['week_1'][] = $item->t5;
-                    $result['week_1'][] = $item->t6;
+                    $result['week_1']['t2'][] = $item->t2;
+                    $result['week_1']['t3'][] = $item->t3;
+                    $result['week_1']['t4'][] = $item->t4;
+                    $result['week_1']['t5'][] = $item->t5;
+                    $result['week_1']['t6'][] = $item->t6;
                 }
             }
             else if ($item->tuan_trong_thang == 'week_2')
             {
                 if($item->buoi == 'sang'){
-                    $result['week_2'][] = $item->t2;
-                    $result['week_2'][] = $item->t3;
-                    $result['week_2'][] = $item->t4;
-                    $result['week_2'][] = $item->t5;
-                    $result['week_2'][] = $item->t6;
+                    $result['week_2']['t2'][] = $item->t2;
+                    $result['week_2']['t3'][] = $item->t3;
+                    $result['week_2']['t4'][] = $item->t4;
+                    $result['week_2']['t5'][] = $item->t5;
+                    $result['week_2']['t6'][] = $item->t6;
                 }
                 else if($item->buoi == 'trua'){
-                    $result['week_2'][] = $item->t2;
-                    $result['week_2'][] = $item->t3;
-                    $result['week_2'][] = $item->t4;
-                    $result['week_2'][] = $item->t5;
-                    $result['week_2'][] = $item->t6;
+                    $result['week_2']['t2'][] = $item->t2;
+                    $result['week_2']['t3'][] = $item->t3;
+                    $result['week_2']['t4'][] = $item->t4;
+                    $result['week_2']['t5'][] = $item->t5;
+                    $result['week_2']['t6'][] = $item->t6;
                 }
                 else if($item->buoi == 'toi') {
-                    $result['week_2'][] = $item->t2;
-                    $result['week_2'][] = $item->t3;
-                    $result['week_2'][] = $item->t4;
-                    $result['week_2'][] = $item->t5;
-                    $result['week_2'][] = $item->t6;
+                    $result['week_2']['t2'][] = $item->t2;
+                    $result['week_2']['t3'][] = $item->t3;
+                    $result['week_2']['t4'][] = $item->t4;
+                    $result['week_2']['t5'][] = $item->t5;
+                    $result['week_2']['t6'][] = $item->t6;
                 }
             }
             else if ($item->tuan_trong_thang == 'week_3')
             {
                 if($item->buoi == 'sang'){
-                    $result['week_3'][] = $item->t2;
-                    $result['week_3'][] = $item->t3;
-                    $result['week_3'][] = $item->t4;
-                    $result['week_3'][] = $item->t5;
-                    $result['week_3'][] = $item->t6;
+                    $result['week_3']['t2'][] = $item->t2;
+                    $result['week_3']['t3'][] = $item->t3;
+                    $result['week_3']['t4'][] = $item->t4;
+                    $result['week_3']['t5'][] = $item->t5;
+                    $result['week_3']['t6'][] = $item->t6;
                 }
                 else if($item->buoi == 'trua'){
-                    $result['week_3'][] = $item->t2;
-                    $result['week_3'][] = $item->t3;
-                    $result['week_3'][] = $item->t4;
-                    $result['week_3'][] = $item->t5;
-                    $result['week_3'][] = $item->t6;
+                    $result['week_3']['t2'][] = $item->t2;
+                    $result['week_3']['t3'][] = $item->t3;
+                    $result['week_3']['t4'][] = $item->t4;
+                    $result['week_3']['t5'][] = $item->t5;
+                    $result['week_3']['t6'][] = $item->t6;
                 }
                 else if($item->buoi == 'toi'){
-                    $result['week_3'][] = $item->t2;
-                    $result['week_3'][] = $item->t3;
-                    $result['week_3'][] = $item->t4;
-                    $result['week_3'][] = $item->t5;
-                    $result['week_3'][] = $item->t6;
+                    $result['week_3']['t2'][] = $item->t2;
+                    $result['week_3']['t3'][] = $item->t3;
+                    $result['week_3']['t4'][] = $item->t4;
+                    $result['week_3']['t5'][] = $item->t5;
+                    $result['week_3']['t6'][] = $item->t6;
                 }
             }
             else if ($item->tuan_trong_thang == 'week_4')
             {
                 if($item->buoi == 'sang'){
-                    $result['week_4'][] = $item->t2;
-                    $result['week_4'][] = $item->t3;
-                    $result['week_4'][] = $item->t4;
-                    $result['week_4'][] = $item->t5;
-                    $result['week_4'][] = $item->t6;
+                    $result['week_4']['t2'][] = $item->t2;
+                    $result['week_4']['t3'][] = $item->t3;
+                    $result['week_4']['t4'][] = $item->t4;
+                    $result['week_4']['t5'][] = $item->t5;
+                    $result['week_4']['t6'][] = $item->t6;
                 }
                 else if($item->buoi == 'trua'){
-                    $result['week_4'][] = $item->t2;
-                    $result['week_4'][] = $item->t3;
-                    $result['week_4'][] = $item->t4;
-                    $result['week_4'][] = $item->t5;
-                    $result['week_4'][] = $item->t6;
+                    $result['week_4']['t2'][] = $item->t2;
+                    $result['week_4']['t3'][] = $item->t3;
+                    $result['week_4']['t4'][] = $item->t4;
+                    $result['week_4']['t5'][] = $item->t5;
+                    $result['week_4']['t6'][] = $item->t6;
                 }
                 else if($item->buoi == 'toi'){
-                    $result['week_4'][] = $item->t2;
-                    $result['week_4'][] = $item->t3;
-                    $result['week_4'][] = $item->t4;
-                    $result['week_4'][] = $item->t5;
-                    $result['week_4'][] = $item->t6;
+                    $result['week_4']['t2'][] = $item->t2;
+                    $result['week_4']['t3'][] = $item->t3;
+                    $result['week_4']['t4'][] = $item->t4;
+                    $result['week_4']['t5'][] = $item->t5;
+                    $result['week_4']['t6'][] = $item->t6;
                 }
             }
         }
-        return $result;
+        $data = [];
+        foreach ($result['week_1'] as $item) {
+            $data['week_1'][] = $item[0];
+            $data['week_1'][] = $item[1];
+            $data['week_1'][] = $item[2];
+        }
+
+        foreach ($result['week_2'] as $item) {
+            $data['week_2'][] = $item[0];
+            $data['week_2'][] = $item[1];
+            $data['week_2'][] = $item[2];
+        }
+
+        foreach ($result['week_3'] as $item) {
+            $data['week_3'][] = $item[0];
+            $data['week_3'][] = $item[1];
+            $data['week_3'][] = $item[2];
+        }
+
+        foreach ($result['week_4'] as $item) {
+            $data['week_4'][] = $item[0];
+            $data['week_4'][] = $item[1];
+            $data['week_4'][] = $item[2];
+        }
+
+        return $data;
     }
 
     public function get_danh_sach_menu_theo_nam($date)

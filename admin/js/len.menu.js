@@ -12,7 +12,17 @@ $(document).ready(function () {
         autoclose: true
     });
 
+    $('.date_menu_create_update').datepicker({
+        format: "mm-yyyy",
+        viewMode: "months",
+        minViewMode: "months",
+        autoclose: true
+    });
+
+
+
     $('.date_menu').datepicker("update", new Date());
+    $('.date_menu_create_update').datepicker("update", new Date());
 
     $('.date_menu').change(function () {
         fill_lai_data();
@@ -139,12 +149,11 @@ $(document).ready(function () {
                     if($(this).data('action') == 1) {
                         $('#myModal').modal('show');
                         get_menu_theo_thang(data.ngay_tao);
+                        $('#menu_id').val(data.id);
+                        $('.date_menu_create_update').val(data.ngay_tao.slice(3)); // gán ngày tạo vào datepicker
                     }
                     else if ($(this).data('action') == 2){
                         delete_menu(data.id);
-                    }
-                    else if ($(this).data('action') == 3){
-                        show_list_be(data.id, data.mo_ta, data.nien_khoa_id)
                     }
                 });
             }
@@ -152,7 +161,7 @@ $(document).ready(function () {
     }
 
     function insert_menu(data_month) {
-        var data = { 'data': (data_month), 'add_menu' : 1 };
+        var data = { 'data': (data_month), 'add_menu' : 1, 'date': $('.date_menu_create_update').val() };
         $.ajax({
             type: "POST",
             url: 'admin-len-menu-xuly.php',
@@ -182,48 +191,20 @@ $(document).ready(function () {
         });
     }
 
-    function update_menu() {
-        var ten_menu = $('input[name="ten_menu"]').val();
-        var gia_tien = $('input[name="gia_tien"]').val();
-        var so_luong = $('input[name="so_luong"]').val();
-        var dvt = $('input[name="dvt"]').val();
-        var ngay_san_xuat = $('input[name="ngay_san_xuat"]').val();
-        var ngay_het_han = $('input[name="ngay_het_han"]').val();
-        var thanh_ly = $('select[name="thanh_ly"]').val();
-        var nien_khoa_id = $('select[name="nien_khoa"]').val();
-        var nhan_vien_id = $('#nguoi_dung').val();
-        var id = $('#menu_id').val();
-
-        var data = {
-            id: id,
-            ten_menu: ten_menu,
-            gia_tien: gia_tien,
-            so_luong: so_luong,
-            dvt: dvt,
-            ngay_san_xuat: ngay_san_xuat,
-            ngay_het_han: ngay_het_han,
-            thanh_ly: thanh_ly,
-            nien_khoa_id: nien_khoa_id,
-            nhan_vien_id: nhan_vien_id,
-        };
-
+    function update_menu(data_month) {
+        var data = { 'data': (data_month), 'edit_menu' : 1, 'date': $('.date_menu_create_update').val() };
         $.ajax({
             type: "POST",
-            url: 'admin-quan-ly-thiet-bi-xu-ly.php',
-            data: { 'edit_menu' : 1, data: data },
+            url: 'admin-len-menu-xuly.php',
+            data: data,
+            dataType: 'jsonp',
             success : function (result){
                 console.log(result);
-
-                if(result == "1"){
-                    alert('Cập nhật nguyên liệu thành công!');
-                    fill_lai_data();
-                    $('#myModal').modal('hide');
-                }
-                else if( result == "-1"){
-                    alert('Lỗi không cập nhật được nguyên liệu');
+                if(result == 1) {
+                    alert('Cập nhật menu thành công');
                 }
                 else{
-                    $('#err_' + result).show();
+                    alert('Lỗi không thêm được');
                 }
             }
         });
@@ -251,12 +232,16 @@ $(document).ready(function () {
     get_danh_sach_menu();
 
     $('btn-show-add-nien-khoa').click(function () {
+        $('#menu_id').val(0);
         $('group-thanh-ly').hide();
     });
 
     $('#btn-save').click(async function () {
         var data = await get_info_menu();
-         insert_menu(data);
+        if($('#menu_id').val() > 0)
+            update_menu(data);
+        else
+            insert_menu(data);
     });
 
 
@@ -385,9 +370,8 @@ $(document).ready(function () {
         var i = 1;
         $.each(data, function (key, item) {
             $('#week-' + i + ' tbody tr').each(function (idx, value) {
-                $(this).find('textarea').val(item[idx])
+                $(this).find('textarea').val(item[idx]);
             });
-
             i++;
         })
     }

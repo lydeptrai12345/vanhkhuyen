@@ -138,6 +138,15 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                             <div class="modal-body">
                                 <div class="row">
                                     <input type="hidden" id="menu_id">
+                                    <div class="col-md-12" style="margin-bottom: 15px">
+                                        <div class="row">
+                                            <label class="col-md-1" style="padding-top: 6px;font-weight: 500">Tháng</label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="date_menu_create_update form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-6"><label for="">Tuần 1</label></div>
