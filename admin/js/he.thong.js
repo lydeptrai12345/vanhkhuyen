@@ -2,8 +2,14 @@ Number.prototype.format = function(n, x) {
     var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
     return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
 };
+function click_list(){
+    $('.item-nhom-chuc-nang').removeClass('active-nhom');
+    $(this).addClass('active-nhom');
+}
 $(document).ready(function () {
     $( "#tabs" ).tabs({ active: '#tabs-1' });
+
+
     $('.date_nguyen_lieu').datepicker({
         format: "mm-yyyy",
         viewMode: "months",
@@ -30,6 +36,66 @@ $(document).ready(function () {
         });
     }
 
+    function get_danh_sach_chuc_nang_cha() {
+        $.ajax({
+            type: "GET",
+            url: 'admin-he-thong-xu-ly.php?danh_sach_nhom_chuc_nang=1',
+            success : function (result){
+                var data = JSON.parse(result);
+                var str = '';
+                data.forEach(function (item) {
+                    str += '<li onclick="click_list()" class="list-group-item item-nhom-chuc-nang" data-id="'+ item.id +'">'+ item.ten_nhom +'</li>';
+                });
+
+                $('#list-chuc-nang-cha').html(str);
+
+                $('.item-nhom-chuc-nang').on('click', function () {
+                    $('.item-nhom-chuc-nang').removeClass('active-nhom');
+                    $(this).addClass('active-nhom');
+
+                    get_danh_sach_chuc_nang_con_theo_cha($(this).data('id'));
+                })
+            }
+        });
+    }
+
+    function get_danh_sach_chuc_nang_con_theo_cha(id) {
+        $.ajax({
+            type: "GET",
+            url: 'admin-he-thong-xu-ly.php?danh_sach_nhom_chuc_nang_con_theo_cha=1&id=' + id,
+            success : function (result){
+                var data = JSON.parse(result);
+                var str = '';
+                if(data.length > 0){
+                    data.forEach(function (item) {
+                        str += '<tr id="'+ item.id +'">\n' +
+                            '                                                        <td>'+ item.ten_nhom +'</td>\n' +
+                            '                                                        <td class="text-center"><input class="all" type="checkbox"></td>\n' +
+                            '                                                        <td class="text-center"><input class="xem" type="checkbox"></td>\n' +
+                            '                                                        <td class="text-center"><input class="them" type="checkbox"></td>\n' +
+                            '                                                        <td class="text-center"><input class="sua" type="checkbox"></td>\n' +
+                            '                                                        <td class="text-center"><input class="xoa" type="checkbox"></td>\n' +
+                            '                                                    </tr>';
+                    });
+                }
+                else{
+                    str = '<tr><td colspan="6" class="text-center"><b>Chức năng này chưa có chức năng con</b></td></td></tr>'
+                }
+                $('#table_chuc_nang tbody').html(str);
+
+                $('.all').on('click', function () {
+                    var parent = $(this).closest('tr');
+                    if ($(this).is(':checked')) {
+                        parent.find('input').prop('checked', true);
+                    }
+                    else parent.find('input').prop('checked', false);
+                });
+            }
+        });
+    }
+
+    get_danh_sach_chuc_nang_cha();
+
     function get_danh_sach_nhom_nguoi_dung() {
         $.ajax({
             type: "GET",
@@ -40,7 +106,7 @@ $(document).ready(function () {
             }
         });
     }
-    get_danh_sach_nhom_nguoi_dung();
+    // get_danh_sach_nhom_nguoi_dung();
 
     function get_danh_sach_nguyen_lieu() {
         $.ajax({

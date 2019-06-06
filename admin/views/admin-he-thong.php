@@ -28,6 +28,15 @@
 
     #example th { text-align: center }
     .d-none-mam-non { display: none; }
+    .item-nhom-chuc-nang:hover {
+        background-color: #eae1d4;
+    }
+    .item-nhom-chuc-nang {
+        cursor: pointer;
+    }
+    .active-nhom {
+        background-color: #ddd;
+    }
 </style>
 
 <?php
@@ -185,14 +194,14 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                     <div id="tabs-2">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <ul class="list-group">
-                                                    <li class="list-group-item">First item</li>
-                                                    <li class="list-group-item">Second item</li>
-                                                    <li class="list-group-item">Third item</li>
+                                                <ul id="list-chuc-nang-cha" class="list-group">
+                                                    <li class="list-group-item item-nhom-chuc-nang">First item</li>
+                                                    <li class="list-group-item item-nhom-chuc-nang">Second item</li>
+                                                    <li class="list-group-item item-nhom-chuc-nang">Third item</li>
                                                 </ul>
                                             </div>
                                             <div class="col-md-8">
-                                                <table class="table table-bordered">
+                                                <table id="table_chuc_nang" class="table table-bordered">
                                                     <thead>
                                                     <tr>
                                                         <th>Tên chức năng</th>

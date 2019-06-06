@@ -30,6 +30,7 @@ class HeThong extends xuly {
         $result = $this->from('nhom_chuc_nang')
             ->select("*")
             ->where('nhom_cha = 0')
+            ->where('hien_thi = 1')
             ->get();
         return $result;
     }
@@ -38,7 +39,8 @@ class HeThong extends xuly {
     {
         $result = $this->from('nhom_chuc_nang')
             ->select("*")
-            ->where('nhom_cha = 0')
+            ->where('nhom_cha = '. $nhom_cha_id)
+            ->where('hien_thi = 1')
             ->get();
         return $result;
     }
