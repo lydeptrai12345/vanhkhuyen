@@ -20,7 +20,7 @@ class LenMenu extends xuly {
 
     public function update_menu($data_update)
     {
-        return $this->update_multiple('menu', $data_update);
+        return $this->where('id = 1')->update_multiple('menu', $data_update);
     }
 
     public function get_data_menu_theo_thang($date)

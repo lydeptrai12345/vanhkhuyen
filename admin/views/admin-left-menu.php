@@ -200,13 +200,11 @@
             -->
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default" id="heading0">
-                    <a href="#" class="parent-active"
+                    <a href="admin-he-thong.php" class="parent-active"
                        style="text-decoration: none; display: block;line-height: 2;color:black;background:#f5f5f5">
                         <div class="panel-heading" data-toggle="collapse" data-target="#collapse0"
                              aria-controls="collapse0">
-                            <div class="panel-title"><span class="glyphicon glyphicon-check"
-                                                           style="margin-right: 6px; top: 2px"></span> Quản trị hệ thống
-                            </div>
+                            <div class="panel-title"><span class="glyphicon glyphicon-check" style="margin-right: 6px; top: 2px"></span> Quản trị hệ thống</div>
                         </div>
                     </a>
                     <div id="collapse0" class="panel-collapse collapse" aria-labelledby="heading0"

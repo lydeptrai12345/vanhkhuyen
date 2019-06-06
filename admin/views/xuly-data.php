@@ -70,6 +70,7 @@ class xuly {
 
         $query = $query_select . $query_from . $query_join . $query_where . $query_oder_by;
 
+//        return $query;
         $query = mysqli_query($this->dbc, $query);
         $result = array();
 
@@ -185,23 +186,26 @@ class xuly {
 
     public function update_multiple($name_table, $array_data)
     {
-        $arr_column = array_keys($array_data[0]);
-        $array_value = [];
-        $arr_str = [];
-
-        for ($i = 0; $i < count($array_data); $i++) {
-            $arr_value = array_values($array_data[$i]);
-            foreach ($arr_value as $item) {
-                $array_value[] = "'" . $item . "'";
+        if (!is_array($array_data) || count($array_data) <= 0) return -1;
+        $arr_query = [];
+        foreach ($array_data as $key => $item) {
+            $query_update = "UPDATE " . $name_table . " SET ";
+            $str_update = [];
+            foreach ($item as $k => $value){
+                $str_update[] = $key . "=" . "'" . $item . "'";
             }
-            $arr_str[] = "(" . implode(",", $array_value) . ")";
-            $array_value = [];
+            $query_where  = !empty($this->_where) ? " WHERE " . implode(" AND ", $this->_where) : "";
+
+            $query_update .= implode(",", $str_update) . $query_where;
+
+            $arr_query[] = $query_update;
         }
-        $query_insert = "INSERT INTO " . $name_table . " (" . implode(",", $arr_column) . ") VALUE " .implode(",", $arr_str);
 
-        mysqli_query($this->dbc, $query_insert);
+        return $arr_query;
 
-        mysqli_affected_rows($this->dbc) > 0 ? $result = 1 : $result = -1;
+        mysqli_query($this->dbc, $arr_query);
+
+        mysqli_affected_rows($this->dbc) >= 0 ? $result = 1 : $result = -1;
 
         mysqli_close($this->dbc);
         return $result;
