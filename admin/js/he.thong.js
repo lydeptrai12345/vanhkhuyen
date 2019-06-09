@@ -204,6 +204,18 @@ $(document).ready(function () {
                         show_list_be(data.id, data.mo_ta, data.nien_khoa_id)
                     }
                 });
+
+                table_lop.on( 'change', 'input.editor-active', function () {
+                    var data = table_lop.row( $(this).parents('tr') ).data();
+                    if(data.trang_thai == 1) msg = 'khóa';
+                    else msg = 'kích hoạt';
+
+                    if(confirm('Bạn có chắc chắn muốn '+ msg +' vừa chọn?')) {
+                        if(data.trang_thai == 1) type = 0;
+                        else type = 1;
+                        kich_hoat_nguoi_dung(data.id, type)
+                    }
+                } );
             }
         });
     }
@@ -354,6 +366,26 @@ $(document).ready(function () {
                 }
                 else{
                     $('#err_' + result).show();
+                }
+            }
+        });
+    }
+
+    function kich_hoat_nguoi_dung(id, type) {
+        $.ajax({
+            type: "POST",
+            url: 'admin-he-thong-xu-ly.php',
+            data: { 'kich_hoat_nguoi_dung' : 1, id: id, type: type },
+            success : function (result){
+                if(type) msg = "đã bị khóa";
+                else msg = "đã được kích hoạt";
+                console.log(result)
+                if(result == "1"){
+                    alert('Người dùng vừa chọn ' + msg);
+                    location.reload();
+                }
+                else {
+                    alert('Đã xảy ra lỗi');
                 }
             }
         });

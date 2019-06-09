@@ -140,9 +140,16 @@ class HeThong extends xuly {
 
     }
 
-    public function delete_thiet_bi($id)
+    public function kich_nguoi_dung($id, $type=0)
+    {
+        if((int)$id <= 0) return -1;
+        $data = array('trang_thai' => $type);
+        return $this->where('id = ' . $id)->update('nguoidung', $data);
+    }
+
+    public function delete_nguoi_dung($id)
     {
         if($id <= 0) return null;
-        return $this->where('id = ' . $id)->delete('thiet_bi');
+        return $this->where('id = ' . $id)->delete('nguoidung');
     }
 }

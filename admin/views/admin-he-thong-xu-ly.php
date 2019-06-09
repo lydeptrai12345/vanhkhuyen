@@ -40,6 +40,14 @@ if(isset($_GET['get_nguoi_dung_id'])) {
     echo json_encode($he_thong->get_tai_khoan_nguoi_dung($id));
 }
 
+if(isset($_POST['kich_hoat_nguoi_dung'])) {
+    $id = isset($_POST['id']) ? $_POST['id'] : 0;
+    $type = isset($_POST['type']) ? $_POST['type'] : 0;
+
+    $he_thong = new HeThong();
+    echo json_encode($he_thong->kich_nguoi_dung($id, $type));
+}
+
 // Insert nguoi dung
 if (isset($_POST['add_nguoi_dung'])) {
     $data = isset($_POST['data']) ? $_POST['data'] : [];
