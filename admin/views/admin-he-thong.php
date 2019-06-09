@@ -127,17 +127,27 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         <input name="ten_nguoi_dung" type="text" class="form-control form-control-sm">
                                         <small id="err_ten_nguoi_dung" class="dot-required d-none-mam-non">Vui lòng nhập tên tài khoản</small>
                                         <small id="err_trung_ten_nguoi_dung" class="dot-required d-none-mam-non">Tên tài khoản này đã tồn tại</small>
+                                        <small id="err_max_ten_nguoi_dung" class="dot-required d-none-mam-non">Tên tài khoản phải có độ dài từ 6-12 ký tự</small>
                                     </div>
 
                                     <div class="form-group col-md-12">
                                         <label for="">Mật khẩu</label>
                                         <input name="mat_khau" type="password" class="form-control form-control-sm">
                                         <small id="err_mat_khau" class="dot-required d-none-mam-non">Vui lòng nhập mật khẩu</small>
+                                        <small id="err_max_mat_khau" class="dot-required d-none-mam-non">Mật khẩu phải có độ dài từ 6-12 ký tự</small>
                                     </div>
 
-                                    <div class="form-group col-md-12">
+                                    <div id="nhan_vien_add" class="form-group col-md-12">
                                         <label for="">Nhân viên</label>
                                         <select name="" id="nhan_vien_id" class="form-control">
+                                            <option value=""></option>
+                                        </select>
+                                        <small id="err_nhan_vien_id" class="dot-required d-none-mam-non">Vui lòng chọn người dùng</small>
+                                    </div>
+
+                                    <div id="nhan_vien_edit" class="form-group col-md-12" style="display: none">
+                                        <label for="">Nhân viên</label>
+                                        <select name="" id="nhan_vien_id_edit" class="form-control">
                                             <option value=""></option>
                                         </select>
                                         <small id="err_nhan_vien_id" class="dot-required d-none-mam-non">Vui lòng chọn người dùng</small>
@@ -181,12 +191,12 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         <div class="row">
                                             <div class="form-group col-md-12">
                                                 <label for="">Tên tài khoản</label>
-                                                <input id="ten_nguoi_dung" type="text" class="form-control form-control-sm">
+                                                <input id="" type="text" class="form-control form-control-sm">
                                             </div>
 
                                             <div class="form-group col-md-12">
                                                 <label for="">Mật khẩu</label>
-                                                <input id="mat_khau" type="password" class="form-control form-control-sm">
+                                                <input id="" type="password" class="form-control form-control-sm">
                                             </div>
 
                                             <div class="form-group col-md-12">

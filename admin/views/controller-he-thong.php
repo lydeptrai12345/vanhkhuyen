@@ -45,6 +45,14 @@ class HeThong extends xuly {
         return $result;
     }
 
+    public function get_tat_ca_danh_sach_nhan_vien()
+    {
+        $result = $this->from('nhanvien')
+            ->select('*')
+            ->get();
+        return $result;
+    }
+
     public function get_danh_sach_nhan_vien_chua_co_tai_khoan()
     {
         $result = $this->from('nhanvien')
@@ -95,8 +103,8 @@ class HeThong extends xuly {
         $id = (isset($data_update->id) && $data_update->id > 0) ? $data_update->id : 0;
         if ($id <= 0) return 'id';
 
-        $mat_khau = $data_update->mat_khau;
-        if (empty($mat_khau)) return 'mat_khau';
+//        $mat_khau = $data_update->mat_khau;
+//        if (empty($mat_khau)) return 'mat_khau';
 
         if (empty($data_update->nhan_vien_id)) return 'nhan_vien_id';
 
@@ -107,18 +115,18 @@ class HeThong extends xuly {
         if ($nhan_vien_id <= 0) return 'nhan_vien_id';
 
         $data_update = array(
-            'mat_khau' => $mat_khau,
+//            'mat_khau' => $mat_khau,
             'nhom_nguoi_dung_id' => $nhom_nguoi_dung_id,
-            'nhan_vien_id' => $nhan_vien_id,
+//            'nhan_vien_id' => $nhan_vien_id,
             'trang_thai' => 1,
         );
 
-        return $this->where('id = ' . $id)->update('nguoi_dung', $data_update);
+        return $this->where('id = ' . $id)->update('nguoidung', $data_update);
     }
 
     public function get_tai_khoan_nguoi_dung($id)
     {
-        if($id > 0) return -1;
+        if((int)$id <= 0) return [];
         $result = $this->select('*')->from('nguoidung')->where('id = '. "'" . $id ."'")->get();
         return $result;
 

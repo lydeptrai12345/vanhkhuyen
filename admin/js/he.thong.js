@@ -23,6 +23,12 @@ $(document).ready(function () {
         fill_lai_data();
     });
 
+    $('#btn-show-add-nien-khoa').click(function () {
+        set_select_nhan_vien(1);
+        $('input[name="ten_nguoi_dung"]').removeAttr('disabled');
+        $('input[name="mat_khau"]').val('');
+    });
+
     function fill_lai_data() {
         $.ajax({
             type: "GET",
@@ -189,7 +195,7 @@ $(document).ready(function () {
                     var data = table_lop.row( $(this).parents('tr') ).data();
                     if($(this).data('action') == 1) {
                         $('#myModal').modal('show');
-                        get_nguyen_lieu(data.id);
+                        get_tai_khoan_nguoi_dung(data.id);
                     }
                     else if ($(this).data('action') == 2){
                         delete_nguyen_lieu(data.id);
@@ -202,10 +208,17 @@ $(document).ready(function () {
         });
     }
 
-    function get_danh_sach_nhan_vien_chua_co_tai_khoan() {
+    function get_danh_sach_nhan_vien_chua_co_tai_khoan(type) {
+        var url = "";
+        if(type == 1) {
+            url = "admin-he-thong-xu-ly.php?danh_sach_nhan_vien_chua_co_tai_khoan=1"
+        }
+        else {
+            url = "admin-he-thong-xu-ly.php?danh_sach_all_nhan_vien=1"
+        }
         $.ajax({
             type: "GET",
-            url: 'admin-he-thong-xu-ly.php?danh_sach_nhan_vien_chua_co_tai_khoan=1',
+            url: url,
             success : function (result){
                 var data = JSON.parse(result);
                 var str = '';
@@ -214,11 +227,27 @@ $(document).ready(function () {
                         str += '<option value="'+ item.id +'">'+ item.ho_ten +'</option>';
                     });
                 }else { str += '<option value="0">Không có nhân viên chưa có tài khoản</option>'; }
-                $('#nhan_vien_id').html(str);
+
+                if(type == 1) $('#nhan_vien_id').html(str);
+                else $('#nhan_vien_id_edit').html(str);
             }
         });
     }
-    get_danh_sach_nhan_vien_chua_co_tai_khoan();
+    get_danh_sach_nhan_vien_chua_co_tai_khoan(1);
+    get_danh_sach_nhan_vien_chua_co_tai_khoan(2);
+
+    set_select_nhan_vien(1);
+
+    function set_select_nhan_vien(type) {
+        if(type == 1){
+            $('#nhan_vien_add').show();
+            $('#nhan_vien_edit').hide();
+        }
+        else{
+            $('#nhan_vien_add').hide();
+            $('#nhan_vien_edit').show();
+        }
+    }
 
     function insert_nguoi_dung() {
         var ten_nguoi_dung = $('input[name="ten_nguoi_dung"]').val();
@@ -226,6 +255,17 @@ $(document).ready(function () {
         var nhan_vien_id = $('#nhan_vien_id').val();
         var nhom_nguoi_dung_id = $('#nhom_nguoi_dung_id').val();
         $('#nguoi_dung_id').val(0);
+
+        if(ten_nguoi_dung.length < 6 || ten_nguoi_dung.length > 12){
+            $('#err_max_ten_nguoi_dung').show();
+            return;
+        }
+        else $('#err_max_ten_nguoi_dung').hide();
+
+        if(mat_khau.length < 6 || mat_khau.length > 12){
+            $('#err_max_mat_khau').show();
+            return;
+        }else $('#err_max_mat_khau').hide();
 
         var data = {
             ten_nguoi_dung: ten_nguoi_dung,
@@ -257,46 +297,60 @@ $(document).ready(function () {
             type: "GET",
             url: 'admin-he-thong-xu-ly.php?get_nguoi_dung_id=1&id=' + id,
             success : function (result){
-                var data = JSON.parse(result);
-                $('input[name="ten_nguoi_dung"]').val(data.ten_nguyen_lieu);
-                $('input[name="gia_tien"]').val(data.gia_tien);
-                $('input[name="so_luong"]').val(data.so_luong);
-                $('input[name="dvt"]').val(data.dvt);
-                $('#nguyen_lieu_id').val(data.id);
+                var data = JSON.parse(result)[0];
+                console.log(data);
+                $('input[name="ten_nguoi_dung"]').val(data.ten_nguoi_dung);
+                $('input[name="mat_khau"]').val('');
+                $('#nhan_vien_id_edit').val(data.nhan_vien_id);
+                $('#nhom_nguoi_dung_id').val(data.nhom_nguoi_dung_id);
+                $('#nguoi_dung_id').val(data.id);
+
+                $('input[name="ten_nguoi_dung"]').attr('disabled','disabled');
+                $('#nhan_vien_id_edit').attr('disabled','disabled');
+                set_select_nhan_vien(2);
             }
         });
     }
 
-    function update_nguyen_lieu() {
-        var ten_nguyen_lieu = $('input[name="ten_nguyen_lieu"]').val();
-        var gia_tien = $('input[name="gia_tien"]').val();
-        var so_luong = $('input[name="so_luong"]').val();
-        var dvt = $('input[name="dvt"]').val();
-        var nhan_vien_id = $('#nguoi_dung').val();
-        var id = $('#nguyen_lieu_id').val();
+    function update_nguoi_dung() {
+        var ten_nguoi_dung = $('input[name="ten_nguoi_dung"]').val();
+        var mat_khau = $('input[name="mat_khau"]').val();
+        var nhan_vien_id = $('#nhan_vien_id').val();
+        var nhom_nguoi_dung_id = $('#nhom_nguoi_dung_id').val();
+        var id = $('#nguoi_dung_id').val();
+
+        if(ten_nguoi_dung.length < 6 || ten_nguoi_dung.length > 12){
+            $('#err_max_ten_nguoi_dung').show();
+            return;
+        }
+        else $('#err_max_ten_nguoi_dung').hide();
+
+        if(mat_khau.length < 6 || mat_khau.length > 12){
+            $('#err_max_mat_khau').show();
+            return;
+        }else $('#err_max_mat_khau').hide();
 
         var data = {
-            ten_nguyen_lieu: ten_nguyen_lieu,
-            gia_tien: gia_tien,
-            so_luong: so_luong,
-            dvt: dvt,
+            ten_nguoi_dung: ten_nguoi_dung,
+            mat_khau: mat_khau,
             nhan_vien_id: nhan_vien_id,
+            nhom_nguoi_dung_id: nhom_nguoi_dung_id,
             id: id
         };
 
         $.ajax({
             type: "POST",
-            url: 'admin-nguyen-lieu-xu-ly.php',
-            data: { 'edit_nguyen_lieu' : 1, data: data },
+            url: 'admin-he-thong-xu-ly.php',
+            data: { 'edit_nguoi_dung' : 1, data: data },
             success : function (result){
                 console.log(result);
 
                 if(result == "1"){
-                    alert('Cập nhật nguyên liệu thành công!');
+                    alert('Cập nhật người dùng thành công!');
                     location.reload();
                 }
                 else if( result == "-1"){
-                    alert('Lỗi không cập nhật được nguyên liệu');
+                    alert('Lỗi không cập nhật được người dùng');
                 }
                 else{
                     $('#err_' + result).show();
@@ -330,7 +384,7 @@ $(document).ready(function () {
         if($('#nguoi_dung_id').val() == 0)
             insert_nguoi_dung();
         else
-            update_nguyen_lieu();
+            update_nguoi_dung();
 
     });
 
