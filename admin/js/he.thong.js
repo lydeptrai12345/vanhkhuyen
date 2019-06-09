@@ -102,11 +102,17 @@ $(document).ready(function () {
             url: 'admin-he-thong-xu-ly.php?danh_sach_nhom_nguoi_dung=1',
             success : function (result){
                 var data = JSON.parse(result);
-                console.log(data);
+                var str = '';
+                if(data.length > 0) {
+                    data.forEach(function (item) {
+                        str += '<option value="'+ item.id +'">'+ item.ten_nhom +'</option>';
+                    });
+                }else { str += '<option value="0">Chưa có nhóm người dùng</option>'; }
+                $('#nhom_nguoi_dung_id').html(str);
             }
         });
     }
-    // get_danh_sach_nhom_nguoi_dung();
+    get_danh_sach_nhom_nguoi_dung();
 
     function get_danh_sach_nguyen_lieu() {
         $.ajax({
@@ -196,32 +202,48 @@ $(document).ready(function () {
         });
     }
 
-    function insert_nguyen_lieu() {
-        var ten_nguyen_lieu = $('input[name="ten_nguyen_lieu"]').val();
-        var gia_tien = $('input[name="gia_tien"]').val();
-        var so_luong = $('input[name="so_luong"]').val();
-        var dvt = $('input[name="dvt"]').val();
-        var nhan_vien_id = $('#nguoi_dung').val();
-        $('#nguyen_lieu_id').val(0);
+    function get_danh_sach_nhan_vien_chua_co_tai_khoan() {
+        $.ajax({
+            type: "GET",
+            url: 'admin-he-thong-xu-ly.php?danh_sach_nhan_vien_chua_co_tai_khoan=1',
+            success : function (result){
+                var data = JSON.parse(result);
+                var str = '';
+                if(data.length > 0) {
+                    data.forEach(function (item) {
+                        str += '<option value="'+ item.id +'">'+ item.ho_ten +'</option>';
+                    });
+                }else { str += '<option value="0">Không có nhân viên chưa có tài khoản</option>'; }
+                $('#nhan_vien_id').html(str);
+            }
+        });
+    }
+    get_danh_sach_nhan_vien_chua_co_tai_khoan();
+
+    function insert_nguoi_dung() {
+        var ten_nguoi_dung = $('input[name="ten_nguoi_dung"]').val();
+        var mat_khau = $('input[name="mat_khau"]').val();
+        var nhan_vien_id = $('#nhan_vien_id').val();
+        var nhom_nguoi_dung_id = $('#nhom_nguoi_dung_id').val();
+        $('#nguoi_dung_id').val(0);
 
         var data = {
-            ten_nguyen_lieu: ten_nguyen_lieu,
-            gia_tien: gia_tien,
-            so_luong: so_luong,
-            dvt: dvt,
+            ten_nguoi_dung: ten_nguoi_dung,
+            mat_khau: mat_khau,
             nhan_vien_id: nhan_vien_id,
+            nhom_nguoi_dung_id: nhom_nguoi_dung_id,
         };
         $.ajax({
             type: "POST",
-            url: 'admin-nguyen-lieu-xu-ly.php',
-            data: { 'add_nguyen_lieu' : 1, data: data },
+            url: 'admin-he-thong-xu-ly.php',
+            data: { 'add_nguoi_dung' : 1, data: data },
             success : function (result){
                 if(result == "1"){
-                    alert('Thêm nguyên liệu thành công!');
+                    alert('Thêm người dùng thành công!');
                     location.reload();
                 }
                 else if( result == "-1"){
-                    alert('Lỗi không thêm được nguyên liệu');
+                    alert('Lỗi không thêm được người dùng');
                 }
                 else{
                     $('#err_' + result).show();
@@ -230,13 +252,13 @@ $(document).ready(function () {
         });
     }
 
-    function get_nguyen_lieu(id) {
+    function get_tai_khoan_nguoi_dung(id) {
         $.ajax({
             type: "GET",
-            url: 'admin-nguyen-lieu-xu-ly.php?get_nguyen_lieu=1&id=' + id,
+            url: 'admin-he-thong-xu-ly.php?get_nguoi_dung_id=1&id=' + id,
             success : function (result){
                 var data = JSON.parse(result);
-                $('input[name="ten_nguyen_lieu"]').val(data.ten_nguyen_lieu);
+                $('input[name="ten_nguoi_dung"]').val(data.ten_nguyen_lieu);
                 $('input[name="gia_tien"]').val(data.gia_tien);
                 $('input[name="so_luong"]').val(data.so_luong);
                 $('input[name="dvt"]').val(data.dvt);
@@ -304,9 +326,9 @@ $(document).ready(function () {
 
     get_danh_sach_nguyen_lieu();
 
-    $('#btn-save').click(function () {
-        if($('#nguyen_lieu_id').val() == 0)
-            insert_nguyen_lieu();
+    $('#btn-save_nguoi_dung').click(function () {
+        if($('#nguoi_dung_id').val() == 0)
+            insert_nguoi_dung();
         else
             update_nguyen_lieu();
 

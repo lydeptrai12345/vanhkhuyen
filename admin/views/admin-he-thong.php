@@ -116,38 +116,44 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Thông tin nguyên liệu</h4>
+                                <h4 class="modal-title">Thông tin tài khoản</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
+                                <input type="hidden" id="nguoi_dung_id">
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label for="">Tên tài khoản</label>
-                                        <input type="text" class="form-control form-control-sm">
+                                        <input name="ten_nguoi_dung" type="text" class="form-control form-control-sm">
+                                        <small id="err_ten_nguoi_dung" class="dot-required d-none-mam-non">Vui lòng nhập tên tài khoản</small>
+                                        <small id="err_trung_ten_nguoi_dung" class="dot-required d-none-mam-non">Tên tài khoản này đã tồn tại</small>
                                     </div>
 
                                     <div class="form-group col-md-12">
                                         <label for="">Mật khẩu</label>
-                                        <input type="password" class="form-control form-control-sm">
+                                        <input name="mat_khau" type="password" class="form-control form-control-sm">
+                                        <small id="err_mat_khau" class="dot-required d-none-mam-non">Vui lòng nhập mật khẩu</small>
                                     </div>
 
                                     <div class="form-group col-md-12">
                                         <label for="">Nhân viên</label>
-                                        <select name="" id="" class="form-control">
-                                            <option value="">aaaaa</option>
+                                        <select name="" id="nhan_vien_id" class="form-control">
+                                            <option value=""></option>
                                         </select>
+                                        <small id="err_nhan_vien_id" class="dot-required d-none-mam-non">Vui lòng chọn người dùng</small>
                                     </div>
 
                                     <div class="form-group col-md-12">
                                         <label for="">Nhóm người dùng</label>
-                                        <select name="" id="" class="form-control">
-                                            <option value="">aaaaa</option>
+                                        <select name="" id="nhom_nguoi_dung_id" class="form-control">
+                                            <option value=""></option>
                                         </select>
+                                        <small id="err_nhom_nguoi_dung_id" class="dot-required d-none-mam-non">Vui lòng chọn nhóm người dùng</small>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button id="btn-save" type="button" class="btn btn-success"><i class="glyphicon glyphicon-floppy-saved"></i> Lưu lại</button>
+                                <button id="btn-save_nguoi_dung" type="button" class="btn btn-success"><i class="glyphicon glyphicon-floppy-saved"></i> Lưu lại</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
                         </div>
@@ -175,12 +181,12 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         <div class="row">
                                             <div class="form-group col-md-12">
                                                 <label for="">Tên tài khoản</label>
-                                                <input type="text" class="form-control form-control-sm">
+                                                <input id="ten_nguoi_dung" type="text" class="form-control form-control-sm">
                                             </div>
 
                                             <div class="form-group col-md-12">
                                                 <label for="">Mật khẩu</label>
-                                                <input type="password" class="form-control form-control-sm">
+                                                <input id="mat_khau" type="password" class="form-control form-control-sm">
                                             </div>
 
                                             <div class="form-group col-md-12">

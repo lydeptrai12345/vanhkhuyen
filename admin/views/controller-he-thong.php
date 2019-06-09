@@ -45,120 +45,89 @@ class HeThong extends xuly {
         return $result;
     }
 
+    public function get_danh_sach_nhan_vien_chua_co_tai_khoan()
+    {
+        $result = $this->from('nhanvien')
+            ->select('*')
+            ->where('id NOT IN (SELECT nhan_vien_id FROM nguoidung)')
+            ->get();
+        return $result;
+    }
 
-    public function insert_thiet_bi($data_insert)
+
+    public function insert_nguoi_dung($data_insert)
     {
         if(empty($data_insert)) return null;
 
         $data_insert = (object)$data_insert;
 
-        $ten_thiet_bi = $data_insert->ten_thiet_bi;
-        if(empty($data_insert->ten_thiet_bi)) return 'ten_thiet_bi';
+        $ten_nguoi_dung = $data_insert->ten_nguoi_dung;
+        if(empty($data_insert->ten_nguoi_dung)) return 'ten_nguoi_dung';
 
-        $so_luong = (float)$data_insert->so_luong;
-        if($so_luong < 0) return 'so_luong';
+        $mat_khau = $data_insert->mat_khau;
+        if(empty($mat_khau)) return 'mat_khau';
 
-        if(empty($data_insert->gia_tien)) return 'gia_tien';
-        $gia_tien = str_replace(",", "", $data_insert->gia_tien);
+        if(empty($data_insert->nhan_vien_id)) return 'nhan_vien_id';
 
-        $dvt = $data_insert->dvt;
-        if(empty($dvt)) return 'dvt';
-
-        $ngay_san_xuat = $data_insert->ngay_san_xuat;
-        if(empty($ngay_san_xuat)) return 'ngay_san_xuat';
-
-        $ngay_het_han = $data_insert->ngay_het_han;
-        if(empty($ngay_het_han)) return 'ngay_het_han';
-
-//        $thanh_ly = $data_insert->thanh_ly;
-//        if(empty($thanh_ly)) return 'thanh_ly';
-
-        $nien_khoa_id = $data_insert->nien_khoa_id;
-        if(empty($nien_khoa_id)) return 'nien_khoa';
+        $nhom_nguoi_dung_id = (int)$data_insert->nhom_nguoi_dung_id;
+        if($nhom_nguoi_dung_id <= 0) return 'nhom_nguoi_dung_id';
 
         $nhan_vien_id = (int)$data_insert->nhan_vien_id;
-        if($nhan_vien_id < 0) return 'nhan_vien_id';
+        if($nhan_vien_id <= 0) return 'nhan_vien_id';
 
         $data_insert = array(
-            'ten_thiet_bi' => $ten_thiet_bi,
-            'so_luong' => $so_luong,
-            'ngay_san_xuat' => date_create($ngay_san_xuat)->format('Y-m-d'),
-            'ngay_het_han' => date_create($ngay_het_han)->format('Y-m-d'),
-            'bao_hanh' => $so_luong,
-            'thanh_ly' => 0,
-            'nien_khoa_id' => $nien_khoa_id,
-            'gia_tien' => str_replace(".", "", $gia_tien),
-            'dvt' => $dvt,
-            'ngay_nhap' => date("Y-m-d"),
+            'ten_nguoi_dung' => $ten_nguoi_dung,
+            'mat_khau' => $mat_khau,
+            'nhom_nguoi_dung_id' => $nhom_nguoi_dung_id,
             'nhan_vien_id' => $nhan_vien_id,
-            'ghi_chu' => $nhan_vien_id,
+            'trang_thai' => 1,
         );
 
-        return $this->insert('thiet_bi', $data_insert);
+        return $this->insert('nguoidung', $data_insert);
     }
 
-    public function update_thiet_bi($data_update)
+    public function update_nguoi_dung($data_update)
     {
-        if(empty($data_update)) return null;
+        if (empty($data_update)) return null;
 
         $data_update = (object)$data_update;
 
-        $id = (isset($data_update->id) && $data_update->id > 0) ? $data_update->id :0;
-        if($id <= 0) return 'id';
+        $id = (isset($data_update->id) && $data_update->id > 0) ? $data_update->id : 0;
+        if ($id <= 0) return 'id';
 
-//        if(empty($this->get_thiet_bi($id))) return 'data_null';
+        $mat_khau = $data_update->mat_khau;
+        if (empty($mat_khau)) return 'mat_khau';
 
-        $ten_thiet_bi = $data_update->ten_thiet_bi;
-        if(empty($data_update->ten_thiet_bi)) return 'ten_thiet_bi';
+        if (empty($data_update->nhan_vien_id)) return 'nhan_vien_id';
 
-        $so_luong = (float)$data_update->so_luong;
-        if($so_luong < 0) return 'so_luong';
-
-        if(empty($data_update->gia_tien)) return 'gia_tien';
-        $gia_tien = str_replace(",", "", $data_update->gia_tien);
-
-        $dvt = $data_update->dvt;
-        if(empty($dvt)) return 'dvt';
-
-        $ngay_san_xuat = $data_update->ngay_san_xuat;
-        if(empty($ngay_san_xuat)) return 'ngay_san_xuat';
-
-        $ngay_het_han = $data_update->ngay_het_han;
-        if(empty($ngay_het_han)) return 'ngay_het_han';
-
-        $thanh_ly = $data_update->thanh_ly;
-        if(empty($thanh_ly)) return 'thanh_ly';
-
-        $nien_khoa_id = $data_update->nien_khoa_id;
-        if(empty($nien_khoa_id)) return 'nien_khoa';
+        $nhom_nguoi_dung_id = (int)$data_update->nhom_nguoi_dung_id;
+        if ($nhom_nguoi_dung_id <= 0) return 'nhom_nguoi_dung_id';
 
         $nhan_vien_id = (int)$data_update->nhan_vien_id;
-        if($nhan_vien_id < 0) return 'nhan_vien_id';
+        if ($nhan_vien_id <= 0) return 'nhan_vien_id';
 
         $data_update = array(
-            'ten_thiet_bi' => $ten_thiet_bi,
-            'so_luong' => $so_luong,
-            'ngay_san_xuat' => date_create($ngay_san_xuat)->format('Y-m-d'),
-            'ngay_het_han' => date_create($ngay_het_han)->format('Y-m-d'),
-            'bao_hanh' => $so_luong,
-            'thanh_ly' => $thanh_ly,
-            'nien_khoa_id' => $nien_khoa_id,
-            'gia_tien' => str_replace(".", "", $gia_tien),
-            'dvt' => $dvt,
-            'ngay_nhap' => date("Y-m-d"),
+            'mat_khau' => $mat_khau,
+            'nhom_nguoi_dung_id' => $nhom_nguoi_dung_id,
             'nhan_vien_id' => $nhan_vien_id,
-            'ghi_chu' => $nhan_vien_id,
+            'trang_thai' => 1,
         );
-        return $this->where('id = ' . $id)->update('thiet_bi', $data_update);
+
+        return $this->where('id = ' . $id)->update('nguoi_dung', $data_update);
     }
 
-    public function get_thiet_bi($thiet_bi_id)
+    public function get_tai_khoan_nguoi_dung($id)
     {
-        $thiet_bi_id = (int)$thiet_bi_id;
+        if($id > 0) return -1;
+        $result = $this->select('*')->from('nguoidung')->where('id = '. "'" . $id ."'")->get();
+        return $result;
 
-        if($thiet_bi_id <=0 ) return -1;
+    }
 
-        $result = $this->select('*')->from('thiet_bi')->where('id = ' . $thiet_bi_id)->get();
+    public function check_ten_tai_khoan_nguoi_dung($ten_tai_khoan)
+    {
+        if(empty($ten_tai_khoan)) return -1;
+        $result = $this->select('*')->from('nguoidung')->where('ten_nguoi_dung = '. "'" . $ten_tai_khoan ."'")->get();
         return $result;
 
     }
