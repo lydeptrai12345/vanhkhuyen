@@ -6,6 +6,9 @@
 	$( '#heading3 .parent-active .panel-heading' ).attr( 'aria-expanded', 'true' );
 </script>
 <?php
+$data_phan_quyen = kiem_tra_quyen_nguoi_dung(3);
+
+
 if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
 	if ( isset( $_POST[ 'typeForm' ] ) && $_POST[ 'typeForm' ] == 'insert-salary' ) {
 		$query = "SELECT id FROM nhanvien where trangthai = 1";
@@ -173,43 +176,44 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
 									<option value="0">Tháng</option>
 								</select>
 							</div>
-							<a class="btn-custom2" style="float:right;margin: auto 25px 0px 0;display:none" data-toggle="modal" data-target="#editSalaryModal">Cập nhật mức lương cơ sở</a>
-							<div class="modal fade" id="editSalaryModal">
-								<div class="modal-dialog modal-dialog-centered">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 class="modal-title">Cập nhật mức lương cơ sở</h4>
-											<!--											<button type="button" style="outline: none;" class="close" data-dismiss="modal">&times;</button>-->
-										</div>
-										<form action="" method="post" onSubmit="return validateSalary();">
-											<div class="modal-body">
-												<table style="width: 100%">
-													<tr>
-														<td style="width: 47%; text-align: right"><label>Mức lương hiện tại</label></td>
-														<td><label style="text-align: left;display: block; text-indent: 13px; color: #7b7b7be6"><?php $slrOld = mysqli_fetch_assoc( mysqli_query( $dbc,
-										"select mucluong from luongcoso"));
-									echo formatCurrencyCustom( $slrOld[ 'mucluong' ] )?></label></td>
-													</tr>
-													<tr>
-														<td style="text-align: right"><label>Mức lương cập nhật</label></td>
-														<td><input onFocus="$('#editSalaryModal').find('.text-danger').css('display','none');" style="color: #03923c !important; font-size: 0.95rem; width: 80%" class="form-control formatCurrency" name="new-salary-basic"/>
-												</td>
-													</tr>	
-													<tr>
-														<td></td>
-														<td><p class='text-danger' style="display:none; transition: 200ms; font-size: 10pt; margin: 0; text-align: left;">Mức lương cơ sở không hợp lệ</p></td>
-													</tr>
-													</table>
-												<input type="hidden" name="typeForm" value="edit-salary-basic"/>
-											</div>
-											<div class="modal-footer">
-												<button type="submit" class="btn btn-success" style="border-color: #0d864b;background-color: #14a25d;">Cập nhật</button>
-												<button type="button" class="btn btn-danger" style="background-color:#e02e2e" data-dismiss="modal">Đóng</button>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
+                            <?php if($data_phan_quyen->sua): ?>
+                                <a class="btn-custom2" style="float:right;margin: auto 25px 0px 0;display:none" data-toggle="modal" data-target="#editSalaryModal">Cập nhật mức lương cơ sở</a>
+                                <div class="modal fade" id="editSalaryModal">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Cập nhật mức lương cơ sở</h4>
+                                            </div>
+                                            <form action="" method="post" onSubmit="return validateSalary();">
+                                                <div class="modal-body">
+                                                    <table style="width: 100%">
+                                                        <tr>
+                                                            <td style="width: 47%; text-align: right"><label>Mức lương hiện tại</label></td>
+                                                            <td><label style="text-align: left;display: block; text-indent: 13px; color: #7b7b7be6"><?php $slrOld = mysqli_fetch_assoc( mysqli_query( $dbc,
+                                                                        "select mucluong from luongcoso"));
+                                                                    echo formatCurrencyCustom( $slrOld[ 'mucluong' ] )?></label></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align: right"><label>Mức lương cập nhật</label></td>
+                                                            <td><input onFocus="$('#editSalaryModal').find('.text-danger').css('display','none');" style="color: #03923c !important; font-size: 0.95rem; width: 80%" class="form-control formatCurrency" name="new-salary-basic"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td><p class='text-danger' style="display:none; transition: 200ms; font-size: 10pt; margin: 0; text-align: left;">Mức lương cơ sở không hợp lệ</p></td>
+                                                        </tr>
+                                                    </table>
+                                                    <input type="hidden" name="typeForm" value="edit-salary-basic"/>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success" style="border-color: #0d864b;background-color: #14a25d;">Cập nhật</button>
+                                                    <button type="button" class="btn btn-danger" style="background-color:#e02e2e" data-dismiss="modal">Đóng</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif;?>
 						</div>
 					</div>
 					<div class="container-salary">
@@ -352,9 +356,11 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
 						} else {
 							?>
 						<form action="" method="post">
-							<a onClick="$('.btn-insert-salary').click();" class="btn-custom" style="margin-top: 50px;margin-bottom: 40px">Tạo lương tháng <?php echo $thang?> năm <?php echo $nam?></a>
-							<input type="hidden" name="typeForm" value="insert-salary"/>
-							<button type="submit" class="btn-insert-salary"/>
+                            <?php if($data_phan_quyen->them): ?>
+                                <a onClick="$('.btn-insert-salary').click();" class="btn-custom" style="margin-top: 50px;margin-bottom: 40px">Tạo lương tháng <?php echo $thang?> năm <?php echo $nam?></a>
+                                <input type="hidden" name="typeForm" value="insert-salary"/>
+                                <button type="submit" class="btn-insert-salary"/>
+                            <?php endif; ?>
 						</form>
 						<?php
 						}

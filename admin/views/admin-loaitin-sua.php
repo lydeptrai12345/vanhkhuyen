@@ -108,7 +108,7 @@
                             ?>
                         </div>
 							<button type="submit" name="xacnhansua" class="btn btn-info">Lưu</button>
-                        <a href="admin-tintuc.php" class="btn btn-warning">Quay về</a>
+                        <a href="admin-loaitin.php" class="btn btn-warning">Quay về</a>
 					</form>
 				</div>
 			<!-- End sua loại tin -->

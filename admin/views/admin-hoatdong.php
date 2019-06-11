@@ -1,15 +1,20 @@
 <?php include "admin-header.php";?>
 <?php include "../../inc/myconnect.php";?>
+<?php include "../../inc/myfunction.php";?>
 <!-- End header-->
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
 <script>
-		$( document ).ready( function () {
-					$('#heading1 .panel-heading').attr('aria-expanded','true');
-					$('#collapse1').addClass('show');
-					$('#collapse1 .list-group a:nth-child(2)').addClass('cus-active');
-		});
-	</script>
+    $(document).ready(function () {
+        $('#heading1 .panel-heading').attr('aria-expanded', 'true');
+        $('#collapse1').addClass('show');
+        $('#collapse1 .list-group a:nth-child(2)').addClass('cus-active');
+    });
+</script>
+
+<?php
+$data_phan_quyen = kiem_tra_quyen_nguoi_dung(8);
+?>
 
 <!-- Page content-->
 <div class="main-content-container container-fluid px-4"style="margin-top:10px">
@@ -24,8 +29,10 @@
 			<!-- Danh sach loại tin -->
 				<div class="card-header border-bottom">
 					<h5 class="text-info">Danh sách hoạt động</h5>
-                    <a id="btn-show-add-nien-khoa" name="them" class="btn btn-success" href="admin-hoatdong-them.php">Thêm hoạt động</a>
-					<!--<a class="btn btn-light" data-toggle="tooltip" title="Thêm tin tức" href="admin-hoatdong-them.php"><i class="material-icons action-icon">add</i></a>-->
+                    <?php if($data_phan_quyen->them): ?>
+                        <a id="btn-show-add-nien-khoa" name="them" class="btn btn-success" href="admin-hoatdong-them.php">Thêm hoạt động</a>
+                    <?php endif; ?>
+
 				</div>
 				<div class="card-body p-0 pb-3 text-center">
                     <div class="row" style="padding: 5px 20px;">
@@ -54,6 +61,24 @@
 
 </div>
 <!-- End page content-->
+<script>
+    var data_quyen = <?php echo json_encode($data_phan_quyen);?>;
+    var phan_quyen = {};
+    if(data_quyen.allaction == 0) {
+        phan_quyen = {
+            them: data_quyen.them,
+            sua: data_quyen.sua,
+            xoa: data_quyen.xoa
+        }
+    }
+    else{
+        phan_quyen = {
+            them: 1,
+            sua: 1,
+            xoa: 1
+        }
+    }
+</script>
 
 <script>
     $(document).ready(function () {
@@ -85,9 +110,9 @@
                         {
                             targets: 4,
                             orderable: false,
-                            data: null,
-                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật hoạt động"><i class="material-icons action-icon">edit</i></a> ' +
-                                '<a data-action="2" style="cursor: pointer" title="Xóa hoạt động"><i class="material-icons action-icon">delete_outline</i></a>'
+                            data: null,visible: ((phan_quyen.sua == 0 && phan_quyen.xoa == 0) ? false : true),
+                            defaultContent: '<a class="edit-btn '+ ((phan_quyen.sua == 0) ? 'd-none' : '') + '" data-action="1" style="cursor: pointer" title="Cập nhật thiết bị"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" class="delete-btn '+ ((phan_quyen.xoa == 0) ? 'd-none' : '') +'" style="cursor: pointer" title="Xóa thiết bị"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
                     ],
                     columns: [

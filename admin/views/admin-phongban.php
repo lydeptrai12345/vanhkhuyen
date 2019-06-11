@@ -5,12 +5,17 @@
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
 <script>
-		$( document ).ready( function () {
-					$('#heading6 .panel-heading').attr('aria-expanded','true');
-					$('#collapse6').addClass('show');
-					$('#collapse6 .list-group a:nth-child(4)').addClass('cus-active');
-		});
-	</script>
+    $(document).ready(function () {
+        $('#heading6 .panel-heading').attr('aria-expanded', 'true');
+        $('#collapse6').addClass('show');
+        $('#collapse6 .list-group a:nth-child(4)').addClass('cus-active');
+    });
+</script>
+
+<?php
+    $data_phan_quyen = kiem_tra_quyen_nguoi_dung(18);
+?>
+
 <!-- Page content-->
 <div class="main-content-container container-fluid px-4"style="margin-top:10px">
 	<!-- Page Header -->
@@ -92,7 +97,9 @@
 				<div class="card-header border-bottom">
 					<form action="admin-phongban.php" method="get">
 						<h5 class="text-info">Danh sách phòng ban</h5>
-                        <button id="btn-show-add-nien-khoa" type="submit" name="them" class="btn btn-success">Thêm phòng ban</button>
+                        <?php if($data_phan_quyen->them): ?>
+                            <button id="btn-show-add-nien-khoa" type="submit" name="them" class="btn btn-success">Thêm phòng ban</button>
+                        <?php endif; ?>
 					</form>
 				</div>
 				<div class="card-body p-0 pb-3 text-center">
@@ -121,6 +128,25 @@
 </div>
 <!-- End page content-->
 <script>
+    var data_quyen = <?php echo json_encode($data_phan_quyen);?>;
+    var phan_quyen = {};
+    if(data_quyen.allaction == 0) {
+        phan_quyen = {
+            them: data_quyen.them,
+            sua: data_quyen.sua,
+            xoa: data_quyen.xoa
+        }
+    }
+    else{
+        phan_quyen = {
+            them: 1,
+            sua: 1,
+            xoa: 1
+        }
+    }
+</script>
+
+<script>
     $(document).ready(function () {
         var table;
         $.ajax({
@@ -148,11 +174,10 @@
                         {
                             targets: 2,
                             orderable: false,
-                            data: null,
-                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật bằng cấp"><i class="material-icons action-icon">edit</i></a> ' +
-                                '<a data-action="2" style="cursor: pointer" title="Xóa bằng cấp"><i class="material-icons action-icon">delete_outline</i></a>'
+                            data: null,visible: ((phan_quyen.sua == 0 && phan_quyen.xoa == 0) ? false : true),
+                            defaultContent: '<a class="edit-btn '+ ((phan_quyen.sua == 0) ? 'd-none' : '') + '" data-action="1" style="cursor: pointer" title="Cập nhật thiết bị"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" class="delete-btn '+ ((phan_quyen.xoa == 0) ? 'd-none' : '') +'" style="cursor: pointer" title="Xóa thiết bị"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
-
                     ],
                     columns: [
                         { width: "30px" },

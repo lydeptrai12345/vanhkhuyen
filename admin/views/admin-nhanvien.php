@@ -17,7 +17,10 @@
 </style>
 
 
-<?php 
+<?php
+$data_phan_quyen = kiem_tra_quyen_nguoi_dung(15);
+
+
 //Kiểm tra ID có phải là kiểu số không, filter_var kiem tra có thuộc tính trim sẽ loại bỏ khoảng trắng
 if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_VALIDATE_INT,array('min_range'=>1)))
 {
@@ -39,8 +42,9 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
 				<!-- Danh sach loại tin -->
 				<div class="card-header border-bottom">
 					<h5 class="text-info">Danh sách Nhân viên</h5>
-					<!-- <a class="btn btn-light" data-toggle="tooltip" title="Thêm Nhân viên" href="admin-nhanvien-them.php"><i class="material-icons action-icon">add</i></a> -->
-                    <a id="btn-show-add-nien-khoa" name="them" class="btn btn-success" href="admin-nhanvien-them.php">Thêm nhân viên</a>
+                    <?php if($data_phan_quyen->them): ?>
+                        <a id="btn-show-add-nien-khoa" name="them" class="btn btn-success" href="admin-nhanvien-them.php">Thêm nhân viên</a>
+                    <?php endif; ?>
 				</div>
 				<div class="card-body p-0 pb-3 text-center table-data">
                     <!--                    copy cai nay -->
@@ -74,6 +78,26 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
 </div>
 
 <script>
+    var data_quyen = <?php echo json_encode($data_phan_quyen);?>;
+    var phan_quyen = {};
+    if(data_quyen.allaction == 0) {
+        phan_quyen = {
+            them: data_quyen.them,
+            sua: data_quyen.sua,
+            xoa: data_quyen.xoa
+        }
+    }
+    else{
+        phan_quyen = {
+            them: 1,
+            sua: 1,
+            xoa: 1
+        }
+    }
+</script>
+
+
+<script>
     $(document).ready(function () {
         var table;
         $.ajax({
@@ -103,7 +127,13 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                         { targets: 4, orderable: false, className: 'dt-body-left' },
                         { targets: 5, orderable: false,className: 'dt-body-left' },
                         { targets: 6, orderable: false, className: 'dt-body-left' },
-                        { targets: 7, orderable: false, data: null, defaultContent: '<a class="btn-edit" style="cursor: pointer" title="Cập nhật nhân viên"><i class="material-icons action-icon">edit</i></a>' },
+                        {
+                            targets: 7,
+                            orderable: false,
+                            data: null,
+                            visible: ((phan_quyen.sua == 0 && phan_quyen.xoa == 0) ? false : true),
+                            defaultContent: '<a class="edit-btn '+ ((phan_quyen.sua == 0) ? 'd-none' : '') + '" style="cursor: pointer" title="Cập nhật nhân viên"><i class="material-icons action-icon">edit</i></a>'
+                        },
                     ],
                     columns: [
                         { width: "30px" },
@@ -161,7 +191,6 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
 
 
         $('#tripRevenue tbody').on('click', 'td.details-control', function () {
-            console.log(table)
             var tr = $(this).closest('tr');
             var row = table.row(tr);
 

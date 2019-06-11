@@ -12,6 +12,10 @@
     });
 </script>
 
+<?php
+    $data_phan_quyen = kiem_tra_quyen_nguoi_dung(16);
+?>
+
 <!-- Page content-->
 <div class="main-content-container container-fluid px-4"style="margin-top:10px">
     <!-- Page Header -->
@@ -120,7 +124,9 @@
                     <div class="card-header border-bottom">
                         <form action="admin-bangcap.php" method="get">
                             <h5 class="text-info">Danh sách bằng cấp</h5>
-                            <button id="btn-show-add-nien-khoa" type="submit" name="them" class="btn btn-success">Thêm bằng cấp</button>
+                            <?php if($data_phan_quyen->them): ?>
+                                <button id="btn-show-add-nien-khoa" type="submit" name="them" class="btn btn-success">Thêm bằng cấp</button>
+                            <?php endif; ?>
                         </form>
                     </div>
                     <div class="card-body p-0 pb-3 text-center">
@@ -149,6 +155,24 @@
 
     </div>
     <!-- End page content-->
+    <script>
+        var data_quyen = <?php echo json_encode($data_phan_quyen);?>;
+        var phan_quyen = {};
+        if(data_quyen.allaction == 0) {
+            phan_quyen = {
+                them: data_quyen.them,
+                sua: data_quyen.sua,
+                xoa: data_quyen.xoa
+            }
+        }
+        else{
+            phan_quyen = {
+                them: 1,
+                sua: 1,
+                xoa: 1
+            }
+        }
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -179,9 +203,9 @@
                             {
                                 targets: 3,
                                 orderable: false,
-                                data: null,
-                                defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật bằng cấp"><i class="material-icons action-icon">edit</i></a> ' +
-                                    '<a data-action="2" style="cursor: pointer" title="Xóa bằng cấp"><i class="material-icons action-icon">delete_outline</i></a>'
+                                data: null,visible: ((phan_quyen.sua == 0 && phan_quyen.xoa == 0) ? false : true),
+                                defaultContent: '<a class="edit-btn '+ ((phan_quyen.sua == 0) ? 'd-none' : '') + '" data-action="1" style="cursor: pointer" title="Cập nhật thiết bị"><i class="material-icons action-icon">edit</i></a> ' +
+                                    '<a data-action="2" class="delete-btn '+ ((phan_quyen.xoa == 0) ? 'd-none' : '') +'" style="cursor: pointer" title="Xóa thiết bị"><i class="material-icons action-icon">delete_outline</i></a>'
                             }
                         ],
                         columns: [
