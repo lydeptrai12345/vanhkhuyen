@@ -35,9 +35,15 @@ if(isset($_GET['danh_sach_nhan_vien_chua_co_tai_khoan'])) {
 
 if(isset($_GET['get_nguoi_dung_id'])) {
     $id = isset($_GET['id']) ? $_GET['id'] : 0;
-//    echo $id;return $id;
+
     $he_thong = new HeThong();
     echo json_encode($he_thong->get_tai_khoan_nguoi_dung($id));
+}
+
+if(isset($_GET['get_phan_quyen_theo_nhom_nguoi_dung'])) {
+    $id = isset($_GET['id']) ? $_GET['id'] : 0;
+    $he_thong = new HeThong();
+    echo json_encode($he_thong->get_phan_quyen_chuc_nang_theo_nhom_nguoi_dung($id));
 }
 
 if(isset($_POST['kich_hoat_nguoi_dung'])) {
@@ -76,3 +82,19 @@ if (isset($_POST['edit_nguoi_dung'])) {
     }
     else echo -1;
 }
+
+if (isset($_POST['add_phan_quyen'])) {
+    $id = isset($_POST['id']) ? $_POST['id'] : 0;
+    $data = isset($_POST['data']) ? $_POST['data'] : [];
+    if($data){
+        // xóa hết các dòng của nhóm người dùng
+        $ht = new HeThong();
+        $ht->delete_phan_quyen_nhom_nguoi_dung($id);
+
+        $he_thong = new HeThong();
+        $result = $he_thong->add_phan_quyen_nhom_nguoi_dung($data);
+        echo $result;
+    }
+    else echo -1;
+}
+

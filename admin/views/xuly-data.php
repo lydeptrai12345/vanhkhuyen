@@ -151,7 +151,7 @@ class xuly {
         $query = "DELETE FROM " .$name_table;
         $query_where = !empty($this->_where) ? " WHERE " . implode(" AND ", $this->_where) : "";
         $query_delete = $query . $query_where;
-
+//        return $query_delete;
         mysqli_query($this->dbc, $query_delete);
 
         mysqli_affected_rows($this->dbc) > 0 ? $result = 1 : $result = -1;
@@ -174,8 +174,9 @@ class xuly {
             $arr_str[] = "(" . implode(",", $array_value) . ")";
             $array_value = [];
         }
-        $query_insert = "INSERT INTO " . $name_table . " (" . implode(",", $arr_column) . ") VALUE " .implode(",", $arr_str);
 
+        $query_insert = "INSERT INTO " . $name_table . " (" . implode(",", $arr_column) . ") VALUE " .implode(",", $arr_str);
+//        return $query_insert;
         mysqli_query($this->dbc, $query_insert);
 
         mysqli_affected_rows($this->dbc) > 0 ? $result = 1 : $result = -1;

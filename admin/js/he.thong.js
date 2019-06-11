@@ -45,7 +45,7 @@ $(document).ready(function () {
     function get_danh_sach_chuc_nang_cha() {
         $.ajax({
             type: "GET",
-            url: 'admin-he-thong-xu-ly.php?danh_sach_nhom_chuc_nang=1',
+            url: 'admin-he-thong-xu-ly.php?danh_sach_nhom_nguoi_dung=1',
             success : function (result){
                 var data = JSON.parse(result);
                 var str = '';
@@ -59,33 +59,56 @@ $(document).ready(function () {
                     $('.item-nhom-chuc-nang').removeClass('active-nhom');
                     $(this).addClass('active-nhom');
 
-                    get_danh_sach_chuc_nang_con_theo_cha($(this).data('id'));
+                    get_phan_quyen_theo_nhom_nguoi_dung($(this).data('id'));
                 })
             }
         });
     }
 
+    $('[data-toggle="toggle"]').change(function(){
+        $(this).parents().next('.hide').toggle();
+    });
+    get_danh_sach_chuc_nang_con_theo_cha(0);
     function get_danh_sach_chuc_nang_con_theo_cha(id) {
         $.ajax({
             type: "GET",
             url: 'admin-he-thong-xu-ly.php?danh_sach_nhom_chuc_nang_con_theo_cha=1&id=' + id,
             success : function (result){
                 var data = JSON.parse(result);
+                console.log(data);
                 var str = '';
+
                 if(data.length > 0){
-                    data.forEach(function (item) {
-                        str += '<tr id="'+ item.id +'">\n' +
-                            '                                                        <td>'+ item.ten_nhom +'</td>\n' +
-                            '                                                        <td class="text-center"><input class="all" type="checkbox"></td>\n' +
-                            '                                                        <td class="text-center"><input class="xem" type="checkbox"></td>\n' +
-                            '                                                        <td class="text-center"><input class="them" type="checkbox"></td>\n' +
-                            '                                                        <td class="text-center"><input class="sua" type="checkbox"></td>\n' +
-                            '                                                        <td class="text-center"><input class="xoa" type="checkbox"></td>\n' +
-                            '                                                    </tr>';
+                    data.forEach(function (value) {
+                        if(value.nhom_cha == 0){
+                            if(value.nhom_con.length > 0) {
+                                str += '<tr><td colspan="6"><b style="font-weight: bold">'+ value.ten_nhom +'</b></td></td></tr>';
+                                value.nhom_con.forEach(function (item) {
+                                    str += '<tr id="'+ item.id +'" class="chuc-nang">\n' +
+                                        '                                                        <td style="padding-left: 10px">- '+ item.ten_nhom +'</td>\n' +
+                                        '                                                        <td class="text-center"><input class="all" type="checkbox"></td>\n' +
+                                        '                                                        <td class="text-center"><input class="xem" type="checkbox"></td>\n' +
+                                        '                                                        <td class="text-center"><input class="them" type="checkbox"></td>\n' +
+                                        '                                                        <td class="text-center"><input class="sua" type="checkbox"></td>\n' +
+                                        '                                                        <td class="text-center"><input class="xoa" type="checkbox"></td>\n' +
+                                        '                                                    </tr>';
+                                })
+                            }
+                            else{
+                                str += '<tr id="'+ value.id +'" class="chuc-nang">\n' +
+                                    '                                                        <td style="font-weight: bold">'+ value.ten_nhom +'</td>\n' +
+                                    '                                                        <td class="text-center"><input class="all" type="checkbox"></td>\n' +
+                                    '                                                        <td class="text-center"><input class="xem" type="checkbox"></td>\n' +
+                                    '                                                        <td class="text-center"><input class="them" type="checkbox"></td>\n' +
+                                    '                                                        <td class="text-center"><input class="sua" type="checkbox"></td>\n' +
+                                    '                                                        <td class="text-center"><input class="xoa" type="checkbox"></td>\n' +
+                                    '                                                    </tr>';
+                            }
+                        }
                     });
                 }
                 else{
-                    str = '<tr><td colspan="6" class="text-center"><b>Chức năng này chưa có chức năng con</b></td></td></tr>'
+                    str = '<tr><td colspan="6" class="text-center"><b>Chưa có chức năng </b></td></td></tr>'
                 }
                 $('#table_chuc_nang tbody').html(str);
 
@@ -101,13 +124,50 @@ $(document).ready(function () {
     }
 
     get_danh_sach_chuc_nang_cha();
-
+    var table_nhom = {};
     function get_danh_sach_nhom_nguoi_dung() {
         $.ajax({
             type: "GET",
             url: 'admin-he-thong-xu-ly.php?danh_sach_nhom_nguoi_dung=1',
             success : function (result){
                 var data = JSON.parse(result);
+
+
+                table_nhom = $('#nhom-nguoi').DataTable({
+                    language: {
+                        "lengthMenu": "Hiển thị _MENU_ nhóm/ trang",
+                        "zeroRecords": "Không tìm thấy kết quả",
+                        "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
+                        "infoEmpty": "Không có dữ liệu",
+                        "infoFiltered": "(Được lọc từ _MAX_ nhóm)",
+                        "search": "Tìm kiếm",
+                        "paginate": {
+                            "previous": "Trở về",
+                            "next": "Tiếp"
+                        }
+                    },
+                    data: data,
+                    columnDefs: [
+                        { targets: 0,orderable: false, data: null },
+                        { targets: 1, className: 'dt-body-left' },
+                        { targets: 2, orderable: false, className: 'dt-body-center' },
+                    ],
+                    columns: [
+                        { width: "30px" },
+                        { data: 'ten_nhom', width: '180px'},
+                        { data: 'ghi_chu' },
+                    ],
+                    order: [[ 1, 'asc' ]]
+
+                });
+
+                // PHẦN THỨ TỰ TABLE
+                table_nhom.on( 'order.dt search.dt', function () {
+                    table_nhom.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                        cell.innerHTML = i+1;
+                    } );
+                } ).draw();
+
                 var str = '';
                 if(data.length > 0) {
                     data.forEach(function (item) {
@@ -419,5 +479,68 @@ $(document).ready(function () {
             update_nguoi_dung();
 
     });
+
+    $('#btn-save-phan-quyen').click(function () {
+        get_data_insert_update_phan_quyen();
+    });
+
+    function get_data_insert_update_phan_quyen() {
+        var arr_checkbox = $('#table_chuc_nang tbody tr.chuc-nang');
+        var data = [];
+        var nhom_nguoi_dung_id = $('#list-chuc-nang-cha').find('li.active-nhom').data('id');
+        arr_checkbox.each(function (idx, item) {
+            $(item).find('input.all').is(':checked');
+            var obj = {
+                id_nhom_nguoi_dung: nhom_nguoi_dung_id,
+                id_chuc_nang: $(item).attr('id'),
+                allaction: Number($(item).find('input.all').is(':checked')),
+                xem: Number($(item).find('input.xem').is(':checked')),
+                them: Number($(item).find('input.them').is(':checked')),
+                sua: Number($(item).find('input.sua').is(':checked')),
+                xoa: Number($(item).find('input.xoa').is(':checked'))
+            };
+
+            data.push(obj);
+        });
+        save_phan_quyen(nhom_nguoi_dung_id, data);
+        console.log(data);
+    }
+
+    function save_phan_quyen(nhom_nguoi_dung_id, data) {
+        if (nhom_nguoi_dung_id <= 0) alert('Vui lòng chọn nhóm người dùng!');
+        else {
+            $.ajax({
+                type: "POST",
+                url: 'admin-he-thong-xu-ly.php',
+                data: {'add_phan_quyen': 1, id: nhom_nguoi_dung_id, data: data},
+                success: function (result) {
+                    console.log(result);
+                    if (result == "1") {
+                        alert('Phân quyền thành công!');
+                        location.reload();
+                    }
+                    else alert('Lỗi Phân quyền thất bại');
+                }
+            });
+        }
+    }
+
+    function get_phan_quyen_theo_nhom_nguoi_dung(nhom_nguoi_dung_id) {
+        $.ajax({
+            type: "GET",
+            url: 'admin-he-thong-xu-ly.php?get_phan_quyen_theo_nhom_nguoi_dung=1&id=' + nhom_nguoi_dung_id,
+            success : function (result){
+                var data = JSON.parse(result);
+                var arr_checkbox = $('#table_chuc_nang tbody tr.chuc-nang');
+                arr_checkbox.each(function (idx, item) {
+                    console.log($(item).attr('id'))
+                    if($(item).attr('id') == data[idx].id_chuc_nang)
+                    {
+                        $(item).find('input.all').prop('checked', (data[idx].allaction == 1) ? true : false);
+                    }
+                });
+            }
+        });
+    }
 
 });

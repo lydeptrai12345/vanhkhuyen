@@ -37,6 +37,12 @@
     .active-nhom {
         background-color: #ddd;
     }
+    .dataTables_wrapper { width: 100% !important; }
+    [data-toggle="toggle"] {
+        display: none;
+    }
+
+    #table_chuc_nang td { padding: 5px; }
 </style>
 
 <?php
@@ -189,22 +195,18 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                     </ul>
                                     <div id="tabs-1">
                                         <div class="row">
-                                            <div class="form-group col-md-12">
-                                                <label for="">Tên tài khoản</label>
-                                                <input id="" type="text" class="form-control form-control-sm">
-                                            </div>
+                                            <table id="nhom-nguoi" class="table display w-100 hover cell-border compact stripe">
+                                                <thead>
+                                                    <tr>
+                                                        <th>TT</th>
+                                                        <th>Tên nhóm</th>
+                                                        <th>Ghi chú</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                                            <div class="form-group col-md-12">
-                                                <label for="">Mật khẩu</label>
-                                                <input id="" type="password" class="form-control form-control-sm">
-                                            </div>
-
-                                            <div class="form-group col-md-12">
-                                                <label for="">Nhóm người dùng</label>
-                                                <select name="" id="" class="form-control">
-                                                    <option value="">aaaaa</option>
-                                                </select>
-                                            </div>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <div id="tabs-2">
@@ -230,7 +232,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td>John dá  dá dasdasd dsada</td>
+                                                        <td></td>
                                                         <td class="text-center"><input type="checkbox"></td>
                                                         <td class="text-center"><input type="checkbox"></td>
                                                         <td class="text-center"><input type="checkbox"></td>
@@ -245,7 +247,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button id="btn-save" type="button" class="btn btn-success"><i class="glyphicon glyphicon-floppy-saved"></i> Lưu lại</button>
+                                <button id="btn-save-phan-quyen" type="button" class="btn btn-success"><i class="glyphicon glyphicon-floppy-saved"></i> Lưu lại</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
                         </div>

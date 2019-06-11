@@ -37,11 +37,42 @@ class HeThong extends xuly {
 
     public function get_danh_sach_chuc_nang_con_theo_cha($nhom_cha_id)
     {
-        $result = $this->from('nhom_chuc_nang')
-            ->select("*")
-            ->where('nhom_cha = '. $nhom_cha_id)
-            ->where('hien_thi = 1')
-            ->get();
+        if($nhom_cha_id == 0){
+            $result_cn = $this->from('nhom_chuc_nang')
+                ->select("*")
+                ->where('hien_thi = 1')
+                ->get();
+            $arr = [];
+            $arr_nhom_con = [];
+            foreach ($result_cn as $value) {
+                if($value->nhom_cha == 0) {
+                    $value->nhom_con = [];
+                    $arr[] = $value;
+                }
+                else {
+                    $arr_nhom_con[] = $value;
+                }
+            }
+
+            foreach ($arr_nhom_con as $item) {
+//                return array_column($arr, 'id');
+                $idx = array_search($item->nhom_cha, array_column($arr, 'id'));
+//                return $arr;
+                if($idx >= 0){
+                    $arr[$idx]->nhom_con[] = $item;
+                }
+            }
+
+            $result = $arr;
+        }
+        else{
+            $result = $this->from('nhom_chuc_nang')
+                ->select("*")
+                ->where('nhom_cha = '. $nhom_cha_id)
+                ->where('hien_thi = 1')
+                ->get();
+        }
+
         return $result;
     }
 
@@ -58,6 +89,15 @@ class HeThong extends xuly {
         $result = $this->from('nhanvien')
             ->select('*')
             ->where('id NOT IN (SELECT nhan_vien_id FROM nguoidung)')
+            ->get();
+        return $result;
+    }
+
+    public function get_phan_quyen_chuc_nang_theo_nhom_nguoi_dung($nhom_nguoi_dung_id)
+    {
+        $result = $this->from('nhom_phan_quyen')
+            ->select('*')
+            ->where('id_nhom_nguoi_dung = ' . $nhom_nguoi_dung_id)
             ->get();
         return $result;
     }
@@ -151,5 +191,16 @@ class HeThong extends xuly {
     {
         if($id <= 0) return null;
         return $this->where('id = ' . $id)->delete('nguoidung');
+    }
+
+    public function add_phan_quyen_nhom_nguoi_dung($data)
+    {
+        if(empty($data)) return -1;
+        return $this->insert_multiple('nhom_phan_quyen', $data);
+    }
+
+    public function delete_phan_quyen_nhom_nguoi_dung($id)
+    {
+        return $this->where('id_nhom_nguoi_dung = ' . $id)->delete('nhom_phan_quyen');
     }
 }
