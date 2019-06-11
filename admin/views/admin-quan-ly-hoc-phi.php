@@ -9,6 +9,8 @@
 <script src="../js/printThis.js"></script>
 
 <?php
+$data_phan_quyen = kiem_tra_quyen_nguoi_dung(14);
+
 $str = "SELECT be.id, be.hinhbe, be.ten, be.ngaysinh, be.gioitinh, lophoc_chitiet.mo_ta, be.chieucao, be.cannang, be.diachi FROM be 
                                               INNER JOIN lophoc_be ON be.id = lophoc_be.be_id 
                                               INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id 
@@ -90,7 +92,9 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                             <h5 class="text-info salary-h5" style="margin: 7px 0 0 0;display: inline-block">Danh sách học phí</h5>
                         </div>
                         <div class="col-md-9">
+                            <?php if($data_phan_quyen->them): ?>
                             <button data-toggle="modal" data-target="#myModal" class="btn btn-success pull-right" style="float: right">Thêm mới học phí</button>
+                            <?php endif; ?>
                         </div>
 
                         <!-- Modal -->
@@ -298,6 +302,26 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
     </div>
 </div>
+
+<script>
+    var data_quyen = <?php echo json_encode($data_phan_quyen);?>;
+    var phan_quyen = {};
+    if(data_quyen.allaction == 0) {
+        phan_quyen = {
+            them: data_quyen.them,
+            sua: data_quyen.sua,
+            xoa: data_quyen.xoa
+        }
+    }
+    else{
+        phan_quyen = {
+            them: 1,
+            sua: 1,
+            xoa: 1
+        }
+    }
+</script>
+
 
 <script>
     $(document).ready(function () {

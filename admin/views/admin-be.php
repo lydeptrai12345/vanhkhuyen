@@ -10,6 +10,7 @@
 <!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
 
 <?php
+    $data_phan_quyen = kiem_tra_quyen_nguoi_dung(12);
     $str = "SELECT be.id, be.hinhbe, be.ten, be.ngaysinh, be.gioitinh, lophoc_chitiet.mo_ta, be.chieucao, be.cannang, be.diachi FROM be 
                                               INNER JOIN lophoc_be ON be.id = lophoc_be.be_id 
                                               INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id 
@@ -62,7 +63,9 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
 			<div class="card card-small mb-4">
 				<div class="card-header border-bottom">
 					<h5 class="text-info salary-h5" style="margin: 7px 0 0 0;display: inline-block">Tìm kiếm bé</h5>
+                    <?php if($data_phan_quyen->them): ?>
 					<a href="admin-be-them.php" class="btn-custom2" style="float: right; margin-right: 20px; font-size: 14px">Thêm bé</a>
+                    <?php endif;?>
 				</div>
 				<style>
 					.salary-table {
@@ -234,6 +237,25 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
 </div>
 
 <script>
+    var data_quyen = <?php echo json_encode($data_phan_quyen);?>;
+    var phan_quyen = {};
+    if(data_quyen.allaction == 0) {
+        phan_quyen = {
+            them: data_quyen.them,
+            sua: data_quyen.sua,
+            xoa: data_quyen.xoa
+        }
+    }
+    else{
+        phan_quyen = {
+            them: 1,
+            sua: 1,
+            xoa: 1
+        }
+    }
+</script>
+
+<script>
     $(document).ready(function () {
         var table;
         $.ajax({
@@ -262,7 +284,13 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                         { targets: 4, orderable: false,className: 'dt-body-left' },
                         { targets: 5, orderable: false,className: 'dt-body-left' },
                         { targets: 6, orderable: false,className: 'dt-body-left' },
-                        { targets: 7,orderable: false, data: null, defaultContent: '<a style="cursor: pointer" title="Cập nhật bé"><i class="material-icons action-icon">edit</i></a>' },
+                        {
+                            targets: 7,
+                            orderable: false,
+                            data: null,
+                            visible: ((phan_quyen.sua == 0 && phan_quyen.xoa == 0) ? false : true),
+                            defaultContent: '<a class="edit-btn '+ ((phan_quyen.sua == 0) ? 'd-none' : '') + '" data-action="1" style="cursor: pointer" title="Cập nhật bé"><i class="material-icons action-icon">edit</i></a>'
+                        }
                     ],
                     columns: [
                         {

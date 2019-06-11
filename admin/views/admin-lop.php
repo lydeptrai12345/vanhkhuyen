@@ -39,6 +39,8 @@
 </style>
 
 <?php
+    $data_phan_quyen = kiem_tra_quyen_nguoi_dung(13);
+
     // lấy danh sách niên khóa
     $results_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY nam_ket_thuc DESC");
 
@@ -159,7 +161,11 @@
                             <h5 class="text-info">Danh sách lớp học</h5>
                         </div>
                         <div class="col-md-2">
-                            <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#Modal_NIEN_KHOA" class="btn btn-success">Thêm mới niên khóa</button>
+                            <?php if($data_phan_quyen->them): ?>
+                                <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#Modal_NIEN_KHOA" class="btn btn-success">
+                                    Thêm mới niên khóa
+                                </button>
+                            <?php endif; ?>
                         </div>
                         <div class="col-md-2">
                             <button id="btn-show-add" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-info">Thêm mới lớp học</button>
@@ -490,6 +496,25 @@
 <!-- End page content-->
 
 <script>
+    var data_quyen = <?php echo json_encode($data_phan_quyen);?>;
+    var phan_quyen = {};
+    if(data_quyen.allaction == 0) {
+        phan_quyen = {
+            them: data_quyen.them,
+            sua: data_quyen.sua,
+            xoa: data_quyen.xoa
+        }
+    }
+    else{
+        phan_quyen = {
+            them: 1,
+            sua: 1,
+            xoa: 1
+        }
+    }
+</script>
+
+<script>
     var rows_selected = [];
     $(document).ready(function () {
         $( '.select-nhannien-add' ).select2( {
@@ -718,8 +743,9 @@
                             targets: 5,
                             orderable: false,
                             data: null,
-                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật lớp"><i class="material-icons action-icon">edit</i></a> ' +
-                                '<a data-action="2" style="cursor: pointer" title="Xóa lớp"><i class="material-icons action-icon">delete_outline</i></a>'
+                            visible: ((phan_quyen.sua == 0 && phan_quyen.xoa == 0) ? false : true),
+                            defaultContent: '<a class="edit-btn '+ ((phan_quyen.sua == 0) ? 'd-none' : '') + '" data-action="1" style="cursor: pointer" title="Cập nhật thiết bị"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" class="delete-btn '+ ((phan_quyen.xoa == 0) ? 'd-none' : '') +'" style="cursor: pointer" title="Xóa thiết bị"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
                     ],
                     columns: [

@@ -52,7 +52,6 @@ if(isset($_SESSION['uid']))
                 $matkhau=md5($_POST['txtMatkhau']);
             }
 
-            echo $matkhau;
             if(empty($errors))
             {
                 $query = "SELECT nguoidung.id, ten_nguoi_dung, mat_khau, quyen, ho_ten, nhom_nguoi_dung_id FROM nguoidung 
