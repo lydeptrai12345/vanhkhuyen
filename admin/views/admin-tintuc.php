@@ -4,11 +4,11 @@
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
 <script>
-		$( document ).ready( function () {
-					$('#heading1 .panel-heading').attr('aria-expanded','true');
-					$('#collapse1').addClass('show');
-					$('#collapse1 .list-group a:nth-child(3)').addClass('cus-active');
-		});
+    $(document).ready(function () {
+        $('#heading1 .panel-heading').attr('aria-expanded', 'true');
+        $('#collapse1').addClass('show');
+        $('#collapse1 .list-group a:nth-child(3)').addClass('cus-active');
+    });
 	</script>
 <style>
     .img-tintuc {

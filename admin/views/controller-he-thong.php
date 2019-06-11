@@ -55,9 +55,7 @@ class HeThong extends xuly {
             }
 
             foreach ($arr_nhom_con as $item) {
-//                return array_column($arr, 'id');
                 $idx = array_search($item->nhom_cha, array_column($arr, 'id'));
-//                return $arr;
                 if($idx >= 0){
                     $arr[$idx]->nhom_con[] = $item;
                 }
@@ -202,5 +200,32 @@ class HeThong extends xuly {
     public function delete_phan_quyen_nhom_nguoi_dung($id)
     {
         return $this->where('id_nhom_nguoi_dung = ' . $id)->delete('nhom_phan_quyen');
+    }
+
+    public function kiem_tra_quyen_menu_trai() {
+        $result_cn = $this->from('nhom_chuc_nang')
+            ->select("*")
+            ->where('hien_thi = 1')
+            ->get();
+        $arr = [];
+        $arr_nhom_con = [];
+        foreach ($result_cn as $value) {
+            if($value->nhom_cha == 0) {
+                $value->nhom_con = [];
+                $arr[] = $value;
+            }
+            else {
+                $arr_nhom_con[] = $value;
+            }
+        }
+
+        foreach ($arr_nhom_con as $item) {
+            $idx = array_search($item->nhom_cha, array_column($arr, 'id'));
+            if($idx >= 0){
+                $arr[$idx]->nhom_con[] = $item;
+            }
+        }
+
+        return $arr;
     }
 }

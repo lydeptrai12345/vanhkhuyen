@@ -1,4 +1,5 @@
 <?php
+
 function show_news($parent_id="0",$insert_text="-")
 {
 	global $dbc;

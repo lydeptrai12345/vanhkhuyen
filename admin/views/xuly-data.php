@@ -15,6 +15,7 @@ class xuly {
     protected $_where = [];
     protected $_from = " FROM ";
     protected $_join = [];
+    protected $left_join = [];
     protected $_insert = "";
     protected $_update = "";
     protected $_delete = "";
@@ -50,10 +51,22 @@ class xuly {
         return $this;
     }
 
+    public function left_join($table_join, $foreign_key, $condition, $foreign)
+    {
+        $this->left_join[] = $table_join . " ON " . $foreign_key . " " . $condition . " " .$foreign;
+        return $this;
+    }
+
     public function order_by($order_by)
     {
         $this->_order_by .= $order_by . " ";
         return $this;
+    }
+
+    public function query($query)
+    {
+        $query = mysqli_query($this->dbc, $query);
+        return $query;
     }
 
     public function get()
