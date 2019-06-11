@@ -517,7 +517,6 @@ $(document).ready(function () {
                     console.log(result);
                     if (result == "1") {
                         alert('Phân quyền thành công!');
-                        location.reload();
                     }
                     else alert('Lỗi Phân quyền thất bại');
                 }
@@ -533,10 +532,17 @@ $(document).ready(function () {
                 var data = JSON.parse(result);
                 var arr_checkbox = $('#table_chuc_nang tbody tr.chuc-nang');
                 arr_checkbox.each(function (idx, item) {
-                    console.log($(item).attr('id'))
-                    if($(item).attr('id') == data[idx].id_chuc_nang)
-                    {
-                        $(item).find('input.all').prop('checked', (data[idx].allaction == 1) ? true : false);
+                    if(data.length == 0){
+                        $(item).find('input').prop('checked', false);
+                    }
+                    else{
+                        if($(item).attr('id') == data[idx].id_chuc_nang){
+                            $(item).find('input.all').prop('checked', (data[idx].allaction == 1) ? true : false);
+                            $(item).find('input.xem').prop('checked', (data[idx].xem == 1) ? true : false);
+                            $(item).find('input.them').prop('checked', (data[idx].them == 1) ? true : false);
+                            $(item).find('input.sua').prop('checked', (data[idx].sua == 1) ? true : false);
+                            $(item).find('input.xoa').prop('checked', (data[idx].xoa == 1) ? true : false);
+                        }
                     }
                 });
             }

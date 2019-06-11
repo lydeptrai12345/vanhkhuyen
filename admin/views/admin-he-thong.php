@@ -43,6 +43,14 @@
     }
 
     #table_chuc_nang td { padding: 5px; }
+    #table_chuc_nang tr:hover {
+        background-color: #ddd;
+        cursor: pointer;
+    }
+    .list-group-item {
+        border-radius: 0 !important;
+        cursor: pointer;
+    }
 </style>
 
 <?php
@@ -223,11 +231,11 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                                     <thead>
                                                     <tr>
                                                         <th>Tên chức năng</th>
-                                                        <th class="text-center">All</th>
-                                                        <th class="text-center">Xem</th>
-                                                        <th class="text-center">Thêm</th>
-                                                        <th class="text-center">Cập nhật</th>
-                                                        <th class="text-center">Xóa</th>
+                                                        <th class="text-center" style="width: 85px">All</th>
+                                                        <th class="text-center" style="width: 85px">Xem</th>
+                                                        <th class="text-center" style="width: 85px">Thêm</th>
+                                                        <th class="text-center" style="width: 85px">Sửa</th>
+                                                        <th class="text-center" style="width: 85px">Xóa</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -242,12 +250,17 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <div class="col-md-12">
+                                                <button id="btn-save-phan-quyen" type="button" class="btn btn-success" style="float: right">
+                                                    <i class="glyphicon glyphicon-floppy-saved"></i> Lưu lại
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
+                                    <!-- End tab 2 -->
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button id="btn-save-phan-quyen" type="button" class="btn btn-success"><i class="glyphicon glyphicon-floppy-saved"></i> Lưu lại</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
                         </div>
