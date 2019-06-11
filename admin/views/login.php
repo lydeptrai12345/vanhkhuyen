@@ -51,11 +51,13 @@ if(isset($_SESSION['uid']))
             {
                 $matkhau=md5($_POST['txtMatkhau']);
             }
+
+            echo $matkhau;
             if(empty($errors))
             {
                 $query = "SELECT nguoidung.id, ten_nguoi_dung, mat_khau, quyen, ho_ten, nhom_nguoi_dung_id FROM nguoidung 
                         INNER JOIN nhanvien ON nguoidung.nhan_vien_id = nhanvien.id
-                        WHERE ten_nguoi_dung='{$taikhoan}' AND mat_khau='{$matkhau}' AND ( quyen = 1 OR quyen = 2 )";
+                        WHERE ten_nguoi_dung='{$taikhoan}' AND mat_khau='{$matkhau}'";
                 $result = mysqli_query($dbc, $query);
                 if (mysqli_num_rows($result) == 1) {
                     list($id, $taikhoan, $matkhau, $quyen, $ho_ten, $nhom_nguoi_dung_id) = mysqli_fetch_array($result, MYSQLI_NUM);
@@ -64,7 +66,7 @@ if(isset($_SESSION['uid']))
                     $_SESSION['ho_ten'] = $ho_ten;
                     $_SESSION['matkhau'] = $matkhau;
                     $_SESSION['quyen'] = $quyen;
-                    $_SESSION['quyen'] = $quyen;
+                    $_SESSION['nhom_nguoi_dung_id'] = $nhom_nguoi_dung_id;
 
                     $hethong = new HeThong();
                     $_SESSION['phan_quyen'] = $hethong->get_phan_quyen_chuc_nang_theo_nhom_nguoi_dung($nhom_nguoi_dung_id);

@@ -123,7 +123,7 @@ class HeThong extends xuly {
 
         $data_insert = array(
             'ten_nguoi_dung' => $ten_nguoi_dung,
-            'mat_khau' => $mat_khau,
+            'mat_khau' => md5($mat_khau),
             'nhom_nguoi_dung_id' => $nhom_nguoi_dung_id,
             'nhan_vien_id' => $nhan_vien_id,
             'trang_thai' => 1,

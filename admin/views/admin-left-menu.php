@@ -1,8 +1,9 @@
 <?php
-include 'controller-he-thong.php';
-$he_thong = new HeThong();
-$menu = $he_thong->kiem_tra_quyen_menu_trai();
+    include 'controller-he-thong.php';
+    $he_thong = new HeThong();
+    $menu = $he_thong->kiem_tra_quyen_menu_trai();
     $arr_quyen = $_SESSION['phan_quyen'];
+//    $nhom_phan_quyen_id = $_SESSION['nhom_nguoi_dung_id'];
 //    echo "<pre>";
 //    echo print_r($menu);
 ?>
@@ -148,7 +149,43 @@ $menu = $he_thong->kiem_tra_quyen_menu_trai();
 
             <div class="panel-group" id="accordion">
                 <?php foreach ($menu as $key => $item):?>
+                    <?php
+                        $dem = 0;
+                        if($item->nhom_con){
+                            foreach ($item->nhom_con as $value) {
+                                $idx = array_search($value->id, array_column($arr_quyen,'id_chuc_nang'));
+                                if($idx >= 0) {
+                                    $quyen = $arr_quyen[$idx];
+                                    if($quyen->allaction == 1){
+                                        $dem = 1;
+                                    }
+                                    else {
+                                        if($quyen->xem  == 1) $dem = 1;
+                                        if($quyen->them == 1) $dem = 1;
+                                        if($quyen->sua  == 1) $dem = 1;
+                                        if($quyen->xoa  == 1) $dem = 1;
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            $idx = array_search($item->id, array_column($arr_quyen,'id_chuc_nang'));
+                            if($idx >= 0) {
+                                $quyen = $arr_quyen[$idx];
+                                if($quyen->allaction == 1){
+                                    $dem = 1;
+                                }
+                                else {
+                                    if($quyen->xem  == 1) $dem = 1;
+                                    if($quyen->them == 1) $dem = 1;
+                                    if($quyen->sua  == 1) $dem = 1;
+                                    if($quyen->xoa  == 1) $dem = 1;
+                                }
+                            }
+                        }
+                     ?>
 
+                    <?php if($dem > 0):?>
                     <div class="panel panel-default" id="heading<?php echo $key+1;?>">
                         <a href="<?php if($item->link) echo $item->link; else echo '#';?>" class="parent-active menu-item">
                             <div class="panel-heading" data-toggle="collapse" data-target="#collapse<?php echo $key+1;?>"
@@ -161,16 +198,39 @@ $menu = $he_thong->kiem_tra_quyen_menu_trai();
                         </a>
                         <div id="collapse<?php echo $key+1;?>" class="panel-collapse collapse" aria-labelledby="heading<?php echo $key+1;?>" data-parent="#accordion">
                             <ul class="list-group">
+
                                 <?php if($item->nhom_con):?>
                                     <?php foreach ($item->nhom_con as $idx => $value):?>
-                                    <a class="list-group-item cus-collapse-item" href="<?php echo $value->link;?>">
-                                        <span class="glyphicon glyphicon-menu-right icon-menu"></span> <?php echo $value->ten_nhom;?>
-                                    </a>
+
+                                        <?php
+                                            $count = 0;
+                                            $idx = array_search($value->id, array_column($arr_quyen,'id_chuc_nang'));
+                                            if($idx >= 0) {
+                                                $quyen = $arr_quyen[$idx];
+                                                if($quyen->allaction == 1){
+                                                    $count = 1;
+                                                }
+                                                else {
+                                                    if($quyen->xem  == 1) $count = 1;
+                                                    if($quyen->them == 1) $count = 1;
+                                                    if($quyen->sua  == 1) $count = 1;
+                                                    if($quyen->xoa  == 1) $count = 1;
+                                                }
+                                            }
+                                        ?>
+
+                                        <?php if($count > 0):?>
+                                            <a class="list-group-item cus-collapse-item" href="<?php echo $value->link;?>">
+                                                <span class="glyphicon glyphicon-menu-right icon-menu"></span> <?php echo $value->ten_nhom;?>
+                                            </a>
+                                        <?php endif;?>
+
                                     <?php endforeach;?>
                                 <?php endif;?>
                             </ul>
                         </div>
                     </div>
+                    <?php endif;?>
                 <?php endforeach;?>
             </div>
         </ul>
