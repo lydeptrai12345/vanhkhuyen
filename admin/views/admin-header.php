@@ -46,6 +46,9 @@ if(!isset($_SESSION['uid']))
 
     td a.edit-btn:hover i.material-icons { color: #0f814a; }
     td a.delete-btn:hover i.material-icons { color: #ff360c; }
+    .d-none {
+        display: none;
+    }
 </style>
 
 <div class="container-fluid">

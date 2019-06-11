@@ -33,9 +33,14 @@
         font-size: 15px;
         font-weight: 500;
     }
+    .d-none {
+        display: none;
+    }
 </style>
 
 <?php
+$data_phan_quyen = kiem_tra_quyen_nguoi_dung(2);
+
 // lấy danh sách niên khóa
 $results_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY nam_ket_thuc DESC");
 
@@ -75,7 +80,9 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                     <h5 class="text-info">Danh sách thiết bị</h5>
                     <form action="" method="get" class="row">
                         <div class="col-md-2">
+                            <?php if($data_phan_quyen->them): ?>
                             <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm thiết bị</button>
+                            <?php endif;?>
                         </div>
                         <div class="col-md-6"></div>
                         <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Năm</div>
@@ -219,7 +226,24 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 
 </div>
 <!-- End page content-->
-
+<script>
+    var data_quyen = <?php echo json_encode($data_phan_quyen);?>;
+    var phan_quyen = {};
+    if(data_quyen.allaction == 0) {
+        phan_quyen = {
+            them: data_quyen.them,
+            sua: data_quyen.sua,
+            xoa: data_quyen.xoa
+        }
+    }
+    else{
+        phan_quyen = {
+            them: 1,
+            sua: 1,
+            xoa: 1
+        }
+    }
+</script>
 <script src="../js/quan.ly.thiet.bi.js"></script>
 
 

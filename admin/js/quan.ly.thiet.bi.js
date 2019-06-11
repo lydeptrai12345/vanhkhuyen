@@ -3,7 +3,7 @@ Number.prototype.format = function(n, x) {
     return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
 };
 $(document).ready(function () {
-
+    console.log(phan_quyen);
     $('.date_thiet_bi').datepicker({
         format: "yyyy",
         viewMode: "years",
@@ -75,8 +75,9 @@ $(document).ready(function () {
                             targets: 7,
                             orderable: false,
                             data: null,
-                            defaultContent: '<a class="edit-btn" data-action="1" style="cursor: pointer" title="Cập nhật thiết bị"><i class="material-icons action-icon">edit</i></a> ' +
-                                '<a data-action="2" class="delete-btn" style="cursor: pointer" title="Xóa thiết bị"><i class="material-icons action-icon">delete_outline</i></a>'
+                            visible: ((phan_quyen.sua == 0 && phan_quyen.xoa == 0) ? false : true),
+                            defaultContent: '<a class="edit-btn '+ ((phan_quyen.sua == 0) ? 'd-none' : '') + '" data-action="1" style="cursor: pointer" title="Cập nhật thiết bị"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" class="delete-btn '+ ((phan_quyen.xoa == 0) ? 'd-none' : '') +'" style="cursor: pointer" title="Xóa thiết bị"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
                     ],
                     columns: [
