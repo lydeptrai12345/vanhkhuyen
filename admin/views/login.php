@@ -54,28 +54,35 @@ if(isset($_SESSION['uid']))
 
             if(empty($errors))
             {
-                $query = "SELECT nguoidung.id, ten_nguoi_dung, mat_khau, quyen, ho_ten, nhom_nguoi_dung_id FROM nguoidung 
+                $query = "SELECT nguoidung.id, ten_nguoi_dung, mat_khau, quyen, ho_ten, nhom_nguoi_dung_id, trang_thai FROM nguoidung 
                         INNER JOIN nhanvien ON nguoidung.nhan_vien_id = nhanvien.id
                         WHERE ten_nguoi_dung='{$taikhoan}' AND mat_khau='{$matkhau}'";
                 $result = mysqli_query($dbc, $query);
                 if (mysqli_num_rows($result) == 1) {
-                    list($id, $taikhoan, $matkhau, $quyen, $ho_ten, $nhom_nguoi_dung_id) = mysqli_fetch_array($result, MYSQLI_NUM);
-                    $_SESSION['uid'] = $id;
-                    $_SESSION['username'] = $taikhoan;
-                    $_SESSION['ho_ten'] = $ho_ten;
-                    $_SESSION['matkhau'] = $matkhau;
-                    $_SESSION['quyen'] = $quyen;
-                    $_SESSION['nhom_nguoi_dung_id'] = $nhom_nguoi_dung_id;
+                    list($id, $taikhoan, $matkhau, $quyen, $ho_ten, $nhom_nguoi_dung_id, $trang_thai) = mysqli_fetch_array($result, MYSQLI_NUM);
 
-                    $hethong = new HeThong();
-                    $_SESSION['phan_quyen'] = $hethong->get_phan_quyen_chuc_nang_theo_nhom_nguoi_dung($nhom_nguoi_dung_id);
-                    //clear temp file
-                    $files = glob('../images/temp-image/*');
-                    foreach ($files as $file) {
-                        if (is_file($file))
-                            unlink($file);
+                    if($trang_thai == 0) {
+                        echo "<script>alert('Tài khoản của bạn đã bị khóa!!!');</script>";
+                    }else {
+                        $_SESSION['uid'] = $id;
+                        $_SESSION['username'] = $taikhoan;
+                        $_SESSION['ho_ten'] = $ho_ten;
+                        $_SESSION['matkhau'] = $matkhau;
+                        $_SESSION['quyen'] = $quyen;
+                        $_SESSION['nhom_nguoi_dung_id'] = $nhom_nguoi_dung_id;
+                        $_SESSION['trang_thai'] = $trang_thai;
+
+                        $hethong = new HeThong();
+                        $_SESSION['phan_quyen'] = $hethong->get_phan_quyen_chuc_nang_theo_nhom_nguoi_dung($nhom_nguoi_dung_id);
+                        //clear temp file
+                        $files = glob('../images/temp-image/*');
+                        foreach ($files as $file) {
+                            if (is_file($file))
+                                unlink($file);
+                        }
+
+                        header('Location: ' . ((isset($_GET['redirect']) && strlen(trim($_GET['redirect'])) > 0) ? $_GET['redirect'] : 'index.php'));
                     }
-                    header('Location: ' . ((isset($_GET['redirect']) && strlen(trim($_GET['redirect'])) > 0) ? $_GET['redirect'] : 'index.php'));
                 } else {
                     $message = "<p class='text-danger'>Tài khoản hoặc mật khẩu không đúng</p>";
                 }

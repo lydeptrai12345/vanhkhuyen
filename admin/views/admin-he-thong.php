@@ -241,11 +241,11 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                                     <tbody>
                                                     <tr>
                                                         <td></td>
-                                                        <td class="text-center"><input type="checkbox"></td>
-                                                        <td class="text-center"><input type="checkbox"></td>
-                                                        <td class="text-center"><input type="checkbox"></td>
-                                                        <td class="text-center"><input type="checkbox"></td>
-                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center all"><input type="checkbox"></td>
+                                                        <td class="text-center read"><input type="checkbox"></td>
+                                                        <td class="text-center add"><input type="checkbox"></td>
+                                                        <td class="text-center edit"><input type="checkbox"></td>
+                                                        <td class="text-center del"><input type="checkbox"></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>

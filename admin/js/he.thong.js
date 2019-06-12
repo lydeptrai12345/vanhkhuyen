@@ -87,10 +87,10 @@ $(document).ready(function () {
                                     str += '<tr id="'+ item.id +'" class="chuc-nang">\n' +
                                         '                                                        <td style="padding-left: 10px">- '+ item.ten_nhom +'</td>\n' +
                                         '                                                        <td class="text-center"><input class="all" type="checkbox"></td>\n' +
-                                        '                                                        <td class="text-center"><input class="xem" type="checkbox"></td>\n' +
-                                        '                                                        <td class="text-center"><input class="them" type="checkbox"></td>\n' +
-                                        '                                                        <td class="text-center"><input class="sua" type="checkbox"></td>\n' +
-                                        '                                                        <td class="text-center"><input class="xoa" type="checkbox"></td>\n' +
+                                        '                                                        <td class="text-center"><input class="cb xem" type="checkbox"></td>\n' +
+                                        '                                                        <td class="text-center"><input class="cb them" type="checkbox"></td>\n' +
+                                        '                                                        <td class="text-center"><input class="cb sua" type="checkbox"></td>\n' +
+                                        '                                                        <td class="text-center"><input class="cb xoa" type="checkbox"></td>\n' +
                                         '                                                    </tr>';
                                 })
                             }
@@ -98,10 +98,10 @@ $(document).ready(function () {
                                 str += '<tr id="'+ value.id +'" class="chuc-nang">\n' +
                                     '                                                        <td style="font-weight: bold">'+ value.ten_nhom +'</td>\n' +
                                     '                                                        <td class="text-center"><input class="all" type="checkbox"></td>\n' +
-                                    '                                                        <td class="text-center"><input class="xem" type="checkbox"></td>\n' +
-                                    '                                                        <td class="text-center"><input class="them" type="checkbox"></td>\n' +
-                                    '                                                        <td class="text-center"><input class="sua" type="checkbox"></td>\n' +
-                                    '                                                        <td class="text-center"><input class="xoa" type="checkbox"></td>\n' +
+                                    '                                                        <td class="text-center"><input class="cb xem" type="checkbox"></td>\n' +
+                                    '                                                        <td class="text-center"><input class="cb them" type="checkbox"></td>\n' +
+                                    '                                                        <td class="text-center"><input class="cb sua" type="checkbox"></td>\n' +
+                                    '                                                        <td class="text-center"><input class="cb xoa" type="checkbox"></td>\n' +
                                     '                                                    </tr>';
                             }
                         }
@@ -118,6 +118,21 @@ $(document).ready(function () {
                         parent.find('input').prop('checked', true);
                     }
                     else parent.find('input').prop('checked', false);
+                });
+
+                $('.cb').on('click',function () {
+                    var e = $(this).closest('tr');
+                    // debugger;
+                    var all = e.find('.all');
+                    var xem = e.find('.xem').is(':checked');
+                    var them = e.find('.them').is(':checked');
+                    var sua = e.find('.sua').is(':checked');
+                    var xoa = e.find('.xoa').is(':checked');
+                    if (xem && them && sua && xoa) {
+                        all.prop('checked', true);
+                    }else{
+                        all.prop('checked', false);
+                    }
                 });
             }
         });
@@ -242,7 +257,7 @@ $(document).ready(function () {
                     },
 
                 });
-
+                table_lop.search( '' );
                 // PHẦN THỨ TỰ TABLE
                 table_lop.on( 'order.dt search.dt', function () {
                     table_lop.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
@@ -437,9 +452,9 @@ $(document).ready(function () {
             url: 'admin-he-thong-xu-ly.php',
             data: { 'kich_hoat_nguoi_dung' : 1, id: id, type: type },
             success : function (result){
-                if(type) msg = "đã bị khóa";
+                if(type == 0) msg = "đã bị khóa";
                 else msg = "đã được kích hoạt";
-                console.log(result)
+
                 if(result == "1"){
                     alert('Người dùng vừa chọn ' + msg);
                     location.reload();
@@ -503,18 +518,16 @@ $(document).ready(function () {
             data.push(obj);
         });
         save_phan_quyen(nhom_nguoi_dung_id, data);
-        console.log(data);
     }
 
     function save_phan_quyen(nhom_nguoi_dung_id, data) {
-        if (nhom_nguoi_dung_id <= 0) alert('Vui lòng chọn nhóm người dùng!');
+        if (typeof nhom_nguoi_dung_id == "undefined" || nhom_nguoi_dung_id <= 0) alert('Vui lòng chọn nhóm người dùng!');
         else {
             $.ajax({
                 type: "POST",
                 url: 'admin-he-thong-xu-ly.php',
                 data: {'add_phan_quyen': 1, id: nhom_nguoi_dung_id, data: data},
                 success: function (result) {
-                    console.log(result);
                     if (result == "1") {
                         alert('Phân quyền thành công!');
                     }
