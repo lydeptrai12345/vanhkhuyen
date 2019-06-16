@@ -2,7 +2,10 @@ Number.prototype.format = function(n, x) {
     var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
     return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
 };
+
 $(document).ready(function () {
+
+
     console.log(phan_quyen);
     $('.date_thiet_bi').datepicker({
         format: "yyyy",
@@ -19,6 +22,7 @@ $(document).ready(function () {
 
     $('.ngay_san_xuat').datepicker({
         format: "dd-mm-yyyy",
+        "setDate": new Date(),
         autoclose: true
     });
 
@@ -26,6 +30,20 @@ $(document).ready(function () {
         format: "dd-mm-yyyy",
         autoclose: true
     });
+
+    $('.ngay_san_xuat').change(function () {
+        console.log($(this).val())
+        $('.ngay_het_han').datepicker('setStartDate', $(this).val());
+    });
+
+    $('.ngay_het_han').change(function () {
+        $('.ngay_san_xuat').datepicker('setEndDate', $(this).val());
+    });
+
+    function clear_text() {
+        $('.modal-body').find('input').val('');
+        $('.ngay_san_xuat').datepicker("update", new Date());
+    }
 
     function fill_lai_data() {
         $.ajax({
@@ -232,7 +250,7 @@ $(document).ready(function () {
         var dvt = $('input[name="dvt"]').val();
         var ngay_san_xuat = $('input[name="ngay_san_xuat"]').val();
         var ngay_het_han = $('input[name="ngay_het_han"]').val();
-        var thanh_ly = $('select[name="thanh_ly"]').val();
+        var thanh_ly = $('#se_thanh_ly').val();
         var nien_khoa_id = $('select[name="nien_khoa"]').val();
         var nhan_vien_id = $('#nguoi_dung').val();
         var id = $('#thiet_bi_id').val();
@@ -255,7 +273,6 @@ $(document).ready(function () {
             url: 'admin-quan-ly-thiet-bi-xu-ly.php',
             data: { 'edit_thiet_bi' : 1, data: data },
             success : function (result){
-                console.log(result);
 
                 if(result == "1"){
                     alert('Cập nhật thiết bị thành công!');
@@ -293,8 +310,9 @@ $(document).ready(function () {
 
     get_danh_sach_thiet_bi();
 
-    $('btn-show-add-nien-khoa').click(function () {
-        $('group-thanh-ly').hide();
+    $('#btn-show-add-nien-khoa').click(function () {
+        $('.group-thanh-ly').hide();
+        clear_text();
     });
 
     $('#btn-save').click(function () {

@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="../../library/datepicker/bootstrap-datepicker.css">
 <script src="../../library/datepicker/bootstrap-datepicker.js"></script>
+<!--<script src="../../library/datepicker/jquery.min.js"></script>-->
 
 
 <script src="../../library/collapse/jquery.collapse.js"></script>
@@ -153,7 +154,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                     <div class="form-group col-md-4">
                                         <label for="">Số lượng <span class="dot-required">*</span></label>
                                         <input name="so_luong" type="number" min="1" max="1000" class="form-control text-right" value="0">
-                                        <small id="err_so_luong" class="dot-required d-none-mam-non">Vui lòng nhập số lượng</small>
+                                        <small id="err_so_luong" class="dot-required d-none-mam-non">Số lượng lớn hơn 0</small>
                                     </div>
 
                                     <div class="form-group col-md-12">
@@ -164,19 +165,19 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 
                                     <div class="form-group col-md-6">
                                         <label for="">Ngày sản xuất <span class="dot-required">*</span></label>
-                                        <input name="ngay_san_xuat" type="text" maxlength="255" class="ngay_san_xuat form-control">
+                                        <input id="timeCheckIn" name="ngay_san_xuat" type="text" maxlength="255" class="ngay_san_xuat form-control">
                                         <small id="err_ngay_san_xuat" class="dot-required d-none-mam-non">Vui lòng nhập ngày sản xuất </small>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="">Ngày hết hạn <span class="dot-required">*</span></label>
-                                        <input name="ngay_het_han" type="text" maxlength="255" class="ngay_het_han form-control">
+                                        <input id="timeCheckOut" name="ngay_het_han" type="text" maxlength="255" class="ngay_het_han form-control">
                                         <small id="err_ngay_het_han" class="dot-required d-none-mam-non">Vui lòng nhập ngày hết hạn</small>
                                     </div>
 
                                     <div class="form-group col-md-6 group-thanh-ly" style="display: none">
                                         <label for="">Thanh lý <span class="dot-required">*</span></label>
-                                        <select name="thanh_ly" id="" class="form-control">
+                                        <select name="thanh_ly" id="se_thanh_ly" class="form-control">
                                             <option value="0">Chưa thanh lý</option>
                                             <option value="1">Đã thanh lý</option>
                                         </select>

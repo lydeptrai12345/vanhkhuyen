@@ -34,7 +34,7 @@ class QuanLyThietBi extends xuly {
         if(empty($data_insert->ten_thiet_bi)) return 'ten_thiet_bi';
 
         $so_luong = (float)$data_insert->so_luong;
-        if($so_luong < 0) return 'so_luong';
+        if($so_luong <= 0) return 'so_luong';
 
         if(empty($data_insert->gia_tien)) return 'gia_tien';
         $gia_tien = str_replace(",", "", $data_insert->gia_tien);
@@ -90,7 +90,7 @@ class QuanLyThietBi extends xuly {
         if(empty($data_update->ten_thiet_bi)) return 'ten_thiet_bi';
 
         $so_luong = (float)$data_update->so_luong;
-        if($so_luong < 0) return 'so_luong';
+        if($so_luong <= 0) return 'so_luong';
 
         if(empty($data_update->gia_tien)) return 'gia_tien';
         $gia_tien = str_replace(",", "", $data_update->gia_tien);
