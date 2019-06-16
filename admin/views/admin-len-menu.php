@@ -97,7 +97,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                     <form action="" method="get" class="row">
                         <div class="col-md-2">
                             <?php if($data_phan_quyen->them): ?>
-                                <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm thiết bị</button>
+                                <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm Menu</button>
                             <?php endif; ?>
                         </div>
                         <div class="col-md-6"></div>
