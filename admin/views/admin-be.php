@@ -219,7 +219,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                                     <th>Ngày sinh</th>
                                     <th>Lớp</th>
                                     <th>Địa chỉ</th>
-                                    <th>Trạng thái</th>
+                                    <th >Trạng thái</th>
                                     <th>Thao tác</th>
                                 </tr>
                                 </thead>
@@ -365,23 +365,24 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
         $('#tripRevenue tbody').on( 'click', 'a', function () {
             var data = table.row( $(this).parents('tr') ).data();
             console.log(data);
-            if($(this).data('action') == 1) {
-                $.ajax( {
-                    type: "GET",
-                    url: "admin-be.php?changeStatusId=" + data.be_id,
-                    success: function ( result ) {
-                        $('.table-data').html($(result).find('.table-data').html());
-                    }
-                } );
-            }
-            else
-                window.location.href = "admin-be-sua.php?id=" + data.be_id;
+            window.location.href = "admin-be-sua.php?id=" + data.be_id;
+            // if($(this).data('action') == "1") {
+            //     $.ajax( {
+            //         type: "GET",
+            //         url: "admin-be.php?changeStatusId=" + data.be_id,
+            //         success: function ( result ) {
+            //             $('.table-data').html($(result).find('.table-data').html());
+            //         }
+            //     } );
+            // }
+            // else
+            //     window.location.href = "admin-be-sua.php?id=" + data.be_id;
         } );
 
-        $('#tripRevenue tbody').on( 'click', 'a', function () {
-            var data = table.row( $(this).parents('tr') ).data();
-            console.log(data);
-        } );
+        // $('#tripRevenue tbody').on( 'click', 'a', function () {
+        //     var data = table.row( $(this).parents('tr') ).data();
+        //     console.log(data);
+        // } );
         $('#tripRevenue tbody').on( 'change', 'input.editor-active', function () {
             var data = table.row( $(this).parents('tr') ).data();
             if(confirm('Bạn có chắc chắn muốn cập nhật trạng thái của bé vừa chọn?')) {

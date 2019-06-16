@@ -5,7 +5,7 @@
     $arr_quyen = $_SESSION['phan_quyen'];
 //    $nhom_phan_quyen_id = $_SESSION['nhom_nguoi_dung_id'];
 //    echo "<pre>";
-//    echo print_r($menu);
+//    echo print_r($arr_quyen);
 ?>
 
 <style>
@@ -153,8 +153,15 @@
                         $dem = 0;
                         if($item->nhom_con){
                             foreach ($item->nhom_con as $value) {
-                                $idx = array_search($value->id, array_column($arr_quyen,'id_chuc_nang'));
-                                if($idx >= 0) {
+                                $idx = 0;
+
+                                foreach ($arr_quyen as $k => $q) {
+                                    if($q->id_chuc_nang == $value->id) {
+                                       $idx = $k;
+                                    }
+                                }
+
+                                if($idx > 0) {
                                     $quyen = $arr_quyen[$idx];
                                     if($quyen->allaction == 1){
                                         $dem = 1;
@@ -169,7 +176,13 @@
                             }
                         }
                         else{
-                            $idx = array_search($item->id, array_column($arr_quyen,'id_chuc_nang'));
+                            $idx = -1;
+
+                            foreach ($arr_quyen as $k => $q) {
+                                if($q->id_chuc_nang == $item->id) {
+                                    $idx = $k;
+                                }
+                            }
                             if($idx >= 0) {
                                 $quyen = $arr_quyen[$idx];
                                 if($quyen->allaction == 1){
@@ -204,7 +217,14 @@
 
                                         <?php
                                             $count = 0;
-                                            $idx = array_search($value->id, array_column($arr_quyen,'id_chuc_nang'));
+                                            $idx = -1;
+
+                                            foreach ($arr_quyen as $k => $q) {
+                                                if($q->id_chuc_nang == $value->id) {
+                                                    $idx = $k;
+                                                }
+                                            }
+
                                             if($idx >= 0) {
                                                 $quyen = $arr_quyen[$idx];
                                                 if($quyen->allaction == 1){

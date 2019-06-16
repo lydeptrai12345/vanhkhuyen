@@ -54,14 +54,24 @@ class HeThong extends xuly {
                 }
             }
 
-            foreach ($arr_nhom_con as $item) {
-                $idx = array_search($item->nhom_cha, array_column($arr, 'id'));
-                if($idx >= 0){
-                    $arr[$idx]->nhom_con[] = $item;
+            $da = [];
+            foreach ($arr as $item) {
+                foreach ($arr_nhom_con as $value) {
+                    if($item->id == $value->nhom_cha) {
+                        $item->nhom_con[] = $value;
+                    }
                 }
+                $da[] = $item;
             }
 
-            $result = $arr;
+//            foreach ($arr_nhom_con as $item) {
+//                $idx = array_search($item->nhom_cha, array_column($arr, 'id'));
+//                if($idx >= 0){
+//                    $arr[$idx]->nhom_con[] = $item;
+//                }
+//            }
+
+            $result = $da;
         }
         else{
             $result = $this->from('nhom_chuc_nang')
@@ -218,7 +228,17 @@ class HeThong extends xuly {
                 $arr_nhom_con[] = $value;
             }
         }
-
+//        return $arr;
+        $da = [];
+        foreach ($arr as $item) {
+            foreach ($arr_nhom_con as $value) {
+                if($item->id == $value->nhom_cha) {
+                    $item->nhom_con[] = $value;
+                }
+            }
+            $da[] = $item;
+        }
+        return $da;
         foreach ($arr_nhom_con as $item) {
             $idx = array_search($item->nhom_cha, array_column($arr, 'id'));
             if($idx >= 0){

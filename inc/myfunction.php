@@ -105,7 +105,13 @@ function lay_thong_tin_lop_hoc_cua_be ($dbc, $be_id) {
 function kiem_tra_quyen_nguoi_dung($chuc_nang_id) {
     $arr_quyen = $_SESSION['phan_quyen'];
     if(is_array($arr_quyen) && count($arr_quyen) > 0) {
-        $idx = array_search($chuc_nang_id, array_column($arr_quyen, 'id_chuc_nang'));
+        $idx = -1;
+
+        foreach ($arr_quyen as $k => $q) {
+            if($q->id_chuc_nang == $chuc_nang_id) {
+                $idx = $k;
+            }
+        }
         if($idx >= 0) {
             return $arr_quyen[$idx];
         }
