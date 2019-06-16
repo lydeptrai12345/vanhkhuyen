@@ -197,7 +197,7 @@
                                 ?>
                                 <script>
                                     alert( "Thêm thành công" );
-                                    window.location = "admin-be.php?btnSeach=&searchKey="+"<?php echo $name?>";
+                                    window.location = "admin-be.php";
                                 </script>
                                 <?php
                             } else {
@@ -355,7 +355,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Chiều cao(cm) <span class="dot-required">*</span></label>
-                                        <input class="form-control" name="txtChieuCao" placeholder="Vui lòng nhập chiều cao của bé" value="<?php if(isset($_POST['txtChieuCao'])) {echo $_POST['txtChieuCao'];} ?>">
+                                        <input type="number" class="form-control" name="txtChieuCao" placeholder="Vui lòng nhập chiều cao của bé" value="<?php if(isset($_POST['txtChieuCao'])) {echo $_POST['txtChieuCao'];} ?>">
                                         <?php
                                         if(isset($errors) && in_array('txtChieuCao',$errors))
                                         {
@@ -365,7 +365,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Cân nặng(kg) <span class="dot-required">*</span></label>
-                                        <input class="form-control" name="txtCanNang" placeholder="Vui lòng nhập cân nặng của bé" value="<?php if(isset($_POST['txtCanNang'])) {echo $_POST['txtCanNang'];} ?>">
+                                        <input type="number" class="form-control" name="txtCanNang" placeholder="Vui lòng nhập cân nặng của bé" value="<?php if(isset($_POST['txtCanNang'])) {echo $_POST['txtCanNang'];} ?>">
                                         <?php
                                         if(isset($errors) && in_array('txtCanNang',$errors))
                                         {
