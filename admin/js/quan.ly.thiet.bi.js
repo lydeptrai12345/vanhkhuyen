@@ -49,11 +49,11 @@ $(document).ready(function () {
                 // console.log(data);
                 table_lop = $('#tripRevenue').DataTable({
                     language: {
-                        "lengthMenu": "Hiển thị _MENU_ nguyên liệu/ trang",
+                        "lengthMenu": "Hiển thị _MENU_ thiết bị/ trang",
                         "zeroRecords": "Không tìm thấy kết quả",
                         "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
                         "infoEmpty": "Không có dữ liệu",
-                        "infoFiltered": "(Được lọc từ _MAX_ nguyên liệu)",
+                        "infoFiltered": "(Được lọc từ _MAX_ thiết bị)",
                         "search": "Tìm kiếm",
                         "paginate": {
                             "previous": "Trở về",
@@ -187,12 +187,12 @@ $(document).ready(function () {
             data: { 'add_thiet_bi' : 1, data: data },
             success : function (result){
                 if(result == "1"){
-                    alert('Thêm nguyên liệu thành công!');
+                    alert('Thêm thiết bị thành công!');
                     fill_lai_data();
                     $('#myModal').modal('hide');
                 }
                 else if( result == "-1"){
-                    alert('Lỗi không thêm được nguyên liệu');
+                    alert('Lỗi không thêm được thiết bị');
                 }
                 else{
                     $('#err_' + result).show();
@@ -258,12 +258,12 @@ $(document).ready(function () {
                 console.log(result);
 
                 if(result == "1"){
-                    alert('Cập nhật nguyên liệu thành công!');
+                    alert('Cập nhật thiết bị thành công!');
                     fill_lai_data();
                     $('#myModal').modal('hide');
                 }
                 else if( result == "-1"){
-                    alert('Lỗi không cập nhật được nguyên liệu');
+                    alert('Lỗi không cập nhật được thiết bị');
                 }
                 else{
                     $('#err_' + result).show();
@@ -273,18 +273,18 @@ $(document).ready(function () {
     }
 
     function delete_thiet_bi(id) {
-        if(confirm('Bạn có chắc chắn muốn xóa nguyên liệu vừa chọn?')) {
+        if(confirm('Bạn có chắc chắn muốn xóa thiết bị vừa chọn?')) {
             $.ajax({
                 type: "POST",
                 url: 'admin-quan-ly-thiet-bi-xu-ly.php',
                 data: { 'delete_thiet_bi' : 1, id: id },
                 success : function (result){
                     if(result == "1"){
-                        alert('Nguyên liệu vừa chọn đã được xóa!');
+                        alert('Thiết bị vừa chọn đã được xóa!');
                         fill_lai_data();
                     }
                     else {
-                        alert('Lỗi không xóa được nguyên liệu vừa chọn!!!');
+                        alert('Lỗi không xóa được thiết bị vừa chọn!!!');
                     }
                 }
             });
