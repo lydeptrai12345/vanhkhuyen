@@ -135,14 +135,14 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 
                                     <div class="form-group col-md-8">
                                         <label for="">Giá tiền <span class="dot-required">*</span></label>
-                                        <input name="gia_tien" type="text" class="form-control text-right">
+                                        <input name="gia_tien" type="text" class="form-control text-right" data-type="currency">
                                         <small id="err_gia_tien" class="dot-required d-none-mam-non">Vui lòng nhập gia tiền</small>
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label for="">Số lượng <span class="dot-required">*</span></label>
                                         <input name="so_luong" type="number" class="form-control text-right" value="0">
-                                        <small id="err_so_luong" class="dot-required d-none-mam-non">Vui lòng nhập số lượng</small>
+                                        <small id="err_so_luong" class="dot-required d-none-mam-non">Số lượng lớn hơn 0</small>
                                     </div>
 
                                     <div class="form-group col-md-12">
