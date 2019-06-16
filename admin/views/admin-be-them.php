@@ -179,6 +179,9 @@
                             $trangthai = 1;
                             $fileName = randomDigitsLame(4).'_'.randomDigitsLame(14).substr($temp_file,strrpos($temp_file, '.', -0));
                             copy($temp_file,"../images/hinhbe/".$fileName);
+
+                            $ngaysinh = date_format(date_create($ngaysinh), 'Y-m-d');
+
                             $query_tt = "INSERT INTO be(ten, ngaysinh, gioitinh, chieucao, cannang, diachi, tinhtrangsuckhoe, benhbamsinh ,hinhbe , tencha, sdtcha, tenme, sdtme, trangthai) VALUES('{$name}','{$ngaysinh}',{$gioitinh},'{$chieucao}','{$cannang}','{$diachi}','{$tinhtrangsuckhoe}','{$benh}','{$fileName}','{$tencha}','{$sdtCha}','{$tenme}','{$sdtMe}',$trangthai) ";
                             $results_tt = mysqli_query( $dbc, $query_tt );
                             if ( mysqli_affected_rows( $dbc ) == 1 ) {

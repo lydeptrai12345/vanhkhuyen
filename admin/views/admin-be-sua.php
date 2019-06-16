@@ -171,6 +171,8 @@ else {
                             $gioitinh = $_POST[ 'slGioiTinh' ];
                             $trangthai = 1;
 
+                            $ngaysinh = date_format(date_create($ngaysinh), 'Y-m-d');
+
                             $query_tt = "UPDATE be 
                                         SET ten='{$name}', ngaysinh='{$ngaysinh}', gioitinh='{$gioitinh}', chieucao='{$chieucao}', cannang='{$cannang}', diachi='{$diachi}', tinhtrangsuckhoe='{$tinhtrangsuckhoe}', 
                                         benhbamsinh='{$benh}', tencha='{$tencha}', sdtcha='{$sdtCha}', tenme='{$tenme}', sdtme='{$sdtMe}', trangthai = 1";
