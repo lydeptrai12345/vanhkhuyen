@@ -141,13 +141,13 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                     <div class="form-group col-md-12">
                                         <label for="">Tên thiết bị <span class="dot-required">*</span></label>
                                         <input name="ten_thiet_bi" maxlength="255" type="text" class="form-control">
-                                        <small id="err_ten_thiet_bi" class="dot-required d-none-mam-non">Vui lòng nhập tên nguyên liệu</small>
+                                        <small id="err_ten_thiet_bi" class="dot-required d-none-mam-non">Vui lòng nhập tên thiết bị</small>
                                     </div>
 
                                     <div class="form-group col-md-8">
                                         <label for="">Giá tiền <span class="dot-required">*</span></label>
                                         <input name="gia_tien" type="text" class="form-control text-right" data-type="currency">
-                                        <small id="err_gia_tien" class="dot-required d-none-mam-non">Vui lòng nhập gia tiền</small>
+                                        <small id="err_gia_tien" class="dot-required d-none-mam-non">Vui lòng nhập giá tiền</small>
                                     </div>
 
                                     <div class="form-group col-md-4">
@@ -165,13 +165,13 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                     <div class="form-group col-md-6">
                                         <label for="">Ngày sản xuất <span class="dot-required">*</span></label>
                                         <input name="ngay_san_xuat" type="text" maxlength="255" class="ngay_san_xuat form-control">
-                                        <small id="err_ngay_san_xuat" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                        <small id="err_ngay_san_xuat" class="dot-required d-none-mam-non">Vui lòng nhập ngày sản xuất </small>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="">Ngày hết hạn <span class="dot-required">*</span></label>
                                         <input name="ngay_het_han" type="text" maxlength="255" class="ngay_het_han form-control">
-                                        <small id="err_ngay_het_han" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                        <small id="err_ngay_het_han" class="dot-required d-none-mam-non">Vui lòng nhập ngày hết hạn</small>
                                     </div>
 
                                     <div class="form-group col-md-6 group-thanh-ly" style="display: none">
@@ -180,7 +180,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                             <option value="0">Chưa thanh lý</option>
                                             <option value="1">Đã thanh lý</option>
                                         </select>
-                                        <small id="err_thanh_ly" class="dot-required d-none-mam-non">Vui lòng nhập đơn vị tính</small>
+                                        <small id="err_thanh_ly" class="dot-required d-none-mam-non">Vui lòng nhập thanh lý</small>
                                     </div>
 
                                     <div class="form-group col-md-6">
