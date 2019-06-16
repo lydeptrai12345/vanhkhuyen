@@ -156,7 +156,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         <select name="" id="nhan_vien_id" class="form-control">
                                             <option value=""></option>
                                         </select>
-                                        <small id="err_nhan_vien_id" class="dot-required d-none-mam-non">Vui lòng chọn người dùng</small>
+                                        <small id="err_nhan_vien_id" class="dot-required d-none-mam-non">Vui lòng chọn nhân viên</small>
                                     </div>
 
                                     <div id="nhan_vien_edit" class="form-group col-md-12" style="display: none">
@@ -164,7 +164,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         <select name="" id="nhan_vien_id_edit" class="form-control">
                                             <option value=""></option>
                                         </select>
-                                        <small id="err_nhan_vien_id" class="dot-required d-none-mam-non">Vui lòng chọn người dùng</small>
+                                        <small id="err_nhan_vien_id" class="dot-required d-none-mam-non">Vui lòng chọn nhân viên</small>
                                     </div>
 
                                     <div class="form-group col-md-12">

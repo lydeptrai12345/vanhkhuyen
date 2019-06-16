@@ -204,7 +204,7 @@ $(document).ready(function () {
                 console.log(data)
                 table_lop = $('#tripRevenue').DataTable({
                     language: {
-                        "lengthMenu": "Hiển thị _MENU_ nguyên liệu/ trang",
+                        "lengthMenu": "Hiển thị _MENU_ người dùng/ trang",
                         "zeroRecords": "Không tìm thấy kết quả",
                         "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
                         "infoEmpty": "Không có dữ liệu",
@@ -230,8 +230,8 @@ $(document).ready(function () {
                             targets: 4,
                             orderable: false,
                             data: null,
-                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật nguyên liệu"><i class="material-icons action-icon">edit</i></a> ' +
-                                '<a data-action="2" style="cursor: pointer" title="Xóa nguyên liệu"><i class="material-icons action-icon">delete_outline</i></a>'
+                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật người dùng"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" style="cursor: pointer" title="Xóa người dùng"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
                     ],
                     columns: [
@@ -467,18 +467,18 @@ $(document).ready(function () {
     }
 
     function delete_nguyen_lieu(id) {
-        if(confirm('Bạn có chắc chắn muốn xóa nguyên liệu vừa chọn?')) {
+        if(confirm('Bạn có chắc chắn muốn xóa người dùng vừa chọn?')) {
             $.ajax({
                 type: "POST",
                 url: 'admin-nguyen-lieu-xu-ly.php',
                 data: { 'delete_nguyen_lieu' : 1, id: id },
                 success : function (result){
                     if(result == "1"){
-                        alert('Nguyên liệu vừa chọn đã được xóa!');
+                        alert('Người dùng vừa chọn đã được xóa!');
                         location.reload();
                     }
                     else {
-                        alert('Lỗi không xóa được nguyên liệu vừa chọn!!!');
+                        alert('Lỗi không xóa được người dùng vừa chọn!!!');
                     }
                 }
             });
