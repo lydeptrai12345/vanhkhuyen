@@ -3,11 +3,13 @@
 <?php include "../../inc/myfunction.php";?>
 <!-- End header-->
 <!--copy cai nay-->
+
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
-<!-- end copy cai nay-->
-<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">-->
-<!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
+
+<link rel="stylesheet" href="../../library/datepicker/bootstrap-datepicker.css">
+<script src="../../library/datepicker/bootstrap-datepicker.js"></script>
+
 
 <?php
     $data_phan_quyen = kiem_tra_quyen_nguoi_dung(12);
@@ -207,7 +209,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
 				</style>
 				<div class="card-body p-0 text-center" style="margin: 30px 0">
 
-<!--                    copy cai nay -->
+<!-- copy cai nay -->
                     <div class="row" style="padding: 5px 20px;">
                         <div class="col-md-12">
                             <table id="tripRevenue" class="table display w-100 hover cell-border compact stripe">

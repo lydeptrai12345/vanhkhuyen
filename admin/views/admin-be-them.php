@@ -3,6 +3,10 @@
 <?php include "../../inc/myfunction.php";?>
 <!-- End header-->
 
+<link rel="stylesheet" href="../../library/datepicker/bootstrap-datepicker.css">
+<script src="../../library/datepicker/bootstrap-datepicker.js"></script>
+<script src="../../library/datepicker/moment.js"></script>
+
 <script>
 	$( document ).ready( function () {
 		$( '#heading5 .panel-heading' ).attr( 'aria-expanded', 'true' );
@@ -333,7 +337,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Ngày sinh <span class="dot-required">*</span></label>
-                                        <input type="date" class="form-control" name="txtNgaySinh" placeholder="Vui lòng nhập ngày sinh" value="<?php if(isset($_POST['txtNgaySinh'])) {echo $_POST['txtNgaySinh'];} ?>">
+
+                                        <input type="text" class="form-control txtNgaySinh" name="txtNgaySinh" placeholder="Vui lòng nhập ngày sinh" value="<?php if(isset($_POST['txtNgaySinh'])) {echo $_POST['txtNgaySinh'];} ?>">
                                         <?php
                                             if(isset($errors) && in_array('txtNgaySinh',$errors))
                                             {
@@ -537,7 +542,7 @@
                         <!-- =========================== END THÔNG TIN LOP HOC ===========================-->
 
                         <div class="row card-footer" style="padding-left: 0">
-                            <button name="btn-submit-be" type="submit" class="btn btn-info" style="margin-right: 5px;">Thêm Thông Tin</button>
+                            <button id="submit-be" name="btn-submit-be" type="submit" class="btn btn-info" style="margin-right: 5px;">Thêm Thông Tin</button>
                             <a href="admin-be.php" class="btn btn-warning formatCurrency">Quay về</a>
                         </div>
                     </form>
@@ -559,6 +564,149 @@
     $('select[name="nien_khoa"]').change(function () {
         get_data_lop_hoc_theo_nien_khoa($(this).val());
     });
+
+    function check_tuoi(){
+        var id_khoi = $('select[name="lop_hoc"]').children('option:selected').data('khoi');
+        var id_lop = $('select[name="lop_hoc"]').children('option:selected').val();
+
+        var d = $('.txtNgaySinh').val().split('-');
+        var new_date = d[2] + '-' + d[1] + '-' + d[0];
+
+        var fromDate = new Date(new_date);
+        var toDate = new Date();
+
+        var date = Date.getFormattedDateDiff(fromDate, toDate);
+
+        var arr_compare_date = date.split(',');
+
+        if(Number(arr_compare_date[1]) < 6 && Number(arr_compare_date[0] < 1)) {
+            alert('Bé không được nhỏ hơn 6 tháng thuổi');
+            $('#submit-be').attr('disabled', 'disabled');
+        }
+        else{
+            if(arr_compare_date[0] < 3) {
+                if(id_khoi != 4){
+                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                    $('#submit-be').attr('disabled', 'disabled');
+                    return;
+                }
+            }
+            else if(arr_compare_date[0] == 3){
+                if(id_khoi != 1){
+                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
+                    $('#submit-be').attr('disabled', 'disabled');
+                    return;
+                }
+            }
+            else if(arr_compare_date[0] == 4){
+                if(id_khoi != 2){
+                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                    $('#submit-be').attr('disabled', 'disabled');
+                    return;
+                }
+            }
+            else if(arr_compare_date[0] == 5){
+                if(id_khoi != 3){
+                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
+                    $('#submit-be').attr('disabled', 'disabled');
+                    return;
+                }
+            }
+            $('#submit-be').removeAttr('disabled');
+
+        }
+    }
+
+
+    Date.getFormattedDateDiff = function(date1, date2) {
+        var b = moment(date1),
+            a = moment(date2),
+            intervals = ['years','months','weeks','days'],
+            out = [];
+
+        for(var i=0; i<intervals.length; i++){
+            var diff = a.diff(b, intervals[i]);
+            b.add(diff, intervals[i]);
+            // out.push(diff + '-' + intervals[i]);
+            out.push(diff);
+        }
+        return out.join(',');
+    };
+
+    function calculateInterval() {
+        var start = new Date(document.getElementById('start').value),
+            end   = new Date(document.getElementById('end').value);
+
+        document.getElementById('out1').innerHTML
+            = 'Time elapsed between "' + start.toISOString().split('T')[0]
+            + '" and "' + end.toISOString().split('T')[0] + '":<br/>'
+            + Date.getFormattedDateDiff(start, end);
+    }
+
+    function GetTodayDate() {
+        var tdate = new Date();
+        var dd = tdate.getDate(); //yields day
+        var MM = Number(tdate.getMonth()) + 1; //yields month
+        if(MM < 10) MM = '0'+MM;
+        var yyyy = tdate.getFullYear(); //yields year
+        var currentDate = dd + "-" + MM + "-" + yyyy;
+
+        return currentDate;
+    }
+
+    $('.txtNgaySinh').datepicker({
+        format: 'dd-mm-yyyy'
+    });
+    
+    $('.txtNgaySinh').change(function () {
+        var d = $(this).val().split('-');
+        var new_date = d[2] + '-' + d[1] + '-' + d[0];
+
+        var fromDate = new Date(new_date);
+        var toDate = new Date();
+
+        var date = Date.getFormattedDateDiff(fromDate, toDate);
+        var arr_compare_date = date.split(',');
+
+        var id_khoi = $('select[name="lop_hoc"]').children('option:selected').data('khoi');
+        var id_lop = $('select[name="lop_hoc"]').children('option:selected').val();
+
+        if(Number(arr_compare_date[1]) < 6 && Number(arr_compare_date[0] < 1)) {
+            alert('Bé không được nhỏ hơn 6 tháng thuổi');
+            $('#submit-be').attr('disabled', 'disabled');
+        }
+        else{
+            if(arr_compare_date[0] < 3) {
+                if(id_khoi != 4){
+                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                    $('#submit-be').attr('disabled', 'disabled');
+                    return;
+                }
+            }
+            else if(arr_compare_date[0] == 3){
+                if(id_khoi != 1){
+                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
+                    $('#submit-be').attr('disabled', 'disabled');
+                    return;
+                }
+            }
+            else if(arr_compare_date[0] == 4){
+                if(id_khoi != 2){
+                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                    $('#submit-be').attr('disabled', 'disabled');
+                    return;
+                }
+            }
+            else if(arr_compare_date[0] == 5){
+                if(id_khoi != 3){
+                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
+                    $('#submit-be').attr('disabled', 'disabled');
+                    return;
+                }
+            }
+            $('#submit-be').removeAttr('disabled');
+        }
+    })
 
     function get_data_lop_hoc_theo_nien_khoa(id_nien_khoa) {
         $.ajax({
@@ -609,7 +757,7 @@
                     $('.btn-thanh-toan').click();
                     $('input[name="hoc_phi"]').val('Lớp học này chưa có học phí');
                 }
-                console.log(data);
+                // console.log(data);
             }
         });
     }
@@ -617,6 +765,7 @@
     $(document).ready(function () {
         $('select[name="lop_hoc"]').change(function () {
             get_hoc_phi_theo_khoi();
+            check_tuoi();
         });
 
         var nien_khoa = $('select[name="nien_khoa"]').val();
