@@ -13,6 +13,12 @@ if(isset($_GET['get_all_menu'])) {
     echo json_encode($menu->get_danh_sach_menu_theo_nam($date));
 }
 
+if(isset($_GET['check_menu_thang'])) {
+    $date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
+    $menu = new LenMenu();
+    echo json_encode($menu->check_menu_thang($date));
+}
+
 if(isset($_POST['add_menu'])) {
     $data = ($_POST['data']);
     $date = "01-" . $_POST['date'];
@@ -128,7 +134,7 @@ if(isset($_POST['edit_menu'])) {
             $arr[] = $item_menu_trua;
             $arr[] = $item_menu_toi;
         }
-//        echo json_encode($arr);
+//        echo json_encode($arr);return;
         $menu = new LenMenu();
         echo json_encode($menu->update_menu($arr));
     }

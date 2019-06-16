@@ -23,6 +23,23 @@ class LenMenu extends xuly {
         return $this->where('id = 1')->update_multiple('menu', $data_update);
     }
 
+    public function check_menu_thang($date)
+    {
+        $date = date($date);
+        $month = date("m", strtotime($date)); // lấy tháng
+
+        $year = date("Y", strtotime($date)); // lây năm
+        $date_start = $year . '-' . $month . '-01'; // nối chuỗi
+
+        $data_menu = $this->from('menu')
+            ->select('*')
+            ->where("DATE(ngay_tao) >= DATE('". $date_start ."')")
+            ->where("DATE(ngay_tao) <= LAST_DAY('". $date_start ."')")
+            ->order_by('ngay_tao DESC')
+            ->get();
+        return $data_menu;
+    }
+
     public function get_data_menu_theo_thang($date)
     {
         $date = date($date);
@@ -179,5 +196,10 @@ class LenMenu extends xuly {
             ->order_by('ngay_tao DESC')
             ->get();
         return $data_menu;
+    }
+
+    public function check_menu_da_len($date)
+    {
+
     }
 }

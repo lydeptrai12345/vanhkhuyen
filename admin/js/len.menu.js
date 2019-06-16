@@ -38,22 +38,66 @@ $(document).ready(function () {
         autoclose: true
     });
 
-    $('.btn-toggle-table').click(function () {
-        $('#week-' + $(this).data('table')).toggle('slow', function () {
-            $('.btn-' + $(this).data('table')).text('aaa');
-            // $(this).attr('data-btntext','aaaaa');
-            // $('.btn-' + $(this).data('table')).text('Hiển thị')
-            // console.log($(this).data('text', 'aaaa'));
-        });
-        $('.btn-' + $(this).data('table')).text('aaa');
-        $('#aaaa').data('text','aaa');
-        // $('.btn-' + $(this).data('table')).html()
-        //
-        if($(this).text() == 'Ẩn bớt') {
-            $(this).html('Hiển thị');
+    // $('.btn-toggle-table').click(function () {
+    //     $('#week-' + $(this).data('table')).toggle('slow', function () {
+    //         $('.btn-' + $(this).data('table')).text('aaa');
+    //         // $(this).attr('data-btntext','aaaaa');
+    //         // $('.btn-' + $(this).data('table')).text('Hiển thị')
+    //         // console.log($(this).data('text', 'aaaa'));
+    //     });
+    //     $('.btn-' + $(this).data('table')).text('aaa');
+    //     $('#aaaa').data('text','aaa');
+    //     // $('.btn-' + $(this).data('table')).html()
+    //     //
+    //     if($(this).text() == 'Ẩn bớt') {
+    //         $(this).html('Hiển thị');
+    //     }
+    //     else {
+    //         $(this).html('Ẩn bớt');
+    //     }
+    // });
+
+    $('#an-1').click(function () {
+        var e = $(this);
+        $('#week-' + e.data('table')).toggle('slow');
+        if(e.text() == 'Ẩn bớt') {
+            e.text('Hiển thị');
         }
-        else {
-            $(this).html('Ẩn bớt');
+        else{
+            e.text('Ẩn bớt');
+        }
+    });
+
+    $('#an-2').click(function () {
+        var e = $(this);
+        $('#week-' + e.data('table')).toggle('slow');
+        if(e.text() == 'Ẩn bớt') {
+            e.text('Hiển thị');
+        }
+        else{
+            e.text('Ẩn bớt');
+        }
+    });
+
+    $('#an-3').click(function () {
+        var e = $(this);
+        $('#week-' + e.data('table')).toggle('slow');
+        if(e.text() == 'Ẩn bớt') {
+            e.text('Hiển thị');
+        }
+        else{
+            e.text('Ẩn bớt');
+        }
+    });
+
+    $('#an-4').click(function () {
+        var e = $(this);
+        $('#week-' + e.data('table')).toggle('slow');
+        if(e.text() == 'Ẩn bớt') {
+            e.text('Hiển thị');
+        }
+        else{
+            e.text('Ẩn bớt');
         }
     });
 
@@ -162,21 +206,49 @@ $(document).ready(function () {
 
     function insert_menu(data_month) {
         var data = { 'data': (data_month), 'add_menu' : 1, 'date': $('.date_menu_create_update').val() };
+        var check = [];
+        $.ajax({
+            type: "GET",
+            url: 'admin-len-menu-xuly.php?check_menu_thang=1&date=01-' + $('.date_menu_create_update').val(),
+            success : function (da){
+                check = JSON.parse(da);
+                if(check.length > 0) {
+                    alert('Menu đã được lên trong tháng này');
+                }
+                else{
+                    add_menu_menu(data);
+                }
+            }
+        });
+    }
+
+    function add_menu_menu(data) {
         $.ajax({
             type: "POST",
             url: 'admin-len-menu-xuly.php',
             data: data,
             dataType: 'jsonp',
             success : function (result){
-                console.log(result);
-                if(result == "1") {
-                    alert('Thêm menu thành công');
-                }
-                else{
-                    alert('Lỗi không thêm được');
-                }
+                alert('Vo day roi')
+            }
+        }).done(function() {
+            alert( "Lên menu thành công" );
+        });
+
+        alert( "Lên menu thành công" );
+    }
+
+    function check_menu_theo_thang(date) {
+        var data = [];
+        $.ajax({
+            type: "GET",
+            url: 'admin-len-menu-xuly.php?get_menu_theo_thang=1&date=' + date,
+            success : function (result){
+                data = JSON.parse(result);
+                return data;
             }
         });
+        // return data;
     }
 
     function get_menu_theo_thang(date) {
@@ -185,7 +257,6 @@ $(document).ready(function () {
             url: 'admin-len-menu-xuly.php?get_menu_theo_thang=1&date=' + date,
             success : function (result){
                 var data = JSON.parse(result);
-                console.log(data);
                 render_data_table(data);
             }
         });

@@ -215,7 +215,7 @@ class xuly {
             $arr_query[] = $query_update;
         }
 
-        return $arr_query;
+//        return $arr_query;
 
         mysqli_query($this->dbc, $arr_query);
 

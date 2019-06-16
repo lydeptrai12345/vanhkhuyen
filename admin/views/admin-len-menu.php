@@ -155,9 +155,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         <div class="row">
                                             <div class="col-md-6"><label for="">Tuần 1</label></div>
                                             <div class="col-md-6">
-                                                <button id="aaaa" data-table="1" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-1" style="float: right;">
-                                                    Ẩn bớt
-                                                </button>
+                                                <button id="an-1" data-table="1" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-1" style="float: right;">Ẩn bớt</button>
                                             </div>
                                         </div>
                                         <table class="table table-bordered table-menu week-1" id="week-1">
@@ -177,9 +175,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         <div class="row">
                                             <div class="col-md-6"><label for="">Tuần 2</label></div>
                                             <div class="col-md-6">
-                                                <button id="aaaa" data-table="1" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-2" style="float: right;">
-                                                    Ẩn bớt
-                                                </button>
+                                                <button id="an-2" data-table="2" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-2" style="float: right;">Ẩn bớt</button>
                                             </div>
                                         </div>
                                         <table class="table table-bordered table-menu week-1" id="week-2">
@@ -196,13 +192,13 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         </table>
                                     </div>
 
+                                    <div class="col-md-12"><hr></div>
+
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-6"><label for="">Tuần 3</label></div>
                                             <div class="col-md-6">
-                                                <button id="aaaa" data-table="1" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-3" style="float: right;">
-                                                    Ẩn bớt
-                                                </button>
+                                                <button id="an-3" data-table="3" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-3" style="float: right;">Ẩn bớt</button>
                                             </div>
                                         </div>
                                         <table class="table table-bordered table-menu week-3" id="week-3">
@@ -223,9 +219,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                         <div class="row">
                                             <div class="col-md-6"><label for="">Tuần 4</label></div>
                                             <div class="col-md-6">
-                                                <button id="aaaa" data-table="1" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-4" style="float: right;">
-                                                    Ẩn bớt
-                                                </button>
+                                                <button id="an-4" data-table="4" data-text="0" class="btn btn-sm btn-success btn-toggle-table btn-4" style="float: right;">Ẩn bớt</button>
                                             </div>
                                         </div>
                                         <table class="table table-bordered table-menu week-1" id="week-4">
