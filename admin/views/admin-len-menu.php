@@ -101,9 +101,9 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                             <?php endif; ?>
                         </div>
                         <div class="col-md-6"></div>
-                        <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Năm</div>
+                        <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px"></div>
                         <div class="col-md-2">
-                            <input class="date_menu form-control" type="text">
+                            <input class="date_menu form-control" type="text" style="display: none">
                         </div>
                     </form>
                 </div>
@@ -238,7 +238,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button id="btn-save" type="button" class="btn btn-success"><i class="glyphicon glyphicon-floppy-saved"></i> Lưu lại</button>
+                                <button id="btn-save" data-typebtn="1" type="button" class="btn btn-success"><i class="glyphicon glyphicon-floppy-saved"></i> Lưu lại</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
                         </div>
