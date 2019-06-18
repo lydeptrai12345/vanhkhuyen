@@ -98,3 +98,9 @@ if (isset($_POST['add_phan_quyen'])) {
     else echo -1;
 }
 
+if(isset($_POST['add_nhom_nguoi_dung'])) {
+    $nhom = new HeThong();
+    $data = ['ten_nhom' => $_POST['ten_nhom']];
+    echo $nhom->add_nhom_nguoi_dung($data);
+}
+

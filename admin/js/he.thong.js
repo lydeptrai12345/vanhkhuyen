@@ -9,6 +9,14 @@ function click_list(){
 $(document).ready(function () {
     $( "#tabs" ).tabs({ active: '#tabs-1' });
 
+    $('#show-modal-nhom-nguoi-dung').click(function () {
+        $('#modal-nhom-nguoi-dung').toggle(true);
+    });
+
+    $('#btn-dong-nhom').click(function () {
+        $('#modal-nhom-nguoi-dung').toggle(false);
+    });
+
 
     $('.date_nguyen_lieu').datepicker({
         format: "mm-yyyy",
@@ -140,6 +148,7 @@ $(document).ready(function () {
 
     get_danh_sach_chuc_nang_cha();
     var table_nhom = {};
+
     function get_danh_sach_nhom_nguoi_dung() {
         $.ajax({
             type: "GET",
@@ -165,12 +174,10 @@ $(document).ready(function () {
                     columnDefs: [
                         { targets: 0,orderable: false, data: null },
                         { targets: 1, className: 'dt-body-left' },
-                        { targets: 2, orderable: false, className: 'dt-body-center' },
                     ],
                     columns: [
                         { width: "30px" },
                         { data: 'ten_nhom', width: '180px'},
-                        { data: 'ghi_chu' },
                     ],
                     order: [[ 1, 'asc' ]]
 
@@ -201,7 +208,8 @@ $(document).ready(function () {
             url: 'admin-he-thong-xu-ly.php?danh_sach_tai_khoan=1',
             success: function (result) {
                 var data = JSON.parse(result);
-                console.log(data)
+                $('.dataTables_filter label input').val('');
+                $('input[type=search]').val('');
                 table_lop = $('#tripRevenue').DataTable({
                     language: {
                         "lengthMenu": "Hiển thị _MENU_ người dùng/ trang",
@@ -215,6 +223,7 @@ $(document).ready(function () {
                             "next": "Tiếp"
                         }
                     },
+                    searching: false,
                     data: data,
                     columnDefs: [
                         { targets: 0,orderable: false, data: null },
@@ -257,7 +266,7 @@ $(document).ready(function () {
                     },
 
                 });
-                table_lop.search( '' );
+
                 // PHẦN THỨ TỰ TABLE
                 table_lop.on( 'order.dt search.dt', function () {
                     table_lop.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
@@ -385,7 +394,7 @@ $(document).ready(function () {
             url: 'admin-he-thong-xu-ly.php?get_nguoi_dung_id=1&id=' + id,
             success : function (result){
                 var data = JSON.parse(result)[0];
-                console.log(data);
+
                 $('input[name="ten_nguoi_dung"]').val(data.ten_nguoi_dung);
                 $('input[name="mat_khau"]').val('');
                 $('#nhan_vien_id_edit').val(data.nhan_vien_id);
@@ -558,6 +567,44 @@ $(document).ready(function () {
                         }
                     }
                 });
+            }
+        });
+    }
+    
+    function add_nhom_nguoi_dung() {
+        $.ajax({
+            type: "POST",
+            url: 'admin-he-thong-xu-ly.php',
+            data: { 'add_nhom_nguoi_dung' : 1, 'ten_nhom': $('input[name="ten_nhom_nguoi_dung"]').val() },
+            success : function (result){
+                if(result == "1"){
+                    alert('Thêm nhóm người dùng thành công!!!');
+                    fill_lai_data_nhom_nguoi_dung();
+                }
+                else {
+                    alert('Lỗi không thêm được nhóm người dùng!!!');
+                }
+            }
+        });
+    }
+
+    $('#btn-add-nhom-nguoi-dung').click(function () {
+        add_nhom_nguoi_dung();
+    });
+
+    function fill_lai_data_nhom_nguoi_dung () {
+        $.ajax({
+            type: "GET",
+            url: 'admin-he-thong-xu-ly.php?danh_sach_nhom_nguoi_dung=1',
+            success : function (result){
+                $('input[name="ten_nhom_nguoi_dung"]').val('');
+                $('#modal-nhom-nguoi-dung').toggle(false);
+                var data = JSON.parse(result);
+                var tb = $('#nhom-nguoi').dataTable();
+                tb.dataTable().fnClearTable();
+                if(data.length > 0) tb.dataTable().fnAddData(data);
+
+                get_danh_sach_chuc_nang_cha();
             }
         });
     }

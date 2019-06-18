@@ -3,8 +3,8 @@
 <?php include "../../inc/myfunction.php";?>
 
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
+<!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
 
 <link rel="stylesheet" href="../styles/admin/datatables.min.css">
 <script src="../js/datatables.min.js"></script>
@@ -91,7 +91,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                             <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#myModal" class="btn btn-success">Thêm tài khoản</button>
                         </div>
                         <div class="col-md-2">
-                            <button id="btn-show-add-nien-khoa" type="button" name="them" data-toggle="modal" data-target="#modal_nhom_nguoi_dung" class="btn btn-primary">Nhóm người dùng</button>
+                            <button id="" type="button" name="them" data-toggle="modal" data-target="#modal_nhom_nguoi_dung" class="btn btn-primary">Nhóm người dùng</button>
                         </div>
                         <div class="col-md-4"></div>
                         <div class="col-md-2 text-right" style="padding-right: 0;padding-top: 7px">Niên khóa</div>
@@ -138,7 +138,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label for="">Tên tài khoản</label>
-                                        <input name="ten_nguoi_dung" type="text" class="form-control form-control-sm">
+                                        <input name="ten_nguoi_dung" type="text" class="form-control form-control-sm" autocomplete="off">
                                         <small id="err_ten_nguoi_dung" class="dot-required d-none-mam-non">Vui lòng nhập tên tài khoản</small>
                                         <small id="err_trung_ten_nguoi_dung" class="dot-required d-none-mam-non">Tên tài khoản này đã tồn tại</small>
                                         <small id="err_max_ten_nguoi_dung" class="dot-required d-none-mam-non">Tên tài khoản phải có độ dài từ 6-12 ký tự</small>
@@ -146,7 +146,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
 
                                     <div class="form-group col-md-12">
                                         <label for="">Mật khẩu</label>
-                                        <input name="mat_khau" type="password" class="form-control form-control-sm">
+                                        <input name="mat_khau" type="password" autocomplete="new-password" class="form-control form-control-sm">
                                         <small id="err_mat_khau" class="dot-required d-none-mam-non">Vui lòng nhập mật khẩu</small>
                                         <small id="err_max_mat_khau" class="dot-required d-none-mam-non">Mật khẩu phải có độ dài từ 6-12 ký tự</small>
                                     </div>
@@ -203,12 +203,27 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                     </ul>
                                     <div id="tabs-1">
                                         <div class="row">
+                                            <div class="col-md-12" style="margin-bottom: 10px; padding-left: 0">
+                                                <button id="show-modal-nhom-nguoi-dung" class="btn btn-success" style="margin-bottom: 10px">Thêm nhóm người dùng</button>
+                                                <div id="modal-nhom-nguoi-dung" class="col-md-12" style="border: 1px solid #ddd;display: none">
+                                                    <div class="form-group" style="margin-top: 10px;">
+                                                        <label for="">Tên nhóm người dùng</label>
+                                                        <input name="ten_nhom_nguoi_dung" type="text" class="form-control form-control-sm">
+                                                        <small id="err_ten_nhom" class="dot-required d-none-mam-non">Vui lòng nhập tên nhóm</small>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button id="btn-add-nhom-nguoi-dung" class="btn btn-success"><i class="glyphicon glyphicon-floppy-saved"></i> Lưu lại</button>
+                                                        <button id="btn-dong-nhom" type="button" class="btn btn-default">Đóng</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <table id="nhom-nguoi" class="table display w-100 hover cell-border compact stripe">
                                                 <thead>
                                                     <tr>
                                                         <th>TT</th>
                                                         <th>Tên nhóm</th>
-                                                        <th>Ghi chú</th>
+<!--                                                        <th>Ghi chú</th>-->
                                                     </tr>
                                                 </thead>
                                                 <tbody>
