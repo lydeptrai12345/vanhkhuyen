@@ -20,12 +20,11 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
         }
 
         .a-chua-img {
-            height: 135px;
-            display: inline-block;
-            width: 100%;
+            height: 150px;
+            width: 100px;
         }
 
-        .a-chua-img img { width: 90%; height: 100%; }
+        .a-chua-img img { width: 170px; height: 130px; }
     </style>
     <section class="junior__classes__area section-lg-padding--top section-padding--md--bottom bg--white" style="padding-top: 40px">
         <div class="container">
@@ -78,7 +77,7 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
                     $query = "SELECT * FROM be 
                               INNER JOIN lophoc_be ON be.id = lophoc_be.be_id 
                               INNER JOIN lophoc_chitiet ON lophoc_be.lop_hoc_chi_tiet_id = lophoc_chitiet.id 
-                              WHERE ten LIKE '%{$keyword}%' ";
+                              WHERE ten LIKE '{$keyword}' and trangthai=1";
 
                     // kiểm tra có tra cứu theo niên khóa - nối chuỗi truy vẫn
                     if(isset($_GET['nien_khoa']) && (int)$_GET['nien_khoa'] > 0) {
@@ -101,7 +100,7 @@ $data_nien_khoa = mysqli_query($dbc,"SELECT * FROM nienkhoa ORDER BY id DESC");
                         {
                             ?>
                             <div class="row ket-qua">
-                                <div class = col-3>
+                                <div class = col-2>
                                     <a href="" class="a-chua-img">
                                         <img src="admin/images/hinhbe/<?php echo $item['hinhbe'] ?>" alt="class images">
                                     </a>

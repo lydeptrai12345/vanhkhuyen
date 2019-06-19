@@ -59,9 +59,9 @@ if(isset($_GET['id']) && filter_var($_GET['id'],FILTER_VALIDATE_INT,array('min_r
 		{
 		?>
 		<div class="row">
-			<div class = col-3>
+			<div class = col-2>
 				<a href="bai-viet-chi-tiet.php?id=<?php echo $item_tt['id'] ?>">
-					<img style ="width : 100%>" src="admin/images/tintuc/<?php echo $item_tt['hinh'] ?>" alt="class images">
+					<img style ="width: 160px; height: 130px;" src="admin/images/tintuc/<?php echo $item_tt['hinh'] ?>" alt="class images">
 				</a>
 			</div>
 			<div class=" col-8">

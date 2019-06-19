@@ -221,9 +221,10 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                             <table id="nhom-nguoi" class="table display w-100 hover cell-border compact stripe">
                                                 <thead>
                                                     <tr>
-                                                        <th>TT</th>
+                                                        <th>STT</th>
                                                         <th>Tên nhóm</th>
-<!--                                                        <th>Ghi chú</th>-->
+                                                        <th>Thao tác</th>
+<!--                                                        -->
                                                     </tr>
                                                 </thead>
                                                 <tbody>

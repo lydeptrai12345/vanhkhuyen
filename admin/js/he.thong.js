@@ -174,10 +174,18 @@ $(document).ready(function () {
                     columnDefs: [
                         { targets: 0,orderable: false, data: null },
                         { targets: 1, className: 'dt-body-left' },
+                        {
+                            targets: 2,
+                            orderable: false,
+                            data: null,
+                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật người dùng"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" style="cursor: pointer" title="Xóa người dùng"><i class="material-icons action-icon">delete_outline</i></a>'
+                        }
                     ],
                     columns: [
                         { width: "30px" },
-                        { data: 'ten_nhom', width: '180px'},
+                        { data: 'ten_nhom' },
+                        { "width": "60px" },
                     ],
                     order: [[ 1, 'asc' ]]
 
@@ -294,7 +302,7 @@ $(document).ready(function () {
                     if(data.trang_thai == 1) msg = 'khóa';
                     else msg = 'kích hoạt';
 
-                    if(confirm('Bạn có chắc chắn muốn '+ msg +' vừa chọn?')) {
+                    if(confirm('Bạn có chắc chắn muốn '+ msg +' người dùng vừa chọn?')) {
                         if(data.trang_thai == 1) type = 0;
                         else type = 1;
                         kich_hoat_nguoi_dung(data.id, type)
