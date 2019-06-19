@@ -177,6 +177,7 @@
                             $benh = $_POST['txtBenhBS'];
                             $gioitinh = $_POST[ 'slGioiTinh' ];
                             $trangthai = 1;
+
                             $fileName = randomDigitsLame(4).'_'.randomDigitsLame(14).substr($temp_file,strrpos($temp_file, '.', -0));
                             copy($temp_file,"../images/hinhbe/".$fileName);
 
@@ -200,7 +201,7 @@
                                 ?>
                                 <script>
                                     alert( "Thêm thành công" );
-                                    window.location = "admin-be.php";
+                                    <?php //header('location: admin-be.php') ?>
                                 </script>
                                 <?php
                             } else {
