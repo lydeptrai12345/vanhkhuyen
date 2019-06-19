@@ -348,6 +348,8 @@
                                                 echo "<p class='text-danger'>Bạn chưa nhập ngày sinh bé</p>";
                                             }
                                         ?>
+                                        <p class='error_tuoi err_7tuoi text-danger' style="display: none">Bé không được lớn hơn 7 tuổi</p>
+                                        <p class='error_tuoi err_6thang text-danger' style="display: none">Bé không được nhỏ hơn 6 tháng tuổi</p>
                                     </div>
                                     <div class="form-group">
                                         <label>Giới tính  <span class="dot-required">*</span></label>
@@ -517,6 +519,8 @@
                                             echo "<p class='text-danger'>Bạn chưa chọn niên khóa</p>";
                                         }
                                         ?>
+
+                                        <p class='error_lop text-danger' style="display: none"></p>
                                     </div>
                                 </div>
 
@@ -583,38 +587,52 @@
         var arr_compare_date = date.split(',');
 
         if(Number(arr_compare_date[1]) < 6 && Number(arr_compare_date[0] < 1)) {
-            alert('Bé không được nhỏ hơn 6 tháng thuổi');
+            alert('Bé không được nhỏ hơn 6 tháng tuổi');
+            $('#submit-be').attr('disabled', 'disabled');
+        }
+        else if(Number(arr_compare_date[0]) > 7) {
+            alert('Bé không được lớn hơn 7 tuổi');
             $('#submit-be').attr('disabled', 'disabled');
         }
         else{
             if(arr_compare_date[0] < 3) {
                 if(id_khoi != 4){
-                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                    // alert('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                    $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                    $('.error_lop').show();
                     $('#submit-be').attr('disabled', 'disabled');
                     return;
                 }
             }
             else if(arr_compare_date[0] == 3){
                 if(id_khoi != 1){
-                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
+                    // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
+                    $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
+                    $('.error_lop').show();
                     $('#submit-be').attr('disabled', 'disabled');
                     return;
                 }
             }
             else if(arr_compare_date[0] == 4){
                 if(id_khoi != 2){
-                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                    // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                    $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                    $('.error_lop').show();
                     $('#submit-be').attr('disabled', 'disabled');
                     return;
                 }
             }
             else if(arr_compare_date[0] == 5){
                 if(id_khoi != 3){
-                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
+                    // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
+                    $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
+                    $('.error_lop').show();
                     $('#submit-be').attr('disabled', 'disabled');
                     return;
                 }
             }
+
+            $('.error_lop').hide();
             $('#submit-be').removeAttr('disabled');
 
         }
@@ -658,7 +676,8 @@
     }
 
     $('.txtNgaySinh').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true
     });
     
     $('.txtNgaySinh').change(function () {
@@ -675,38 +694,56 @@
         var id_lop = $('select[name="lop_hoc"]').children('option:selected').val();
 
         if(Number(arr_compare_date[1]) < 6 && Number(arr_compare_date[0] < 1)) {
-            alert('Bé không được nhỏ hơn 6 tháng thuổi');
+            // alert('Bé không được nhỏ hơn 6 tháng tuổi');
+            $('.error_tuoi').hide();
+            $('.err_6thang').show();
+            $('#submit-be').attr('disabled', 'disabled');
+        }
+        else if(Number(arr_compare_date[0]) > 7) {
+            // alert('Bé không được lớn hơn 7 tuổi');
+            $('.error_tuoi').show();
+            $('.err_6thang').hide();
             $('#submit-be').attr('disabled', 'disabled');
         }
         else{
+            $('.error_tuoi').hide();
             if(arr_compare_date[0] < 3) {
                 if(id_khoi != 4){
-                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                    // alert('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                    $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                    $('.error_lop').show();
                     $('#submit-be').attr('disabled', 'disabled');
                     return;
                 }
             }
             else if(arr_compare_date[0] == 3){
                 if(id_khoi != 1){
-                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
+                    // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
+                    $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
+                    $('.error_lop').show();
                     $('#submit-be').attr('disabled', 'disabled');
                     return;
                 }
             }
             else if(arr_compare_date[0] == 4){
                 if(id_khoi != 2){
-                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                    // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                    $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                    $('.error_lop').show();
                     $('#submit-be').attr('disabled', 'disabled');
                     return;
                 }
             }
             else if(arr_compare_date[0] == 5){
                 if(id_khoi != 3){
-                    alert('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
+                    // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
+                    $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
+                    $('.error_lop').show();
                     $('#submit-be').attr('disabled', 'disabled');
                     return;
                 }
             }
+            $('.error_lop').hide();
             $('#submit-be').removeAttr('disabled');
         }
     })
