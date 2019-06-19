@@ -8,6 +8,13 @@
 <script src="../js/datatables.min.js"></script>
 <script src="../js/printThis.js"></script>
 
+<style>
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+</style>
+
 <?php
 $data_phan_quyen = kiem_tra_quyen_nguoi_dung(14);
 
@@ -258,42 +265,42 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
     <div class="" style="display: none">
         <div id="print-hoc-phi" class="col-md-12">
             <div class="row">
-                <div class="col-md-6">
-                    <h6 class="m-b-5 p-b-5">TRƯỜNG MẦM NON VÀNH KHUYÊN</h6>
-                    <p class="m-b-5 p-b-5">Địa chỉ: 256</p>
-                    <p class="m-b-5 p-b-5">Website: sfsfsdffsdf</p>
+                <div class="col-md-6" style="padding-top: 30px; padding-left: 50px">
+                    <h6 class="m-b-5 p-b-5" style="font-size: 25px !important;">TRƯỜNG MẦM NON VÀNH KHUYÊN</h6>
+                    <p class="m-b-5 p-b-5 p-l-50" style="font-size: 17px !important;">Địa chỉ: 256</p>
+                    <p class="m-b-5 p-b-5 p-l-50" style="font-size: 17px !important;">Website: sfsfsdffsdf</p>
                 </div>
                 <div class="col-md-12" style="margin-top: 20px">
-                    <h5 class="text-center">BIÊN LAI THU HỌC PHÍ</h5>
+                    <h5 class="text-center" style="padding-left: 50px;font-size: 40px">BIÊN LAI THU HỌC PHÍ</h5>
                 </div>
-                <div class="col-md-12" style="margin-top: 20px">
-                    <p class="content-hoa-don"><b>Họ tên người nộp: </b> <span class="nguoi-nop">Trần Thị Tủn</span></p>
-                    <p class="content-hoa-don"><b>Lớp: </b> <span class="ten-lop">Lớp mầm 1</span></p>
-                    <p class="content-hoa-don"><b>Địa chỉ: </b><span class="dia-chi"></span></p>
-                    <p class="content-hoa-don"><b>Lý do thu: </b>Đóng tiền học phí</p>
-                    <p class="content-hoa-don"><b>Số tiền: </b><span class="so-tien">10,000,000</span> VNĐ</p>
-                    <p class="content-hoa-don hinh-thuc"><b>Hình thức: </b>Thanh toán bằng tiền mặt</p>
+                <div class="col-md-12" style="margin-top: 20px; padding-left: 50px;" >
+                    <p class="content-hoa-don p-l-50"><b style="font-size: 20px;">Họ tên người nộp: </b> <span style="font-size: 20px;" class="nguoi-nop">Trần Thị Tủn</span></p>
+                    <p class="content-hoa-don p-l-50"><b style="font-size: 20px;">Lớp: </b> <span style="font-size: 20px;" class="ten-lop">Lớp mầm 1</span></p>
+                    <p class="content-hoa-don p-l-50"><b style="font-size: 20px;">Địa chỉ: </b><span style="font-size: 20px;" class="dia-chi"></span></p>
+                    <p class="content-hoa-don p-l-50"><b style="font-size: 20px;">Lý do thu: </b style="font-size: 20px;"><span style="font-size: 20px;">Đóng tiền học phí</span></p>
+                    <p class="content-hoa-don p-l-50"><b style="font-size: 20px;">Số tiền: </b><span style="font-size: 20px;" class="so-tien">10,000,000 VNĐ</span></p>
+                    <p class="content-hoa-don p-l-50 hinh-thuc" style="padding-left: 50px"><b style="font-size: 20px;">Hình thức: </b style="font-size: 20px;"><span style="font-size: 20px;">Thanh toán bằng tiền mặt</span></p>
                 </div>
             </div>
 
-            <ul class="footer-hoa-don">
+            <ul class="footer-hoa-don" style="padding-left: 30px; padding-right: 30px; font-size: 20px;">
                 <li>
-                    <p class="content-hoa-don ngay-thanh-toan">Ngày 13 tháng 5 năm 2019</p>
-                    <p class="content-hoa-don "><b>Người thu tiền</b></p>
-                    <p class="content-hoa-don ">(Ký và ghi rõ họ tên)</p>
+                    <p class="content-hoa-don ngay-thanh-toan" style="font-size: 20px !important;">Ngày 13 tháng 5 năm 2019</p>
+                    <p class="content-hoa-don "><b style="font-size: 20px !important;">Người thu tiền</b></p>
+                    <p class="content-hoa-don" style="font-size: 20px !important;">(Ký và ghi rõ họ tên)</p>
                     <br><br><br>
                     <p class="content-hoa-don" style="margin-top: 50px">
-                        <b> <span class="nguoi-thu-tien">Trần Thị Thu</span></b>
+                        <b> <span style="font-size: 20px;" class="nguoi-thu-tien">Trần Thị Thu</span></b>
                     </p>
                 </li>
                 <li>
                     <div class="" style="float: right">
-                        <p class="content-hoa-don text-center ngay-thanh-toan">Ngày 13 tháng 5 năm 2019</p>
-                        <p class="content-hoa-don text-center"><b>Người nộp</b></p>
-                        <p class="content-hoa-don text-center">(Ký và ghi rõ họ tên)</p>
+                        <p style="font-size: 20px !important;" class="content-hoa-don text-center ngay-thanh-toan">Ngày 13 tháng 5 năm 2019</p>
+                        <p style="font-size: 20px !important;" class="content-hoa-don text-center"><b style="font-size: 20px;">Người nộp</b></p>
+                        <p style="font-size: 20px !important;" class="content-hoa-don text-center">(Ký và ghi rõ họ tên)</p>
                         <br><br><br>
                         <p class="content-hoa-don text-center" style="padding-top: 50px">
-                            <b><span class="nguoi-nop">Trần Thị Tủn</span></b>
+                            <b><span style="font-size: 20px;" class="nguoi-nop">Trần Thị Tủn</span></b>
                         </p>
                     </div>
                 </li>
@@ -594,8 +601,15 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                     rowCallback: function ( row, data ) {
                         if(data.trangthai == 1){
                             $('input.editor-active', row).attr('disabled', 'disabled');
+                            $('a.print-old', row).removeClass('disabled');
+                            $('a.print-old', row).attr('title', 'In hóa đơn');
+                        }
+                        else {
+                            $('a.print-old', row).addClass('disabled');
+                            $('a.print-old', row).attr('title', 'Thanh toán để in hóa đơn');
                         }
                         $('input.editor-active', row).prop( 'checked', data.trangthai == 1 );
+
                     }
                 });
 
@@ -642,7 +656,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
         //print-old
         $('#table-hoc-phi tbody').on( 'click', 'a.print-old', function () {
             var da = table_hp.row( $(this).parents('tr') ).data();
-            console.log('aaaaa')
+
             print_hoa_don(1, da);
         });
         
@@ -665,7 +679,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
             $('#print-hoc-phi').printThis({
                 importCSS: false,
-                loadCSS: [ "../mamnonvanhkhuyen/css/bootstrap.min.css", "../mamnonvanhkhuyen/admin/css/print-hoa-don.css"],
+                loadCSS: [ "../css/bootstrap.min.css", "../admin/css/print-hoa-don.css"],
             });
         }
         

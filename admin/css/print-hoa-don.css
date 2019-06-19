@@ -7,15 +7,24 @@
         font-size: 12px !important;
     }
 
+    h5 { font-size: 30px !important; }
+
     .m-b-5 { margin-bottom: -5px !important; }
 
     .p-b-5 { padding-bottom: -5px !important; }
+
+    .p-l-50 { padding-left: 50px !important; }
 
     b { padding: 0 }
 
     p.content-hoa-don {
         margin: 0 !important;
         padding: 0!important;
+        font-size: 25px !important;
+    }
+
+    p.content-hoa-don span {
+        font-size: 25px;
     }
 
     .footer-hoa-don {
