@@ -175,14 +175,14 @@
                             targets: 2,
                             orderable: false,
                             data: null,visible: ((phan_quyen.sua == 0 && phan_quyen.xoa == 0) ? false : true),
-                            defaultContent: '<a class="edit-btn '+ ((phan_quyen.sua == 0) ? 'd-none' : '') + '" data-action="1" style="cursor: pointer" title="Cập nhật thiết bị"><i class="material-icons action-icon">edit</i></a> ' +
-                                '<a data-action="2" class="delete-btn '+ ((phan_quyen.xoa == 0) ? 'd-none' : '') +'" style="cursor: pointer" title="Xóa thiết bị"><i class="material-icons action-icon">delete_outline</i></a>'
+                            defaultContent: '<a class="edit-btn '+ ((phan_quyen.sua == 0) ? 'd-none' : '') + '" data-action="1" style="cursor: pointer" title="Cập nhật phòng ban"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" class="delete-btn '+ ((phan_quyen.xoa == 0) ? 'd-none' : '') +'" style="cursor: pointer" title="Xóa phòng ban"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
                     ],
                     columns: [
                         { width: "30px" },
                         { data: 'ten_phong_ban' },
-                        { "width": "60px" },
+                        { width: "60px" },
                     ],
                     order: [[ 1, 'asc' ]]
                 });

@@ -173,22 +173,21 @@ $(document).ready(function () {
                     data: data,
                     columnDefs: [
                         { targets: 0,orderable: false, data: null },
-                        { targets: 1, className: 'dt-body-left' },
+                        { targets: 1, className: 'dt-body-center' },
                         {
                             targets: 2,
                             orderable: false,
                             data: null,
-                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật người dùng"><i class="material-icons action-icon">edit</i></a> ' +
-                                '<a data-action="2" style="cursor: pointer" title="Xóa người dùng"><i class="material-icons action-icon">delete_outline</i></a>'
+                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật nhóm người dùng"><i class="material-icons action-icon">edit</i></a> ' +
+                                '<a data-action="2" style="cursor: pointer" title="Xóa nhóm người dùng"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
                     ],
                     columns: [
                         { width: "30px" },
                         { data: 'ten_nhom' },
-                        { "width": "60px" },
+                        { width: "60px" },
                     ],
                     order: [[ 1, 'asc' ]]
-
                 });
 
                 // PHẦN THỨ TỰ TABLE

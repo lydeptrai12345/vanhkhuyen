@@ -224,12 +224,8 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                                         <th>STT</th>
                                                         <th>Tên nhóm</th>
                                                         <th>Thao tác</th>
-<!--                                                        -->
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-
-                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -247,7 +243,7 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                                     <thead>
                                                     <tr>
                                                         <th>Tên chức năng</th>
-                                                        <th class="text-center" style="width: 85px">All</th>
+                                                        <th class="text-center" style="width: 85px">Tất cả</th>
                                                         <th class="text-center" style="width: 85px">Xem</th>
                                                         <th class="text-center" style="width: 85px">Thêm</th>
                                                         <th class="text-center" style="width: 85px">Sửa</th>
