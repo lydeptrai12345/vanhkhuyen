@@ -125,7 +125,7 @@ $(document).ready(function () {
                 console.log(data);
                 table_lop = $('#tripRevenue').DataTable({
                     language: {
-                        "lengthMenu": "Hiển thị _MENU_ nguyên liệu/ trang",
+                        "lengthMenu": "Hiển thị _MENU_ menu/ trang",
                         "zeroRecords": "Không tìm thấy kết quả",
                         "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
                         "infoEmpty": "Không có dữ liệu",
