@@ -202,4 +202,15 @@ class LenMenu extends xuly {
     {
 
     }
+
+    public function delete_menu_thang($date)
+    {
+        $date = date($date);
+        $month = date("m", strtotime($date)); // lấy tháng
+
+        $year = date("Y", strtotime($date)); // lây năm
+        $date_start = $year . '-' . $month . '-01'; // nối chuỗi
+
+        return $this->where('ngay_tao = ' . '"'. $date_start .'"')->delete('menu');
+    }
 }

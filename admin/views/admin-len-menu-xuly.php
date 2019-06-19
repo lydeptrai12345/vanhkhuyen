@@ -139,3 +139,9 @@ if(isset($_POST['edit_menu'])) {
         echo json_encode($menu->update_menu($arr));
     }
 }
+
+if(isset($_POST['delete_menu'])) {
+    $date = isset($_POST['date']) ? $_POST['date'] : date('Y-m-d');
+    $menu = new LenMenu();
+    echo json_encode($menu->delete_menu_thang($date));
+}

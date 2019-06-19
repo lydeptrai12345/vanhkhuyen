@@ -182,29 +182,32 @@ $(document).ready(function () {
 
                 // PHẦN THỨ TỰ TABLE
                 table_lop.on( 'order.dt search.dt', function () {
-                    table_lop.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                        cell.innerHTML = i+1;
-                    } );
+                    table_lop.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
                 } ).draw();
 
 
                 table_lop.on( 'click', 'a', function () {
                     var data = table_lop.row( $(this).parents('tr') ).data();
                     if($(this).data('action') == 1) {
+                        console.log('ffffff');
                         $('#myModal').modal('show');
                         get_menu_theo_thang(data.ngay_tao);
-                        $('#menu_id').val(data.id);
+                        $('#menu_id').val(data.ngay_tao);
                         $('.date_menu_create_update').val(data.ngay_tao.slice(3)); // gán ngày tạo vào datepicker
+
+                        $('#btn-save').attr('data-typebtn', '2');
                     }
                     else if ($(this).data('action') == 2){
-                        delete_menu(data.id);
+                        delete_menu(data.ngay_tao);
                     }
                 });
             }
         });
     }
 
-    function insert_menu(data_month) {
+    function insert_menu(data_month, type=null) {
         var data = { 'data': (data_month), 'add_menu' : 1, 'date': $('.date_menu_create_update').val() };
         var check = [];
         $.ajax({
@@ -213,7 +216,8 @@ $(document).ready(function () {
             success : function (da){
                 check = JSON.parse(da);
                 if(check.length > 0) {
-                    alert('Menu đã được lên trong tháng này');
+                    if(type == null) type = 'Menu đã được lên trong tháng này'
+                    alert(type);
                 }
                 else{
                     add_menu_menu(data);
@@ -236,6 +240,7 @@ $(document).ready(function () {
         });
 
         alert( "Lên menu thành công" );
+        location.reload();
     }
 
     function check_menu_theo_thang(date) {
@@ -262,38 +267,31 @@ $(document).ready(function () {
         });
     }
 
-    function update_menu(data_month) {
-        var data = { 'data': (data_month), 'edit_menu' : 1, 'date': $('.date_menu_create_update').val() };
+    function update_menu() {
         $.ajax({
             type: "POST",
             url: 'admin-len-menu-xuly.php',
-            data: data,
-            dataType: 'jsonp',
+            data: { 'delete_menu' : 1, date: $('#menu_id').val() },
             success : function (result){
-                console.log(result);
-                if(result == 1) {
-                    alert('Cập nhật menu thành công');
-                }
-                else{
-                    alert('Lỗi không thêm được');
-                }
+                var data = get_info_menu();
+                insert_menu(data, 'Cập nhật menu thành công');
             }
         });
     }
 
     function delete_menu(id) {
-        if(confirm('Bạn có chắc chắn muốn xóa nguyên liệu vừa chọn?')) {
+        if(confirm('Bạn có chắc chắn muốn xóa menu vừa chọn?')) {
             $.ajax({
                 type: "POST",
-                url: 'admin-quan-ly-thiet-bi-xu-ly.php',
-                data: { 'delete_menu' : 1, id: id },
+                url: 'admin-len-menu-xuly.php',
+                data: { 'delete_menu' : 1, date: id },
                 success : function (result){
                     if(result == "1"){
-                        alert('Nguyên liệu vừa chọn đã được xóa!');
-                        fill_lai_data();
+                        alert('Menu vừa chọn đã được xóa!');
+                        location.reload();
                     }
                     else {
-                        alert('Lỗi không xóa được nguyên liệu vừa chọn!!!');
+                        alert('Lỗi không xóa được menu vừa chọn!!!');
                     }
                 }
             });
@@ -302,14 +300,14 @@ $(document).ready(function () {
 
     get_danh_sach_menu();
 
-    $('btn-show-add-nien-khoa').click(function () {
-        $('#menu_id').val(0);
-        $('group-thanh-ly').hide();
+    $('#btn-show-add-nien-khoa').click(function () {
+        $('textarea').val('');
+        $('#btn-save').attr('data-typebtn', 1);
     });
 
     $('#btn-save').click(async function () {
         var data = await get_info_menu();
-        if($('#menu_id').val() > 0)
+        if($(this).data('typebtn') == '2')
             update_menu(data);
         else
             insert_menu(data);
