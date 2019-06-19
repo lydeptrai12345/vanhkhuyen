@@ -341,7 +341,7 @@
                                     <div class="form-group">
                                         <label>Ngày sinh <span class="dot-required">*</span></label>
 
-                                        <input type="text" class="form-control txtNgaySinh" name="txtNgaySinh" placeholder="Vui lòng nhập ngày sinh" value="<?php if(isset($_POST['txtNgaySinh'])) {echo $_POST['txtNgaySinh'];} ?>">
+                                        <input type="text" autocomplete="off" class="form-control txtNgaySinh" name="txtNgaySinh" placeholder="Vui lòng nhập ngày sinh" value="<?php if(isset($_POST['txtNgaySinh'])) {echo $_POST['txtNgaySinh'];} ?>">
                                         <?php
                                             if(isset($errors) && in_array('txtNgaySinh',$errors))
                                             {
@@ -591,7 +591,9 @@
             $('#submit-be').attr('disabled', 'disabled');
         }
         else if(Number(arr_compare_date[0]) > 7) {
-            alert('Bé không được lớn hơn 7 tuổi');
+            // alert('Bé không được lớn hơn 7 tuổi');
+            $('.error_tuoi').show();
+            $('.err_6thang').hide();
             $('#submit-be').attr('disabled', 'disabled');
         }
         else{

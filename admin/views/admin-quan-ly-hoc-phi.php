@@ -268,7 +268,6 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
                 <div class="col-md-6" style="padding-top: 30px; padding-left: 50px">
                     <h6 class="m-b-5 p-b-5" style="font-size: 25px !important;">TRƯỜNG MẦM NON VÀNH KHUYÊN</h6>
                     <p class="m-b-5 p-b-5 p-l-50" style="font-size: 17px !important;">Địa chỉ: 256</p>
-                    <p class="m-b-5 p-b-5 p-l-50" style="font-size: 17px !important;">Website: sfsfsdffsdf</p>
                 </div>
                 <div class="col-md-12" style="margin-top: 20px">
                     <h5 class="text-center" style="padding-left: 50px;font-size: 40px">BIÊN LAI THU HỌC PHÍ</h5>
@@ -625,7 +624,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
         $('#table-hoc-phi tbody').on( 'change', 'input.editor-active', function () {
             var da = table_hp.row( $(this).parents('tr') ).data();
             // console.log(da)
-            if(confirm('Bạn có chắc chắn muốn cập nhật trạng thái của nhân viên vừa chọn?')) {
+            if(confirm('Bạn có chắc chắn muốn cập nhật trạng thái học phí?')) {
                 $.ajax( {
                     type: "POST",
                     url: "admin-quan-ly-hoc-phi-xu-ly.php",

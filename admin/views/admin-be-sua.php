@@ -267,6 +267,8 @@ else {
                                             echo "<p class='text-danger'>Bạn chưa nhập ngày sinh bé</p>";
                                         }
                                         ?>
+                                        <p class='error_tuoi err_7tuoi text-danger' style="display: none">Bé không được lớn hơn 7 tuổi</p>
+                                        <p class='error_tuoi err_6thang text-danger' style="display: none">Bé không được nhỏ hơn 6 tháng tuổi</p>
                                     </div>
                                     <div class="form-group">
                                         <label>Giới tính  <span class="dot-required">*</span></label>
@@ -435,6 +437,7 @@ else {
                                             echo "<p class='text-danger'>Bạn chưa chọn niên khóa</p>";
                                         }
                                         ?>
+                                        <p class='error_lop text-danger' style="display: none"></p>
                                     </div>
                                 </div>
 
@@ -500,7 +503,7 @@ else {
                         <!-- =========================== END THÔNG TIN LOP HOC ===========================-->
 
                         <div class="row card-footer" style="padding-left: 0">
-                            <button name="btn-submit-be" type="submit" class="btn btn-info" style="margin-right: 5px;">Cập nhật Thông Tin</button>
+                            <button id="btn-submit-be" name="btn-submit-be" type="submit" class="btn btn-info" style="margin-right: 5px;">Cập nhật Thông Tin</button>
                             <a href="admin-be.php" class="btn btn-warning">Quay về</a>
                         </div>
                     </form>
@@ -545,38 +548,53 @@ else {
 
             if(Number(arr_compare_date[1]) < 6 && Number(arr_compare_date[0] < 1)) {
                 alert('Bé không được nhỏ hơn 6 tháng thuổi');
-                $('#submit-be').attr('disabled', 'disabled');
+                $('#btn-submit-be').attr('disabled', 'disabled');
+            }
+            else if(Number(arr_compare_date[0]) > 7) {
+                // alert('Bé không được lớn hơn 7 tuổi');
+                $('.error_tuoi').show();
+                $('.err_6thang').hide();
+                $('#btn-submit-be').attr('disabled', 'disabled');
             }
             else{
                 if(arr_compare_date[0] < 3) {
                     if(id_khoi != 4){
-                        alert('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
-                        $('#submit-be').attr('disabled', 'disabled');
+                        // alert('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                        $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                        $('.error_lop').show();
+                        $('#btn-submit-be').attr('disabled', 'disabled');
                         return;
                     }
                 }
                 else if(arr_compare_date[0] == 3){
                     if(id_khoi != 1){
-                        alert('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
-                        $('#submit-be').attr('disabled', 'disabled');
+                        // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
+                        $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                        $('.error_lop').show();
+                        $('#btn-submit-be').attr('disabled', 'disabled');
                         return;
                     }
                 }
                 else if(arr_compare_date[0] == 4){
                     if(id_khoi != 2){
-                        alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
-                        $('#submit-be').attr('disabled', 'disabled');
+                        // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                        $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                        $('.error_lop').show();
+                        $('#btn-submit-be').attr('disabled', 'disabled');
                         return;
                     }
                 }
                 else if(arr_compare_date[0] == 5){
                     if(id_khoi != 3){
-                        alert('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
-                        $('#submit-be').attr('disabled', 'disabled');
+                        // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
+                        $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                        $('.error_lop').show();
+                        $('#btn-submit-be').attr('disabled', 'disabled');
                         return;
                     }
                 }
-                $('#submit-be').removeAttr('disabled');
+                $('.error_lop').hide();
+                $('#btn-submit-be').removeAttr('disabled');
 
             }
         }
@@ -637,38 +655,52 @@ else {
 
             if(Number(arr_compare_date[1]) < 6 && Number(arr_compare_date[0] < 1)) {
                 alert('Bé không được nhỏ hơn 6 tháng thuổi');
-                $('#submit-be').attr('disabled', 'disabled');
+                $('#btn-submit-be').attr('disabled', 'disabled');
+            }
+            else if(Number(arr_compare_date[0]) > 7) {
+                // alert('Bé không được lớn hơn 7 tuổi');
+                $('.error_tuoi').show();
+                $('.err_6thang').hide();
+                $('#btn-submit-be').attr('disabled', 'disabled');
             }
             else{
                 if(arr_compare_date[0] < 3) {
                     if(id_khoi != 4){
-                        alert('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
-                        $('#submit-be').attr('disabled', 'disabled');
+                        // alert('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                        $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                        $('.error_lop').show();
+                        $('#btn-submit-be').attr('disabled', 'disabled');
                         return;
                     }
                 }
                 else if(arr_compare_date[0] == 3){
                     if(id_khoi != 1){
-                        alert('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
-                        $('#submit-be').attr('disabled', 'disabled');
+                        // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Mầm');
+                        $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                        $('.error_lop').show();
+                        $('#btn-submit-be').attr('disabled', 'disabled');
                         return;
                     }
                 }
                 else if(arr_compare_date[0] == 4){
                     if(id_khoi != 2){
-                        alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
-                        $('#submit-be').attr('disabled', 'disabled');
+                        // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                        $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                        $('.error_lop').show();
+                        $('#btn-submit-be').attr('disabled', 'disabled');
                         return;
                     }
                 }
                 else if(arr_compare_date[0] == 5){
                     if(id_khoi != 3){
-                        alert('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
-                        $('#submit-be').attr('disabled', 'disabled');
+                        // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Lá');
+                        $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối nhà trẻ');
+                        $('.error_lop').show();
+                        $('#btn-submit-be').attr('disabled', 'disabled');
                         return;
                     }
                 }
-                $('#submit-be').removeAttr('disabled');
+                $('#btn-submit-be').removeAttr('disabled');
             }
         })
 
