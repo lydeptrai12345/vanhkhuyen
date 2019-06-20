@@ -87,8 +87,8 @@
                         <h5 class="text-info">Thêm bằng cấp</h5>
                         <form action="" method="post">
                             <div class="form-group">
-                                <label>Tên Bằng Cấp</label>
-                                <input class="form-control" name="txtTenbangcap" placeholder="Vui lòng nhập tên bằng cấp" value = "<?php if(isset($_POST['txtTenbangcap'])) {echo $_POST['txtTenbangcap'];} ?>">
+                                <label>Tên Bằng Cấp <span class="dot-required">*</span></label>
+                                <input autocomplete="off" class="form-control" name="txtTenbangcap" placeholder="Vui lòng nhập tên bằng cấp" value = "<?php if(isset($_POST['txtTenbangcap'])) {echo $_POST['txtTenbangcap'];} ?>">
                                 <?php
                                 if(isset($errors) && in_array('txtTenbangcap',$errors))
                                 {
@@ -98,7 +98,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Hệ Số</label>
-                                <input class="form-control" name="txtHeSo" placeholder="Vui lòng nhập hệ số" value = "<?php if(isset($_POST['txtHeSo'])) {echo $_POST['txtHeSo'];} ?>">
+                                <input autocomplete="off" class="form-control" name="txtHeSo" placeholder="Vui lòng nhập hệ số" value = "<?php if(isset($_POST['txtHeSo'])) {echo $_POST['txtHeSo'];} ?>">
                                 <?php
                                 if(isset($errors) && in_array('txtHeSo',$errors))
                                 {

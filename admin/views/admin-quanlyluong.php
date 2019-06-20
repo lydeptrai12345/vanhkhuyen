@@ -195,7 +195,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                                                         </tr>
                                                         <tr>
                                                             <td style="text-align: right"><label>Mức lương cập nhật</label></td>
-                                                            <td><input onFocus="$('#editSalaryModal').find('.text-danger').css('display','none');" style="color: #03923c !important; font-size: 0.95rem; width: 80%" class="form-control formatCurrency" name="new-salary-basic"/>
+                                                            <td><input onFocus="$('#editSalaryModal').find('.text-danger').css('display','none');" style="color: #03923c !important; font-size: 0.95rem; width: 80%" class="form-control formatCurrency" autocomplete="off" name="new-salary-basic"/>
                                                             </td>
                                                         </tr>
                                                         <tr>

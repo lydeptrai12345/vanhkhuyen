@@ -120,7 +120,7 @@
 					<form action="" method="post" enctype="multipart/form-data">
 						<div class="form-group">
 							<label>Tên nhân viên <span class="dot-required">*</span></label>
-							<input class="form-control" name="txtTenNhanVien" placeholder="Vui lòng nhập tên nhân viên" value="<?php if(isset($_POST['txtTenNhanVien'])) {echo $_POST['txtTenNhanVien'];} ?>">
+							<input autocomplete="off" class="form-control" name="txtTenNhanVien" placeholder="Vui lòng nhập tên nhân viên" value="<?php if(isset($_POST['txtTenNhanVien'])) {echo $_POST['txtTenNhanVien'];} ?>">
 							<?php 
                                 if(isset($errors) && in_array('txtTenNhanVien',$errors))
                                 {
@@ -130,7 +130,7 @@
 						</div>
 						<div class="form-group">
 							<label>Email<span class="dot-required">*</span></label>
-							<input type="email" class="form-control" name="txtEmail" placeholder="Vui lòng nhập Email" value="<?php if(isset($_POST['txtEmail'])) {echo $_POST['txtEmail'];} ?>">
+							<input autocomplete="off" type="email" class="form-control" name="txtEmail" placeholder="Vui lòng nhập Email" value="<?php if(isset($_POST['txtEmail'])) {echo $_POST['txtEmail'];} ?>">
                             <?php
                             if(isset($errors) && in_array('txtEmail',$errors))
                             {
@@ -140,11 +140,11 @@
                         </div>
 						<div class="form-group">
 							<label>Địa chỉ</label>
-							<input class="form-control" name="txtDiaChi" placeholder="Vui lòng nhập địa chỉ" value="<?php if(isset($_POST['txtDiaChi'])) {echo $_POST['txtDiaChi'];} ?>">
+							<input autocomplete="off" class="form-control" name="txtDiaChi" placeholder="Vui lòng nhập địa chỉ" value="<?php if(isset($_POST['txtDiaChi'])) {echo $_POST['txtDiaChi'];} ?>">
 						</div>
 						<div class="form-group">
 							<label>Nơi Sinh</label>
-							<input class="form-control" name="txtNoiSinh" placeholder="Vui lòng nhập nơi sinh" value="<?php if(isset($_POST['txtNoiSinh'])) {echo $_POST['txtNoiSinh'];} ?>">
+							<input autocomplete="off" class="form-control" name="txtNoiSinh" placeholder="Vui lòng nhập nơi sinh" value="<?php if(isset($_POST['txtNoiSinh'])) {echo $_POST['txtNoiSinh'];} ?>">
 						</div>
 						<div class="form-group">
 							<label style="display:block">Chức vụ <span class="dot-required">*</span></label>
@@ -171,7 +171,7 @@
 						<div class="row">
 							<div class="col">
 								<label>CMND <span class="dot-required">*</span></label>
-								<input class="form-control" name="txtCMND" placeholder="Vui lòng nhập số chứng minh nhân dân" value="<?php if(isset($_POST['txtCMND'])) {echo $_POST['txtCMND'];} ?>">
+								<input class="form-control" maxlength="9" name="txtCMND" placeholder="Vui lòng nhập số chứng minh nhân dân" value="<?php if(isset($_POST['txtCMND'])) {echo $_POST['txtCMND'];} ?>">
 								<?php 
                                 if(isset($errors) && in_array('txtCMND',$errors))
                                 {
@@ -192,7 +192,7 @@
 						<div class="row">
 							<div class="col">
 								<label>Số điện thoại <span class="dot-required">*</span></label>
-								<input class="form-control" maxlength="10" name="txtSoDienThoai" placeholder="Vui lòng nhập số điện thoại" value="<?php if(isset($_POST['txtSoDienThoai'])) {echo $_POST['txtSoDienThoai'];} ?>">
+								<input autocomplete="off" class="form-control" maxlength="10" name="txtSoDienThoai" placeholder="Vui lòng nhập số điện thoại" value="<?php if(isset($_POST['txtSoDienThoai'])) {echo $_POST['txtSoDienThoai'];} ?>">
 								<?php 
                                 if(isset($errors) && in_array('txtSoDienThoai',$errors))
                                 {

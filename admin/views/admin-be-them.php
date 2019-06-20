@@ -201,7 +201,7 @@
                                 ?>
                                 <script>
                                     alert( "Thêm thành công" );
-                                    <?php //header('location: admin-be.php') ?>
+                                    <?php header('location: admin-be.php') ?>
                                 </script>
                                 <?php
                             } else {
@@ -331,7 +331,7 @@
                                 <div class="col-8">
                                     <div class="form-group">
                                         <label>Họ và tên bé <span class="dot-required">*</span></label>
-                                        <input class="form-control" name="txtTenBe" placeholder="Vui lòng nhập tên bé" value="<?php if(isset($_POST['txtTenBe'])) {echo $_POST['txtTenBe'];} ?>">
+                                        <input class="form-control" autocomplete="off"  name="txtTenBe" placeholder="Vui lòng nhập tên bé" value="<?php if(isset($_POST['txtTenBe'])) {echo $_POST['txtTenBe'];} ?>">
                                         <?php
                                         if(isset($errors) && in_array('txtTenBe',$errors))
                                         {
@@ -361,7 +361,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Chiều cao(cm) <span class="dot-required">*</span></label>
-                                        <input type="number" class="form-control" name="txtChieuCao" placeholder="Vui lòng nhập chiều cao của bé" value="<?php if(isset($_POST['txtChieuCao'])) {echo $_POST['txtChieuCao'];} ?>">
+                                        <input type="number" autocomplete="off"  class="form-control" name="txtChieuCao" placeholder="Vui lòng nhập chiều cao của bé" value="<?php if(isset($_POST['txtChieuCao'])) {echo $_POST['txtChieuCao'];} ?>">
                                         <?php
                                         if(isset($errors) && in_array('txtChieuCao',$errors))
                                         {
@@ -371,7 +371,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Cân nặng(kg) <span class="dot-required">*</span></label>
-                                        <input type="number" class="form-control" name="txtCanNang" placeholder="Vui lòng nhập cân nặng của bé" value="<?php if(isset($_POST['txtCanNang'])) {echo $_POST['txtCanNang'];} ?>">
+                                        <input type="number" autocomplete="off"  class="form-control" name="txtCanNang" placeholder="Vui lòng nhập cân nặng của bé" value="<?php if(isset($_POST['txtCanNang'])) {echo $_POST['txtCanNang'];} ?>">
                                         <?php
                                         if(isset($errors) && in_array('txtCanNang',$errors))
                                         {
@@ -396,7 +396,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Địa chỉ <span class="dot-required">*</span></label>
-                                        <input class="form-control" name="txtDiaChi" placeholder="Vui lòng nhập địa chỉ" value="<?php if(isset($_POST['txtDiaChi'])) {echo $_POST['txtDiaChi'];} ?>">
+                                        <input class="form-control" autocomplete="off"  name="txtDiaChi" placeholder="Vui lòng nhập địa chỉ" value="<?php if(isset($_POST['txtDiaChi'])) {echo $_POST['txtDiaChi'];} ?>">
                                         <?php
                                         if(isset($errors) && in_array('txtDiaChi',$errors))
                                         {
@@ -421,7 +421,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Tên cha</label>
-                                    <input class="form-control" name="txtTenCha" placeholder="Vui lòng nhập tên cha" value="<?php if(isset($_POST['txtTenCha'])) {echo $_POST['txtTenCha'];} ?>">
+                                    <input autocomplete="off" class="form-control" name="txtTenCha" placeholder="Vui lòng nhập tên cha" value="<?php if(isset($_POST['txtTenCha'])) {echo $_POST['txtTenCha'];} ?>">
                                     <?php
                                         if(isset($errors) && in_array('txtTenCha',$errors))
                                         {
@@ -431,7 +431,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Số điện thoại cha</label>
-                                    <input class="form-control" maxlength="10" name="txtSDTCha" placeholder="Vui lòng nhập số điện thoại cha" value="<?php if(isset($_POST['txtSDTCha'])) {echo $_POST['txtSDTCha'];} ?>">
+                                    <input autocomplete="off" class="form-control" maxlength="10" name="txtSDTCha" placeholder="Vui lòng nhập số điện thoại cha" value="<?php if(isset($_POST['txtSDTCha'])) {echo $_POST['txtSDTCha'];} ?>">
                                     <?php
                                         if(isset($errors) && in_array('txtSDTCha',$errors))
                                         {
@@ -452,7 +452,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Tên mẹ</label>
-                                    <input class="form-control" name="txtTenMe" placeholder="Vui lòng nhập tên mẹ" value="<?php if(isset($_POST['txtTenMe'])) {echo $_POST['txtTenMe'];} ?>">
+                                    <input autocomplete="off" class="form-control" name="txtTenMe" placeholder="Vui lòng nhập tên mẹ" value="<?php if(isset($_POST['txtTenMe'])) {echo $_POST['txtTenMe'];} ?>">
                                     <?php
                                     if(isset($errors) && in_array('txtTenMe',$errors))
                                     {
@@ -462,7 +462,7 @@
                                 </div>
                                 <div class="form-group" style="margin-bottom: 7px;">
                                     <label>Số điện thoại mẹ</label>
-                                    <input class="form-control" maxlength="10" name="txtSDTMe" placeholder="Vui lòng nhập số điện thoại mẹ" value="<?php if(isset($_POST['txtSDTMe'])) {echo $_POST['txtSDTMe'];} ?>">
+                                    <input autocomplete="off" class="form-control" maxlength="10" name="txtSDTMe" placeholder="Vui lòng nhập số điện thoại mẹ" value="<?php if(isset($_POST['txtSDTMe'])) {echo $_POST['txtSDTMe'];} ?>">
                                     <?php
                                         if(isset($errors) && in_array('txtSDTMe',$errors))
                                         {
@@ -550,7 +550,7 @@
                         <!-- =========================== END THÔNG TIN LOP HOC ===========================-->
 
                         <div class="row card-footer" style="padding-left: 0">
-                            <button id="submit-be" name="btn-submit-be" type="submit" class="btn btn-info" style="margin-right: 5px;">Thêm Thông Tin</button>
+                            <button id="submit-be" name="btn-submit-be" type="submit" class="btn btn-info" style="margin-right: 5px;">Lưu</button>
                             <a href="admin-be.php" class="btn btn-warning formatCurrency">Quay về</a>
                         </div>
                     </form>
@@ -618,8 +618,8 @@
             }
             else if(arr_compare_date[0] == 4){
                 if(id_khoi != 2){
-                    // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
-                    $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối Trồi');
+                    // alert('Tuổi của bé chỉ phù hợp với lớp ở khối Chồi');
+                    $('.error_lop').text('Tuổi của bé chỉ phù hợp với lớp ở khối Chồi');
                     $('.error_lop').show();
                     $('#submit-be').attr('disabled', 'disabled');
                     return;

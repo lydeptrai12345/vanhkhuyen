@@ -76,8 +76,8 @@
 					<h5 class="text-info">Thêm phòng ban</h5>
 					<form action="" method="post">
 						<div class="form-group">
-							<label>Tên Phòng Ban</label>
-							<input class="form-control" name="txtTenphongban" placeholder="Vui lòng nhập tên phòng ban" value = "<?php if(isset($_POST['txtTenphongban'])) {echo $_POST['txtTenphongban'];} ?>">
+							<label>Tên Phòng Ban<span class="dot-required">*</span></label>
+							<input autocomplete="off" class="form-control" name="txtTenphongban" placeholder="Vui lòng nhập tên phòng ban" value = "<?php if(isset($_POST['txtTenphongban'])) {echo $_POST['txtTenphongban'];} ?>">
 							<?php 
                                 if(isset($errors) && in_array('txtTenphongban',$errors))
                                 {

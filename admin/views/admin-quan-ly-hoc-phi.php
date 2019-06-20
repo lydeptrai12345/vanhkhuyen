@@ -153,7 +153,7 @@ $data_lop_hoc = mysqli_query($dbc,"SELECT lophoc_chitiet.id, lophoc_chitiet.mo_t
 
                                                 <div class="form-group col-md-12">
                                                     <label for="">Học phí <span class="dot-required">*</span></label>
-                                                    <input name="hoc_phi" type="text" class="form-control formatCurrency text-right" value="0">
+                                                    <input autocomplete="off" name="hoc_phi" type="text" class="form-control formatCurrency text-right" value="0">
                                                     <small style="display: none" class="error-message e-4"><i>Học phí phải lớn hơn 1000</i></small>
                                                 </div>
 

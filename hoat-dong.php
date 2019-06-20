@@ -79,7 +79,7 @@
 					?>
 						<div class="col-lg-4 col-md-6 col-sm-6 col-12">
 							<div class="gallery wow fadeInUp">
-							<!-- Start Single Gallery -->
+
 								<div class="gallery__thumb">
 									<a href="#">
 										<img src="admin/images/hinhhd/<?php echo $item_hhd['hinh']; ?>" alt="gallery images">
@@ -103,38 +103,38 @@
 					<!-- End Single Gallery -->
 				</div>
 				<br />
-				<?php
-					echo "<nav aria-label='Page navigation example'>";
-				        echo "<ul class='pagination justify-content-center'>";
-				        if($per_page > 1)
-				        {
-				            $current_page=($start/$limit) + 1;
-				            //Nếu không phải là trang đầu thì hiện thị trang trước
-				            if($current_page !=1)
-				            {
-				                echo "<li class='page-item' class='float-left'><a class='page-link' href='hoat-dong.php?s=".($start - $limit)."&p={$per_page}'>Trở về</a></li>";
-				            }
-				            //hiện thị những phần còn lại của trang
-				            for ($i=1; $i <= $per_page ; $i++) 
-				            { 
-				                if($i != $current_page)
-				                {
-				                    echo "<li class='page-item'><a class='page-link' href='hoat-dong.php?s=".($limit *($i - 1))."&p={$per_page}'>{$i}</a></li>";
-				                }
-				                else
-				                {
-				                    echo "<li class='page-item' class='active'><a class='page-link'>{$i}</a></li>";
-				                }
-				            }
-				            //Nếu không phải trang cuối thì hiện thị nút next
-				            if($current_page != $per_page)
-				            {
-				                echo "<li class='page-item' ><a class='page-link' href='hoat-dong.php?s=".($start + $limit)."&p={$per_page}'>Tiếp</a></li>";  
-				            }
-				        }
-				        echo "</ul>";
-				    echo "</nav>"          
-				?>
+<!--				--><?php
+//					echo "<nav aria-label='Page navigation example'>";
+//				        echo "<ul class='pagination justify-content-center'>";
+//				        if($per_page > 1)
+//				        {
+//				            $current_page=($start/$limit) + 1;
+//				            //Nếu không phải là trang đầu thì hiện thị trang trước
+//				            if($current_page !=1)
+//				            {
+//				                echo "<li class='page-item' class='float-left'><a class='page-link' href='hoat-dong.php?s=".($start - $limit)."&p={$per_page}'>Trở về</a></li>";
+//				            }
+//				            //hiện thị những phần còn lại của trang
+//				            for ($i=1; $i <= $per_page ; $i++)
+//				            {
+//				                if($i != $current_page)
+//				                {
+//				                    echo "<li class='page-item'><a class='page-link' href='hoat-dong.php?s=".($limit *($i - 1))."&p={$per_page}'>{$i}</a></li>";
+//				                }
+//				                else
+//				                {
+//				                    echo "<li class='page-item' class='active'><a class='page-link'>{$i}</a></li>";
+//				                }
+//				            }
+//				            //Nếu không phải trang cuối thì hiện thị nút next
+//				            if($current_page != $per_page)
+//				            {
+//				                echo "<li class='page-item' ><a class='page-link' href='hoat-dong.php?s=".($start + $limit)."&p={$per_page}'>Tiếp</a></li>";
+//				            }
+//				        }
+//				        echo "</ul>";
+//				    echo "</nav>"
+//				?>
 			</div>
 			<!-- End hình ảnh -->
 		</div>

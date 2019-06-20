@@ -250,7 +250,7 @@ else {
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label>Họ và tên bé <span class="dot-required">*</span></label>
-                                        <input class="form-control" name="txtTenBe" placeholder="Vui lòng nhập tên bé" value="<?php if(isset($detail_be->ten)) {echo $detail_be->ten;} ?>">
+                                        <input autocomplete="off" class="form-control" name="txtTenBe" placeholder="Vui lòng nhập tên bé" value="<?php if(isset($detail_be->ten)) {echo $detail_be->ten;} ?>">
                                         <?php
                                         if(isset($errors) && in_array('txtTenBe',$errors))
                                         {
@@ -312,7 +312,7 @@ else {
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Địa chỉ <span class="dot-required">*</span></label>
-                                        <input class="form-control" name="txtDiaChi" placeholder="Vui lòng nhập địa chỉ" value="<?php if(isset($detail_be->diachi)) {echo $detail_be->diachi;} ?>">
+                                        <input autocomplete="off" class="form-control" name="txtDiaChi" placeholder="Vui lòng nhập địa chỉ" value="<?php if(isset($detail_be->diachi)) {echo $detail_be->diachi;} ?>">
                                         <?php
                                         if(isset($errors) && in_array('txtDiaChi',$errors))
                                         {
@@ -339,7 +339,7 @@ else {
                             <div class="col">
                                 <div class="form-group">
                                     <label>Tên cha</label>
-                                    <input class="form-control" name="txtTenCha" placeholder="Vui lòng nhập tên cha" value="<?php if(isset($detail_be->tencha)) {echo $detail_be->tencha;} ?>">
+                                    <input autocomplete="off" class="form-control" name="txtTenCha" placeholder="Vui lòng nhập tên cha" value="<?php if(isset($detail_be->tencha)) {echo $detail_be->tencha;} ?>">
                                     <?php
                                     if(isset($errors) && in_array('txtTenCha',$errors))
                                     {
@@ -349,7 +349,7 @@ else {
                                 </div>
                                 <div class="form-group">
                                     <label>Số điện thoại cha</label>
-                                    <input class="form-control" name="txtSDTCha" placeholder="Vui lòng nhập số điện thoại cha" value="<?php if(isset($detail_be->sdtcha)) {echo $detail_be->sdtcha;} ?>">
+                                    <input autocomplete="off" class="form-control" name="txtSDTCha" placeholder="Vui lòng nhập số điện thoại cha" value="<?php if(isset($detail_be->sdtcha)) {echo $detail_be->sdtcha;} ?>">
                                     <?php
                                     if(isset($errors) && in_array('txtSDTCha',$errors))
                                     {
@@ -370,11 +370,11 @@ else {
                             <div class="col">
                                 <div class="form-group">
                                     <label>Tên mẹ</label>
-                                    <input class="form-control" name="txtTenMe" maxlength="255" placeholder="Vui lòng nhập tên mẹ" value="<?php if(isset($detail_be->tenme)) {echo $detail_be->tenme;} ?>">
+                                    <input autocomplete="off"class="form-control" name="txtTenMe" maxlength="255" placeholder="Vui lòng nhập tên mẹ" value="<?php if(isset($detail_be->tenme)) {echo $detail_be->tenme;} ?>">
                                 </div>
                                 <div class="form-group" style="margin-bottom: 7px;">
                                     <label>Số điện thoại mẹ</label>
-                                    <input class="form-control" name="txtSDTMe" maxlength="10" placeholder="Vui lòng nhập số điện thoại mẹ" value="<?php if(isset($detail_be->sdtme)) {echo $detail_be->sdtme;} ?>">
+                                    <input autocomplete="off" class="form-control" name="txtSDTMe" maxlength="10" placeholder="Vui lòng nhập số điện thoại mẹ" value="<?php if(isset($detail_be->sdtme)) {echo $detail_be->sdtme;} ?>">
                                     <?php
                                     if(isset($errors) && in_array('txtSDTMe',$errors))
                                     {

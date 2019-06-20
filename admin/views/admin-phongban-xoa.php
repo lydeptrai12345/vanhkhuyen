@@ -12,6 +12,5 @@ if(isset($_GET['id']) && filter_var($_GET['id'],FILTER_VALIDATE_INT,array('min_r
 else
 {
 	header('Location: admin-phongban.php');
-	exit();
 }
 ?>
