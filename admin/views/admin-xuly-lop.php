@@ -145,7 +145,7 @@ if(isset($_GET['load_list_be'])) {
     $id_lop = isset($_GET['id_lop']) ? (int)$_GET['id_lop'] : 0;
 
     if($id_lop > 0) {
-        $str = "SELECT * FROM be INNER JOIN lophoc_be ON be.id = lophoc_be.be_id WHERE lophoc_be.lop_hoc_chi_tiet_id = {$id_lop}";
+        $str = "SELECT * FROM be INNER JOIN lophoc_be ON be.id = lophoc_be.be_id WHERE trangthai = 1 AND lophoc_be.lop_hoc_chi_tiet_id = {$id_lop}";
         $query = mysqli_query($dbc, $str);
         $result = array();
 
@@ -177,7 +177,7 @@ if(isset($_GET['load_list_lop'])) {
     $nien_khoa = isset($_GET['loc_nien_khoa']) ? $_GET['loc_nien_khoa'] : "";
 
     $str = "SELECT l.id,l.mo_ta, n.ten_nien_khoa, l.nien_khoa_id,  
-            (SELECT COUNT(id) FROM lophoc_be WHERE l.id = lophoc_be.lop_hoc_chi_tiet_id)	AS sl_be,
+            (SELECT COUNT(be.id) FROM lophoc_be INNER JOIN be ON lophoc_be.be_id = be.id WHERE l.id = lophoc_be.lop_hoc_chi_tiet_id AND be.trangthai = 1)	AS sl_be,
             (SELECT COUNT(id) FROM lophoc_nhanvien WHERE l.id = lophoc_nhanvien.lop_hoc_chi_tiet_id) AS sl_nhan_vien
             FROM lophoc_chitiet AS l INNER JOIN nienkhoa AS n ON l.nien_khoa_id = n.id 
                                 ";
