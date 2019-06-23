@@ -295,7 +295,7 @@ class HeThong extends xuly {
     {
         $result = $this->from('nguoidung')
             ->select('*')
-            ->where('nhom_nguoi_dung = ' . $id)
+            ->where('nhom_nguoi_dung_id = ' . $id)
             ->get();
         return $result;
     }

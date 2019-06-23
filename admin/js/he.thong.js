@@ -180,7 +180,7 @@ $(document).ready(function () {
                             orderable: false,
                             data: null,
                             defaultContent: '<a class="edit edit-nhom-ng" data-action="1" style="cursor: pointer" title="Cập nhật nhóm người dùng"><i class="material-icons action-icon">edit</i></a> ' +
-                                '<a data-action="2" style="cursor: pointer" title="Xóa nhóm người dùng"><i class="material-icons action-icon">delete_outline</i></a>'
+                                '<a data-action="2" class="edit-nhom-ng" style="cursor: pointer" title="Xóa nhóm người dùng"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
                     ],
                     columns: [

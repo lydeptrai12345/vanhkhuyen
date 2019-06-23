@@ -117,7 +117,7 @@ if(isset($_POST['edit_nhom_nguoi_dung'])) {
 }
 
 if(isset($_POST['delete_nhom_nguoi_dung'])) {
-    $id = isset($_GET['id']) ? $_GET['id'] : 0;
+    $id = isset($_POST['id']) ? $_POST['id'] : 0;
 
     $ht = new HeThong();
     $data_nguoi_dung = $ht->check_nguoi_dung_trong_nhom($id);
