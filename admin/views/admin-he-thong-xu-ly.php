@@ -113,7 +113,7 @@ if(isset($_GET['get_nhom_nguoi_dung_theo_id'])) {
 if(isset($_POST['edit_nhom_nguoi_dung'])) {
     $nhom = new HeThong();
     $data = ['id' => $_POST['id'], 'ten_nhom' => $_POST['ten_nhom']];
-    echo json_encode($nhom->update_nhom_nguoi_dung_id($data));
+    echo ($nhom->update_nhom_nguoi_dung_id($data));
 }
 
 if(isset($_POST['delete_nhom_nguoi_dung'])) {

@@ -253,7 +253,7 @@ class HeThong extends xuly {
     {
         $data_insert = (object)$data_insert;
 
-        if (empty($data_insert->ten_nhom)) return 'ten_nhom';
+        if (empty($data_insert->ten_nhom)) return 'ten_nhom_nguoi_dung';
 
         if ($data_insert->ten_nhom)
             $data_insert = array(

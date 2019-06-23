@@ -601,7 +601,8 @@ $(document).ready(function () {
                     fill_lai_data_nhom_nguoi_dung();
                 }
                 else {
-                    alert('Lỗi không thêm được nhóm người dùng!!!');
+                    $('#err_' + result).show();
+                    // alert('Lỗi không thêm được nhóm người dùng!!!');
                 }
             }
         });
@@ -657,7 +658,8 @@ $(document).ready(function () {
                     fill_lai_data_nhom_nguoi_dung();
                 }
                 else {
-                    alert('Lỗi không cập nhật được nhóm người dùng!!!');
+                    // alert('Lỗi không cập nhật được nhóm người dùng!!!');
+                    $('#err_' + result).show();
                 }
             }
         });
