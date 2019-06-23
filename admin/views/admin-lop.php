@@ -209,7 +209,7 @@
                                     <input id="id_chi_tiet_lop_hoc" type="hidden" value="">
                                     <div class="form-group">
                                         <label style="display:block">Tên lớp <span class="dot-required">*</span></label>
-                                        <input name="ten_lop" onkeyup="check_ten_lop(this)" maxlength="255" type="text" class="form-control">
+                                        <input name="ten_lop" autocomplete="off" onkeyup="check_ten_lop(this)" maxlength="255" type="text" class="form-control">
                                         <small style="display: none" class="error-message">Tên lớp này đã tồn tại</small>
                                         <small style="display: none" class="error-message e-1">Tên lớp có độ từ 5-255 ký tự</small>
                                     </div>

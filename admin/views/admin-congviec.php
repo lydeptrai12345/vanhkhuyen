@@ -83,8 +83,8 @@
 					<h5 class="text-info">Thêm chức vụ</h5>
 					<form action="" method="post">
 						<div class="form-group">
-							<label>Tên chức vụ *</label>
-							<input class="form-control" name="txtTencongviec" placeholder="Vui lòng nhập tên chức vụ" value="<?php if(isset($_POST['txtTencongviec'])) {echo $_POST['txtTencongviec'];} ?>">
+							<label>Tên chức vụ<span class="dot-required">*</span></label>
+							<input autocomplete="off" class="form-control" name="txtTencongviec" placeholder="Vui lòng nhập tên chức vụ" value="<?php if(isset($_POST['txtTencongviec'])) {echo $_POST['txtTencongviec'];} ?>">
 							<?php 
                                 if(isset($errors) && in_array('txtTencongviec',$errors))
                                 {
@@ -94,7 +94,7 @@
 						</div>
 						<div class="form-group">
 							<label>Hệ số phụ cấp</label>
-							<input class="form-control" name="txtPhuCap" placeholder="Vui lòng nhập tên chức vụ" value="<?php if(isset($_POST['txtPhuCap'])) {echo $_POST['txtPhuCap'];}?>">
+							<input autocomplete="off" class="form-control" name="txtPhuCap" placeholder="Vui lòng nhập tên chức vụ" value="<?php if(isset($_POST['txtPhuCap'])) {echo $_POST['txtPhuCap'];}?>">
 							<?php 
                                 if(isset($errors) && in_array('txtPhuCap',$errors))
                                 {

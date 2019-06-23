@@ -64,7 +64,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
 		<div class="col">
 			<div class="card card-small mb-4">
 				<div class="card-header border-bottom">
-					<h5 class="text-info salary-h5" style="margin: 7px 0 0 0;display: inline-block">Tìm kiếm bé</h5>
+					<h5 class="text-info salary-h5" style="margin: 7px 0 0 0;display: inline-block">Thông Tin Bé</h5>
                     <?php if($data_phan_quyen->them): ?>
 					<a href="admin-be-them.php" class="btn-custom2" style="float: right; margin-right: 20px; font-size: 14px">Thêm bé</a>
                     <?php endif;?>

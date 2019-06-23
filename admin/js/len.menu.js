@@ -129,7 +129,7 @@ $(document).ready(function () {
                         "zeroRecords": "Không tìm thấy kết quả",
                         "info": "Hiển thị trang _PAGE_ của _PAGES_ trang",
                         "infoEmpty": "Không có dữ liệu",
-                        "infoFiltered": "(Được lọc từ _MAX_ nguyên liệu)",
+                        "infoFiltered": "(Được lọc từ _MAX_ menu)",
                         "search": "Tìm kiếm",
                         "paginate": {
                             "previous": "Trở về",

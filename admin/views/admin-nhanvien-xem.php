@@ -181,7 +181,7 @@
 					<form action="" method="post" enctype="multipart/form-data">
 						<div class="form-group">
 							<label>Tên nhân viên <span class="dot-required">*</span></label>
-							<input class="form-control" name="txtTenNhanVien" placeholder="Vui lòng nhập tên nhân viên" value="<?php if(isset($name)) {echo $name;} ?>">
+							<input autocomplete="off" class="form-control" name="txtTenNhanVien" placeholder="Vui lòng nhập tên nhân viên" value="<?php if(isset($name)) {echo $name;} ?>">
 							<?php 
                                 if(isset($errors) && in_array('txtTenNhanVien',$errors))
                                 {
@@ -191,7 +191,7 @@
 						</div>
 						<div class="form-group">
 							<label>Email<span class="dot-required">*</span></label>
-							<input type="email" class="form-control" name="txtEmail" placeholder="Vui lòng nhập Email" value="<?php if(isset($email)) {echo $email;} ?>">
+							<input autocomplete="off" type="email" class="form-control" name="txtEmail" placeholder="Vui lòng nhập Email" value="<?php if(isset($email)) {echo $email;} ?>">
 						</div>
 						<div class="form-group">
 							<label>Địa chỉ</label>
