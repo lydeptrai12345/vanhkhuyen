@@ -11,6 +11,7 @@ $(document).ready(function () {
 
     $('#show-modal-nhom-nguoi-dung').click(function () {
         $('#modal-nhom-nguoi-dung').toggle(true);
+        $('#nhom_nguoi_dung_id_edit').val(0);
     });
 
     $('#btn-dong-nhom').click(function () {
@@ -178,7 +179,7 @@ $(document).ready(function () {
                             targets: 2,
                             orderable: false,
                             data: null,
-                            defaultContent: '<a class="edit" data-action="1" style="cursor: pointer" title="Cập nhật nhóm người dùng"><i class="material-icons action-icon">edit</i></a> ' +
+                            defaultContent: '<a class="edit edit-nhom-ng" data-action="1" style="cursor: pointer" title="Cập nhật nhóm người dùng"><i class="material-icons action-icon">edit</i></a> ' +
                                 '<a data-action="2" style="cursor: pointer" title="Xóa nhóm người dùng"><i class="material-icons action-icon">delete_outline</i></a>'
                         }
                     ],
@@ -196,6 +197,17 @@ $(document).ready(function () {
                         cell.innerHTML = i+1;
                     } );
                 } ).draw();
+
+                table_nhom.on( 'click', 'a.edit-nhom-ng', function () {
+                    var data = table_nhom.row( $(this).parents('tr') ).data();
+                    if($(this).data('action') == 1) {
+                        get_nhom_nguoi_dung_theo_id(data.id);
+                        $('#nhom_nguoi_dung_id_edit').val(data.id)
+                    }
+                    else if ($(this).data('action') == 2){
+                        delete_nhom_nguoi_dung_id(data.id);
+                    }
+                });
 
                 var str = '';
                 if(data.length > 0) {
@@ -596,7 +608,13 @@ $(document).ready(function () {
     }
 
     $('#btn-add-nhom-nguoi-dung').click(function () {
-        add_nhom_nguoi_dung();
+        var id = $('#nhom_nguoi_dung_id_edit').val();
+        if(id == 0) {
+            add_nhom_nguoi_dung();
+        }
+        else{
+            update_nhom_nguoi_dung(id);
+        }
     });
 
     function fill_lai_data_nhom_nguoi_dung () {
@@ -614,6 +632,57 @@ $(document).ready(function () {
                 get_danh_sach_chuc_nang_cha();
             }
         });
+    }
+
+    function get_nhom_nguoi_dung_theo_id(id) {
+        $.ajax({
+            type: "GET",
+            url: 'admin-he-thong-xu-ly.php?get_nhom_nguoi_dung_theo_id=1&id=' + id,
+            success : function (result){
+                var data = JSON.parse(result);
+                $('.ten_nhom_nguoi_dung').val(data[0].ten_nhom);
+                $('#modal-nhom-nguoi-dung').toggle(true);
+            }
+        });
+    }
+
+    function update_nhom_nguoi_dung(id) {
+        $.ajax({
+            type: "POST",
+            url: 'admin-he-thong-xu-ly.php',
+            data: { 'edit_nhom_nguoi_dung' : 1, 'ten_nhom': $('input[name="ten_nhom_nguoi_dung"]').val(), 'id': id },
+            success : function (result){
+                if(result == "1"){
+                    alert('Cập nhật nhóm người dùng thành công!!!');
+                    fill_lai_data_nhom_nguoi_dung();
+                }
+                else {
+                    alert('Lỗi không cập nhật được nhóm người dùng!!!');
+                }
+            }
+        });
+    }
+
+    function delete_nhom_nguoi_dung_id(id) {
+        if(confirm('Bạn có chắc chắn muốn xóa nhóm người dùng vừa chọn')){
+            $.ajax({
+                type: "POST",
+                url: 'admin-he-thong-xu-ly.php',
+                data: { 'delete_nhom_nguoi_dung' : 1, 'id': id },
+                success : function (result){
+                    if(result == "1"){
+                        alert('Nhóm người dùng vừa chọn đã được xóa!!!');
+                        fill_lai_data_nhom_nguoi_dung();
+                    }
+                    else if(result == "-3"){
+                        alert('Nhóm người dùng vừa chọn có chứa tài khoản người dùng! Vui lòng cập nhật người dùng ra khỏi nhóm!!!')
+                    }
+                    else {
+                        alert('Lỗi không xóa được nhóm người dùng vừa chọn!!!');
+                    }
+                }
+            });
+        }
     }
 
 });

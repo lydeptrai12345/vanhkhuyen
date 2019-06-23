@@ -260,7 +260,7 @@ else {
                                     </div>
                                     <div class="form-group">
                                         <label>Ngày sinh <span class="dot-required">*</span></label>
-                                        <input type="text" class="form-control txtNgaySinh" name="txtNgaySinh" placeholder="Vui lòng nhập ngày sinh" value="<?php if(isset($detail_be->ngaysinh)) {echo date_format(date_create($detail_be->ngaysinh), 'd-m-Y');} ?>">
+                                        <input disabled type="text" class="form-control txtNgaySinh" name="txtNgaySinh" placeholder="Vui lòng nhập ngày sinh" value="<?php if(isset($detail_be->ngaysinh)) {echo date_format(date_create($detail_be->ngaysinh), 'd-m-Y');} ?>">
                                         <?php
                                         if(isset($errors) && in_array('txtNgaySinh',$errors))
                                         {

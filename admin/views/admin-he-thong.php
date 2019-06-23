@@ -206,10 +206,11 @@ $results_lop_hoc = mysqli_query($dbc,"SELECT * FROM lophoc");
                                             <div class="col-md-12" style="margin-bottom: 10px; padding-left: 0">
                                                 <button id="show-modal-nhom-nguoi-dung" class="btn btn-success" style="margin-bottom: 10px">Thêm nhóm người dùng</button>
                                                 <div id="modal-nhom-nguoi-dung" class="col-md-12" style="border: 1px solid #ddd;display: none">
+                                                    <input id="nhom_nguoi_dung_id_edit" type="hidden" value="0">
                                                     <div class="form-group" style="margin-top: 10px;">
                                                         <label for="">Tên nhóm người dùng</label>
-                                                        <input name="ten_nhom_nguoi_dung" type="text" class="form-control form-control-sm">
-                                                        <small id="err_ten_nhom" class="dot-required d-none-mam-non">Vui lòng nhập tên nhóm</small>
+                                                        <input name="ten_nhom_nguoi_dung" type="text" class="form-control form-control-sm ten_nhom_nguoi_dung">
+                                                        <small id="err_ten_nhom_nguoi_dung" class="dot-required d-none-mam-non">Vui lòng nhập tên nhóm</small>
                                                     </div>
 
                                                     <div class="modal-footer">

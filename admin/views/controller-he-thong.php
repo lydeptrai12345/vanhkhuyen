@@ -228,7 +228,7 @@ class HeThong extends xuly {
                 $arr_nhom_con[] = $value;
             }
         }
-//        return $arr;
+
         $da = [];
         foreach ($arr as $item) {
             foreach ($arr_nhom_con as $value) {
@@ -261,5 +261,46 @@ class HeThong extends xuly {
                 'created_at' => date("Y-m-d")
             );
         return $this->insert('nhom_nguoi_dung', $data_insert);
+    }
+
+    public function get_nhom_nguoi_dung_theo_id($id)
+    {
+        $result = $this->from('nhom_nguoi_dung')
+            ->select('*')
+            ->where('id = ' . $id)
+            ->get();
+        return $result;
+    }
+
+    public function update_nhom_nguoi_dung_id($data_update)
+    {
+        if (empty($data_update)) return null;
+
+        $data_update = (object)$data_update;
+
+        $id = (isset($data_update->id) && $data_update->id > 0) ? $data_update->id : 0;
+        if ($id <= 0) return 'id';
+
+        if(empty($data_update->ten_nhom)) return 'ten_nhom_nguoi_dung';
+        $ten_nhom = $data_update->ten_nhom;
+
+        $data = array(
+            'ten_nhom' => $ten_nhom
+        );
+
+        return $this->where('id = ' . $id)->update('nhom_nguoi_dung', $data);
+    }
+
+    public function check_nguoi_dung_trong_nhom($id)
+    {
+        $result = $this->from('nguoidung')
+            ->select('*')
+            ->where('nhom_nguoi_dung = ' . $id)
+            ->get();
+        return $result;
+    }
+    public function delete_nhom_nguoi_dung_id($id)
+    {
+        return $this->where('id = ' . $id)->delete('nhom_nguoi_dung');
     }
 }

@@ -104,3 +104,31 @@ if(isset($_POST['add_nhom_nguoi_dung'])) {
     echo $nhom->add_nhom_nguoi_dung($data);
 }
 
+if(isset($_GET['get_nhom_nguoi_dung_theo_id'])) {
+    $id = isset($_GET['id']) ? $_GET['id'] : 0;
+    $he_thong = new HeThong();
+    echo json_encode($he_thong->get_nhom_nguoi_dung_theo_id($id));
+}
+
+if(isset($_POST['edit_nhom_nguoi_dung'])) {
+    $nhom = new HeThong();
+    $data = ['id' => $_POST['id'], 'ten_nhom' => $_POST['ten_nhom']];
+    echo json_encode($nhom->update_nhom_nguoi_dung_id($data));
+}
+
+if(isset($_POST['delete_nhom_nguoi_dung'])) {
+    $id = isset($_GET['id']) ? $_GET['id'] : 0;
+
+    $ht = new HeThong();
+    $data_nguoi_dung = $ht->check_nguoi_dung_trong_nhom($id);
+
+    if(count($data_nguoi_dung) > 0) {
+        echo -3;
+        return;
+    }
+
+    $nhom = new HeThong();
+    echo json_encode($nhom->delete_nhom_nguoi_dung_id($id));
+}
+
+
