@@ -283,7 +283,7 @@ if(isset($_GET['changeStatusId']) && filter_var($_GET['changeStatusId'],FILTER_V
                         { targets: 1, className: 'dt-body-left'},
                         { targets: 2, orderable: false,className: 'dt-body-left' },
                         { targets: 3, orderable: false,className: 'dt-body-left' },
-                        { targets: 4, orderable: false,className: 'dt-body-left' },
+                        { targets: 4, className: 'dt-body-left' },
                         { targets: 5, orderable: false,className: 'dt-body-left' },
                         { targets: 6, orderable: false,className: 'dt-body-left' },
                         {

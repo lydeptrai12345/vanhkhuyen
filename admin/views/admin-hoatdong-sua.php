@@ -123,7 +123,7 @@
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Tiêu Đề</label>
-                            <input class="form-control" name="txtTieuDe" placeholder="Vui lòng nhập tên tiêu đề" value = "<?php if(isset($name)) {echo $name;} ?>">
+                            <input autocomplete="off" class="form-control" name="txtTieuDe" placeholder="Vui lòng nhập tên tiêu đề" value = "<?php if(isset($name)) {echo $name;} ?>">
                             <?php 
                                 if(isset($errors) && in_array('txtTieuDe',$errors))
                                 {

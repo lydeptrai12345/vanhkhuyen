@@ -425,7 +425,7 @@ $(document).ready(function () {
                     '                                                    </td>\n' +
                     '                                                </tr>\n' +
                     '                                                <tr class="thu-'+ (j+2) +'">\n' +
-                    '                                                    <td class="center-cell">Tối</td>\n' +
+                    '                                                    <td class="center-cell">Chiều</td>\n' +
                     '                                                    <td>\n' +
                     '                                                        <textarea name="" id="" rows="1" class="form-control form-control-sm content-menu"></textarea>\n' +
                     '                                                    </td>\n' +

@@ -29,8 +29,7 @@
         <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
             <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
                 <div class="d-table m-auto">
-                    <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;"
-                         src="../images/shards-dashboards-logo.svg" alt="Shards Dashboard">
+                    <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="../images/shards-dashboards-logo.svg" alt="Shards Dashboard">
                     <span class="d-none d-md-inline ml-1">Trang Quản Lý</span>
                 </div>
             </a>
@@ -47,7 +46,7 @@
                     <i class="fas fa-search"></i>
                 </div>
             </div>
-            <input class="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search"></div>
+            <input class="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search"> </div>
     </form>
     <div class="nav-wrapper">
         <ul class="nav flex-column">
@@ -116,7 +115,6 @@
                     border-left: 1px solid skyblue;
                     border-right: 1px solid skyblue;
                 }
-
                 .cus-collapse-item.cus-active:after {
                     content: '\e092';
                     position: absolute;
@@ -128,11 +126,9 @@
                     -webkit-font-smoothing: antialiased;
                     -webkit-text-stroke: 3px white;
                 }
-
-                .parent-active {
+                .parent-active{
                     position: relative;
                 }
-
                 .parent-active.parent-selected:after {
                     content: '\e092';
                     position: absolute;
@@ -148,6 +144,7 @@
             </style>
 
             <div class="panel-group" id="accordion">
+
                 <?php foreach ($menu as $key => $item):?>
                     <?php
                         $dem = 0;

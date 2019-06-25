@@ -99,7 +99,7 @@
                         </div>
 						<div class="form-group">
 							<label>Tên Thể Loại</label>
-							<input class="form-control" value="<?php if(isset($name)){ echo $name;} ?>" name="txtTenTheLoai" placeholder="Vui lòng nhập tên thể loại" >
+							<input autocomplete="off" class="form-control" value="<?php if(isset($name)){ echo $name;} ?>" name="txtTenTheLoai" placeholder="Vui lòng nhập tên thể loại" >
                             <?php 
                                 if(isset($errors) && in_array('txtTenTheLoai',$errors))
                                 {

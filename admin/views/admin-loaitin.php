@@ -91,7 +91,7 @@ $data_phan_quyen = kiem_tra_quyen_nguoi_dung(7);
                             </div>
                             <div class="form-group">
                                 <label>Tên Thể Loại</label>
-                                <input class="form-control" name="txtTenTheLoai" placeholder="Vui lòng nhập tên thể loại" value = "<?php if(isset($_POST['txtTenTheLoai'])) {echo $_POST['txtTenTheLoai'];} ?>">
+                                <input autocomplete="off" class="form-control" name="txtTenTheLoai" placeholder="Vui lòng nhập tên thể loại" value = "<?php if(isset($_POST['txtTenTheLoai'])) {echo $_POST['txtTenTheLoai'];} ?>">
                                 <?php
                                 if(isset($errors) && in_array('txtTenTheLoai',$errors))
                                 {

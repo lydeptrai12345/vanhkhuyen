@@ -144,7 +144,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tên Tin Tức</label>
-                            <input class="form-control" name="txtTenTinTuc" placeholder="Vui lòng nhập tên tin tức" value = "<?php if(isset($name)) {echo $name;} ?>">
+                            <input autocomplete="off" class="form-control" name="txtTenTinTuc" placeholder="Vui lòng nhập tên tin tức" value = "<?php if(isset($name)) {echo $name;} ?>">
                             <?php 
                                 if(isset($errors) && in_array('txtTenTinTuc',$errors))
                                 {

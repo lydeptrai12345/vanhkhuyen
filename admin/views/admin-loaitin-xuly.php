@@ -23,9 +23,11 @@ if (isset($_GET['load_list_loaitin'])) {
     }
     echo json_encode($result);
 }
-
 function lay_cha_cua_loai_tin($dbc, $id){
     $resu = mysqli_query($dbc, "SELECT * FROM loaitin WHERE id = {$id}");
     $a = mysqli_fetch_object($resu);
-    return $a->ten;
+    if(isset($a->ten))
+        return $a->ten;
+    else
+        return 'Không có';
 }

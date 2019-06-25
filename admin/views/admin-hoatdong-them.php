@@ -98,7 +98,7 @@
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Tiêu Đề</label>
-                            <input class="form-control" name="txtTieuDe" placeholder="Vui lòng nhập tên tiêu đề" value = "<?php if(isset($_POST['txtTieuDe'])) {echo $_POST['txtTieuDe'];} ?>">
+                            <input autocomplete="off" class="form-control" name="txtTieuDe" placeholder="Vui lòng nhập tên tiêu đề" value = "<?php if(isset($_POST['txtTieuDe'])) {echo $_POST['txtTieuDe'];} ?>">
                             <?php 
                                 if(isset($errors) && in_array('txtTieuDe',$errors))
                                 {
@@ -108,7 +108,7 @@
                         </div>
                         <div class="form-group">
                             <label>Mô tả</label>
-                            <input class="form-control" name="txtMota" placeholder="Vui lòng nhập tên tiêu đề" value = "<?php if(isset($_POST['txtMota'])) {echo $_POST['txtMota'];} ?>">
+                            <input autocomplete="off" class="form-control" name="txtMota" placeholder="Vui lòng nhập tên tiêu đề" value = "<?php if(isset($_POST['txtMota'])) {echo $_POST['txtMota'];} ?>">
                             <?php 
                                 if(isset($errors) && in_array('txtMota',$errors))
                                 {
