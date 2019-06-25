@@ -399,7 +399,7 @@
                     <h4 class="modal-title">Danh sách bé trong lớp</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="modal-body" style="padding: 0 !important;">
+                <div class="modal-body" style="padding: 0 !important;min-height: 300px">
                     <div class="tien-ich"></div>
                     <div class="row">
                         <div class="col-md-12">
@@ -421,8 +421,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="">Lớp học hiện tại</label>
-                                                    <select name="lop_hoc_hien_tai" id="" class="form-control">
-                                                    </select>
+                                                    <select name="lop_hoc_hien_tai" id="" class="form-control"></select>
                                                 </div>
                                             </div>
 
@@ -1060,19 +1059,40 @@
             success : function (result){
                 var data = JSON.parse(result);
                 var str = null;
-
+                console.log(data)
                 if(data.length > 0) {
+                    var khoi = 0;
+                    data.forEach(function (item) {
+                        var data_lop = item.data_lop;
+                        if(data_lop.length > 0){
+                            var lop_hien_tai = $('select[name="lop_hoc_hien_tai"]').val();
+                            data_lop.forEach(function (lop) {
+                                if(lop_hien_tai == lop.id) {
+                                    khoi = Number(item.id);
+                                }
+                            })
+                        }
+                    });
+                    console.log(khoi)
+
                     data.forEach(function (item) {
                         str += '<optgroup label="'+ item.ten_khoi +'">';
                         var data_lop = item.data_lop;
                         if(data_lop.length > 0){
-                            data_lop.forEach(function (lop) {
-                                var lop_hien_tai = $('select[name="lop_hoc_hien_tai"]').val();
-                                if(lop_hien_tai == lop.id){
-                                    str += '<option disabled data-khoi="'+ lop.lop_hoc_id +'" value="'+ lop.id +'">'+ lop.mo_ta +'</option>'
-                                }
-                                else str += '<option data-khoi="'+ lop.lop_hoc_id +'" value="'+ lop.id +'">'+ lop.mo_ta +'</option>'
-                            });
+                            //debugger;
+                            var kkk = khoi + 1;
+                            var kh = Number(item.id);
+
+                            if( ((khoi == kh || kh == kkk) && (khoi == 1 || khoi == 2)) || (khoi == 3 && khoi == kh) || (khoi == 4 && (khoi == kh || kh == 1 ) )) {
+                                data_lop.forEach(function (lop) {
+                                    var lop_hien_tai = $('select[name="lop_hoc_hien_tai"]').val();
+
+                                    if(lop_hien_tai == lop.id){
+                                        str += '<option disabled data-khoi="'+ lop.lop_hoc_id +'" value="'+ lop.id +'">'+ lop.mo_ta +'</option>'
+                                    }
+                                    else str += '<option data-khoi="'+ lop.lop_hoc_id +'" value="'+ lop.id +'">'+ lop.mo_ta +'</option>'
+                                });
+                            }
                         }
 
                         str += '</optgroup>';
